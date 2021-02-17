@@ -16,29 +16,39 @@ namespace Additional_Task
         private static void prog()
         {
             var random = new Random();
-            var password = new int[random.Next(10, 20)];
+            var password = new int[random.Next(10, 30)];
             for (var i = 0; i < password.Length; i++)
             {
                 Thread.Sleep(250);
-                var RanTemp = password[i] = random.Next(1000, 999999);
-                var CharTemp = '\0';
-                var AccessPw = true;
-                foreach (var t in RanTemp.ToString())
+                string tempPassword = null;
+                var accessPw = true;
+                password[i] = random.Next(10, 999999);
+                foreach (var y in password[i].ToString())
                 {
-                    if (CharTemp == t)
-                    {
-                        CharTemp = t;
-                        AccessPw = false;
-                        Console.Write(t);
-                    }
-                    else
-                    {
-                        CharTemp = t;
-                        Console.Write(t);
-                    }
+                    tempPassword += y;
+                    if (random.Next(1, 100) >= 15) continue;
+                    tempPassword = tempPassword.Remove(tempPassword.Length-1);
+                    tempPassword += Convert.ToString((char)('a' + random.Next(0, 26)));
+                    accessPw = false;
                 }
-                Console.ForegroundColor = AccessPw ? ConsoleColor.Green : ConsoleColor.Red;
-                Console.Write($"\t {AccessPw}");
+                var charTemp = '\0';
+                if (tempPassword != null)
+                    foreach (var t in tempPassword)
+                    {
+                        if (charTemp == t)
+                        {
+                            charTemp = t;
+                            accessPw = false;
+                            Console.Write(t);
+                        }
+                        else
+                        {
+                            charTemp = t;
+                            Console.Write(t);
+                        }
+                    }
+                Console.ForegroundColor = accessPw ? ConsoleColor.Green : ConsoleColor.Red;
+                Console.Write($"\t\t {accessPw}");
                 Console.ResetColor();
                 Console.WriteLine();
             }
