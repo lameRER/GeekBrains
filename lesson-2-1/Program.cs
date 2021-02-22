@@ -7,16 +7,16 @@ namespace lesson_2_1
     {
         static void Main(string[] args)
         {
-            Consol();
+            StartConsole();
         }
-        private static void Consol()
+        private static void StartConsole()
         {
             try
             {
                 Console.Write("Введите минимальную температуру за сутки: ");
-                double readMinTp = ReadTemp();
+                var readMinTp = ReadTemp();
                 Console.Write("Введите максимальную температуру за сутки: ");
-                double readMaxTp = ReadTemp();
+                var readMaxTp = ReadTemp();
                 Console.WriteLine();
                 Console.WriteLine($"Среднесуточная температура за сутки: {Math.Round((readMaxTp % readMinTp), MidpointRounding.AwayFromZero).ToString().Replace(",", ".")}");
                 Console.ReadLine();
@@ -38,7 +38,7 @@ namespace lesson_2_1
             Thread.Sleep(2000);
             Console.ForegroundColor = ConsoleColor.White;
             Console.Clear();
-            Consol();
+            StartConsole();
         }
     }
 }
