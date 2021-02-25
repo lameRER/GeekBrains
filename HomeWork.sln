@@ -6,6 +6,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Additional_Task", "Addition
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lesson-1", "lesson-1\lesson-1.csproj", "{CC1B1A2C-93BF-47F8-83EB-95C329C6FDEB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lesson-2-4", "lesson-2-4\lesson-2-4.csproj", "{DC771953-BB66-4A18-9952-BC0D923A9B75}"
+EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lesson-2-3", "lesson-2-3\lesson-2-3.csproj", "{14365D34-58A7-439B-9441-20D4FD5C0864}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lesson-2-2", "lesson-2-2\lesson-2-2.csproj", "{91D024C7-F94C-4D4E-AEEA-0977C3855A44}"
@@ -26,6 +28,10 @@ Global
 		{CC1B1A2C-93BF-47F8-83EB-95C329C6FDEB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CC1B1A2C-93BF-47F8-83EB-95C329C6FDEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CC1B1A2C-93BF-47F8-83EB-95C329C6FDEB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DC771953-BB66-4A18-9952-BC0D923A9B75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC771953-BB66-4A18-9952-BC0D923A9B75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DC771953-BB66-4A18-9952-BC0D923A9B75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC771953-BB66-4A18-9952-BC0D923A9B75}.Release|Any CPU.Build.0 = Release|Any CPU
 		{14365D34-58A7-439B-9441-20D4FD5C0864}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{14365D34-58A7-439B-9441-20D4FD5C0864}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14365D34-58A7-439B-9441-20D4FD5C0864}.Release|Any CPU.ActiveCfg = Release|Any CPU
