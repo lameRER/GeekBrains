@@ -31,7 +31,7 @@ namespace lesson_2_2
                 Console.Write("Введите порядковый номер месяца: ");
                 Console.ForegroundColor = ConsoleColor.Green;
                 var read = Convert.ToInt16(Console.ReadLine());
-                if (read >= 12 || read < 1) return;
+                if (read > 12 || read < 1) return;
                 Console.WriteLine($"Результат: {Month_result(read)}");
             }
             catch (Exception e)
