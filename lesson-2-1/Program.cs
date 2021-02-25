@@ -18,7 +18,7 @@ namespace lesson_2_1
                 Console.Write("Введите максимальную температуру за сутки: ");
                 var readMaxTp = ReadTemp();
                 Console.WriteLine();
-                Console.WriteLine($"Среднесуточная температура за сутки: {Math.Round((readMaxTp % readMinTp), MidpointRounding.AwayFromZero).ToString().Replace(",", ".")}");
+                Console.WriteLine($"Среднесуточная температура за сутки: {Math.Round((readMaxTp + readMinTp) /2, MidpointRounding.AwayFromZero).ToString().Replace(",", ".")}");
                 Console.ReadLine();
             }
             catch (Exception ex)
