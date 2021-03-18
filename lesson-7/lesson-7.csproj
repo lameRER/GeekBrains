@@ -6,4 +6,8 @@
     <RootNamespace>lesson_7</RootNamespace>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Folder Include="Decopilation\" />
+  </ItemGroup>
+
 </Project>
