@@ -1,4 +1,5 @@
-﻿Microsoft Visual Studio Solution File, Format Version 12.00
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.31005.135
 MinimumVisualStudioVersion = 10.0.40219.1
@@ -6,33 +7,35 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Additional_Task", "Addition
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lesson-1", "lesson-1\lesson-1.csproj", "{CC1B1A2C-93BF-47F8-83EB-95C329C6FDEB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lesson-2-4", "lesson-2-4\lesson-2-4.csproj", "{DC771953-BB66-4A18-9952-BC0D923A9B75}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lesson-2-4", "lesson-2-4\lesson-2-4.csproj", "{DC771953-BB66-4A18-9952-BC0D923A9B75}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lesson-2-3", "lesson-2-3\lesson-2-3.csproj", "{14365D34-58A7-439B-9441-20D4FD5C0864}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lesson-2-3", "lesson-2-3\lesson-2-3.csproj", "{14365D34-58A7-439B-9441-20D4FD5C0864}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lesson-2-2", "lesson-2-2\lesson-2-2.csproj", "{91D024C7-F94C-4D4E-AEEA-0977C3855A44}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lesson-2-2", "lesson-2-2\lesson-2-2.csproj", "{91D024C7-F94C-4D4E-AEEA-0977C3855A44}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lesson-2-1", "lesson-2-1\lesson-2-1.csproj", "{7B0F4273-5966-4D68-8A53-8B0B0966DD64}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lesson-2-1", "lesson-2-1\lesson-2-1.csproj", "{7B0F4273-5966-4D68-8A53-8B0B0966DD64}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lesson-3-4", "lesson-3-4\lesson-3-4.csproj", "{5A0917DC-A6AE-4038-B6FF-4803CDD6C258}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lesson-3-4", "lesson-3-4\lesson-3-4.csproj", "{5A0917DC-A6AE-4038-B6FF-4803CDD6C258}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lesson-3-3", "lesson-3-3\lesson-3-3.csproj", "{E2EB7BE7-BA03-4D3E-877A-3374C12FAFDE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lesson-3-3", "lesson-3-3\lesson-3-3.csproj", "{E2EB7BE7-BA03-4D3E-877A-3374C12FAFDE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lesson-3-2", "lesson-3-2\lesson-3-2.csproj", "{45E261B8-5809-4AAD-9029-19FA6FBDFAFD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lesson-3-2", "lesson-3-2\lesson-3-2.csproj", "{45E261B8-5809-4AAD-9029-19FA6FBDFAFD}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lesson-3-1", "lesson-3-1\lesson-3-1.csproj", "{E8FB1BDE-73FB-4E5B-A2E6-10C9C3693DE8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lesson-3-1", "lesson-3-1\lesson-3-1.csproj", "{E8FB1BDE-73FB-4E5B-A2E6-10C9C3693DE8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lesson-5-1", "lesson-5-1\lesson-5-1.csproj", "{538C3ECE-CB90-485C-9F4A-7DBC127D03C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lesson-5-1", "lesson-5-1\lesson-5-1.csproj", "{538C3ECE-CB90-485C-9F4A-7DBC127D03C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lesson-5-2", "lesson-5-2\lesson-5-2.csproj", "{6C70D093-D3C4-4A73-B41B-C3A3D8CF250F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lesson-5-2", "lesson-5-2\lesson-5-2.csproj", "{6C70D093-D3C4-4A73-B41B-C3A3D8CF250F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lesson-5-3", "lesson-5-3\lesson-5-3.csproj", "{9E78AADA-ECA7-4573-80DB-EAF49526FC02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lesson-5-3", "lesson-5-3\lesson-5-3.csproj", "{9E78AADA-ECA7-4573-80DB-EAF49526FC02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lesson-4-1", "lesson-4-1\lesson-4-1.csproj", "{B25C0DB4-0D78-467B-AC4A-FB42F4E4BF5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lesson-4-1", "lesson-4-1\lesson-4-1.csproj", "{B25C0DB4-0D78-467B-AC4A-FB42F4E4BF5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lesson-4-2", "lesson-4-2\lesson-4-2.csproj", "{992DC879-BB5B-4187-96C6-F82B154F4B51}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lesson-4-2", "lesson-4-2\lesson-4-2.csproj", "{992DC879-BB5B-4187-96C6-F82B154F4B51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lesson-4-3", "lesson-4-3\lesson-4-3.csproj", "{85806E17-D930-41A8-9959-AF79C65A56E2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "lesson-4-3", "lesson-4-3\lesson-4-3.csproj", "{85806E17-D930-41A8-9959-AF79C65A56E2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "lesson-7", "lesson-7\lesson-7.csproj", "{51022694-7C03-4A53-8C78-3E2CCC5D822D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -104,6 +107,10 @@ Global
 		{85806E17-D930-41A8-9959-AF79C65A56E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{85806E17-D930-41A8-9959-AF79C65A56E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{85806E17-D930-41A8-9959-AF79C65A56E2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51022694-7C03-4A53-8C78-3E2CCC5D822D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51022694-7C03-4A53-8C78-3E2CCC5D822D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51022694-7C03-4A53-8C78-3E2CCC5D822D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51022694-7C03-4A53-8C78-3E2CCC5D822D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
