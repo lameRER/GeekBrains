@@ -9,9 +9,9 @@ using System.IO;
 
 namespace lesson_7_1
 {
-  internal class Program
+  class Program
   {
-    private static void Main(string[] args)
+    static void Main(string[] args)
     {
             Console.WriteLine("Decopilation");
       foreach (string directory in Directory.GetDirectories("C:\\"))
