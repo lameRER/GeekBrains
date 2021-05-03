@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>lesson_4.HomeWork.Library</RootNamespace>
+        <LangVersion>default</LangVersion>
+    </PropertyGroup>
+
+</Project>
