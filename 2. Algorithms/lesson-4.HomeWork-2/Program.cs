@@ -1,4 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Reflection.Metadata.Ecma335;
+using lesson_4.HomeWork.Library;
 
 namespace lesson_4.HomeWork_2
 {
@@ -6,38 +10,25 @@ namespace lesson_4.HomeWork_2
     {
         static void Main(string[] args)
         {
-            const int n = 10;
-            var ran = new Random();
-            var values = new int[n];
-            for (var i = 0; i < n; i++)
-            {
-                var ranVal = ran.Next(1, n+1);
-                // if (i == n - 1)
-                    // ranVal = n;
-                SetValue(values, ref ranVal, n+1);
-                values[i] = ranVal;
-            }
-            var bList = new BidirectionalList();
+            int[] values = { 16, 8, 4, 2, 1, 3, 6, 5, 7, 12, 10, 9, 11, 14, 13, 15, 24, 20, 18, 17, 19, 22, 21, 23, 28, 26, 25, 27, 30, 29, 31 };
+            var ltree = new TreeNode();
             foreach (var item in values)
             {
-                bList.AddNode(item);
+                ltree.AddItem(item);
             }
             
-        }
-
-        static void SetValue(int[] values, ref int val, int i)
-        {
-            var ran = new Random();
-            foreach (var value in values)
-            {
-                if (value == val)
-                {
-                    val = ran.Next(1, i);
-                    SetValue(values, ref val, i);
-                    break;
-                }
-                        
-            }
+            var node = ltree.GetNodeByValue(28);
+            if (node != null)
+                Console.WriteLine($"\nFound an element with the value {node.Value}");
+            
+            ltree.PrintTree();
+            ltree.RemoveItem(8);
+            ltree.RemoveItem(20);
+            ltree.RemoveItem(28);
+            Console.Clear();
+            ltree.PrintTree();
+            
+            Console.ReadKey();
         }
         
     }
