@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <OutputType>Exe</OutputType>
+        <RootNamespace>lesson_8.HomeWork</RootNamespace>
+        <TargetFramework>net5.0</TargetFramework>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\lesson-4.HomeWork.Library\lesson-4.HomeWork.Library.csproj" />
+    </ItemGroup>
+</Project>
