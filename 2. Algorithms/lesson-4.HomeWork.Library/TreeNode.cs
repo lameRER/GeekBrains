@@ -5,19 +5,19 @@ namespace lesson_4.HomeWork.Library
 {
     public class TreeNode : IComparable, ITree
     {
-        private const int HORIZONTAL_SCALE = 2;
-        private int depth;
-        public TreeNode Root { get; private set; }
-        public int Count { get; private set; }
+        private const int HorizontalScale = 2;
+        private int _depth;
+        private TreeNode Root { get; set; }
+        private int Count { get; set; }
         public int Value { get; private set; }
-        public  TreeNode Left { get; private set; }
-        public  TreeNode Right { get; private set; }
+        private TreeNode Left { get; set; }
+        private TreeNode Right { get; set; }
 
         public TreeNode()
         {
-            
         }
-        public TreeNode(int data)
+
+        private TreeNode(int data)
         {
             Value = data;
         }
@@ -31,14 +31,8 @@ namespace lesson_4.HomeWork.Library
 
         public int CompareTo(object obj)
         {
-            if (obj is TreeNode item)
-            {
-                return Value.CompareTo(item);
-            }
-            else
-            {
-                throw new Exception("Не совпадение типов");
-            }
+            if (obj is TreeNode item) return Value.CompareTo(item);
+            else throw new Exception("Не совпадение типов");
         }
 
         public TreeNode GetRoot()
@@ -54,47 +48,34 @@ namespace lesson_4.HomeWork.Library
                 Count = 1;
                 return;
             }
+
             Root.Add(value);
             Count++;
         }
 
         public void RemoveItem(int value)
         {
-            TreeNode current = Root;
-
+            var current = Root;
             while (current != null && current.Value != value)
-            {
-                if (value < current.Value)
-                    current = current.Left;
-                else
-                    current = current.Right;
-            }
-
-            if (current == null)
-                return;
-
-            TreeNode parent = current.Root;
-
+                current = value < current.Value ? current.Left : current.Right;
+            if (current == null) return;
+            var parent = current.Root;
             if (current.Right == null)
             {
-                if (parent.Left == current)
-                    parent.Left = current.Left;
-                if (parent.Right == current)
-                    parent.Right = current.Left;
+                if (parent.Left == current) parent.Left = current.Left;
+                if (parent.Right == current) parent.Right = current.Left;
                 return;
             }
-            else if (current.Left == null)
+
+            if (current.Left == null)
             {
-                if (parent.Left == current)
-                    parent.Left = current.Right;
-                if (parent.Right == current)
-                    parent.Right = current.Right;
+                if (parent.Left == current) parent.Left = current.Right;
+                if (parent.Right == current) parent.Right = current.Right;
                 return;
             }
 
             var replace = current.Right;
-            while (replace.Left != null)
-                replace = replace.Left;
+            while (replace.Left != null) replace = replace.Left;
             current.Value = replace.Value;
         }
 
@@ -102,157 +83,125 @@ namespace lesson_4.HomeWork.Library
         {
             var current = Root;
             while (current != null && value != current.Value)
-            {
                 current = value.CompareTo(current.Value) == -1 ? current.Left : current.Right;
-            }
             return current;
         }
-        
-        public int GetHeight()
+
+        private int GetHeight()
         {
             var queue = new Queue<TreeNode>();
             var items = new List<TreeNode>();
             var result = 0;
-
             queue.Enqueue(Root);
             while (queue.Count != 0)
             {
                 var current = queue.Dequeue();
                 items.Add(current);
-                var depth = current.depth + 1;
+                var depth = current._depth + 1;
                 result = Math.Max(result, depth);
-
                 if (current.Left != null)
                 {
-                    current.Left.depth = depth;
+                    current.Left._depth = depth;
                     queue.Enqueue(current.Left);
                 }
 
-                if (current.Right != null)
-                {
-                    current.Right.depth = depth;
-                    queue.Enqueue(current.Right);
-                }
+                if (current.Right == null) continue;
+                current.Right._depth = depth;
+                queue.Enqueue(current.Right);
             }
+
             return result;
         }
 
         public void PrintTree()
         {
-            // Preorder();
             PrintBranch(Root, Console.WindowWidth / 2, Console.CursorTop, GetHeight());
         }
 
-        private void PrintBranch(TreeNode node, int x, int y, int height, int level = 0)
+        private static void PrintBranch(TreeNode node, int x, int y, int height, int level = 0)
         {
-            Console.SetCursorPosition(x, y + level * 4);
-            Console.WriteLine("({0})", node.Value);
-            var itemWidth = (1 << height - 1);
-            if (node.Left != null)
+            while (true)
             {
-                level++;
-                int branchX = x - itemWidth / (1 << level) * HORIZONTAL_SCALE;
-                int textWidth = node.Left.Value.ToString().Length + 2;
-
-                // If it does not fit, we will print (..)
-                if (branchX < 0)
-                {
-                    Console.SetCursorPosition(x + textWidth / 2, y + (level - 1) * 4 + 1);
-                    Console.WriteLine("|");
-                    Console.SetCursorPosition(x, y + (level - 1) * 4 + 2);
-                    Console.WriteLine("(..)");
-                    return;
-                }
-                Console.SetCursorPosition(x, y + (level - 1) * 4 + 1);
-                Console.WriteLine("/");
-                int width = x - branchX - 2;
-                Console.SetCursorPosition(branchX + 2 - (width < 1 ? (width * -1 + 1) : 0), y + (level - 1) * 4 + 2);
-                Console.WriteLine(width > 1 ? "".PadRight(width, '-') : "/");
-                Console.SetCursorPosition(branchX + 1 - (width < 1 ? (width * -1 + 1) : 0), y + (level - 1) * 4 + 3);
-                Console.WriteLine("/");
-                PrintBranch(node.Left, branchX, y, height, level);
-                level--;
-            }
-            
-            if (node.Right != null)
-            {
-                level++;
-                int branchX = x + itemWidth / (1 << level) * HORIZONTAL_SCALE;
-                int textWidth = node.Right.Value.ToString().Length + 2;
-
-                // If it does not fit, we will print (..)
-                if (branchX + textWidth > Console.WindowWidth)
-                {
-                    Console.SetCursorPosition(x + textWidth / 2, y + (level - 1) * 4 + 1);
-                    Console.WriteLine("|");
-                    Console.SetCursorPosition(x, y + (level - 1) * 4 + 2);
-                    Console.WriteLine("(..)");
-                    return;
-                }
-
-                Console.SetCursorPosition(x + textWidth - 1, y + (level - 1) * 4 + 1);
-                Console.WriteLine("\\");
-                        
-                Console.SetCursorPosition(x + textWidth, y + (level - 1) * 4 + 2);
-                int width = branchX - x - textWidth;
-                Console.WriteLine(width > 1 ? "".PadRight(width, '-') : "\\");
-
-                Console.SetCursorPosition(branchX + (width < 1 ? (width * -1 + 1) : 0), y + (level - 1) * 4 + 3);
-                Console.WriteLine("\\");
-
-                PrintBranch(node.Right, branchX, y, height, level);
-                level--;
-            }
-        }
-
-        public IEnumerable<int> Preorder()
-        {
-            return Root == null ? new List<int>() : Preorder(Root);
-        }
-
-        private IEnumerable<int> Preorder(TreeNode node)
-        {
-            var list = new List<int>();
-            if (node != null)
-            {
-                list.Add(node.Value);
+                Console.SetCursorPosition(x, y + level * 4);
+                Console.WriteLine("({0})", node.Value);
+                var itemWidth = 1 << (height - 1);
                 if (node.Left != null)
                 {
-                    list.AddRange(Preorder(node.Left));
+                    level++;
+                    var branchX = x - itemWidth / (1 << level) * HorizontalScale;
+                    Console.SetCursorPosition(x, y + (level - 1) * 4 + 1);
+                    Console.WriteLine("/");
+                    var width = x - branchX - 2;
+                    Console.SetCursorPosition(branchX + 2 - (width < 1 ? width * -1 + 1 : 0), y + (level - 1) * 4 + 2);
+                    Console.WriteLine(width > 1 ? "".PadRight(width, '-') : "/");
+                    Console.SetCursorPosition(branchX + 1 - (width < 1 ? width * -1 + 1 : 0), y + (level - 1) * 4 + 3);
+                    Console.WriteLine("/");
+                    PrintBranch(node.Left, branchX, y, height, level);
+                    level--;
                 }
-                
-                if(node.Right != null)
+
+                if (node.Right == null) return;
                 {
-                    list.AddRange(Preorder(node.Right));
+                    level++;
+                    var branchX = x + itemWidth / (1 << level) * HorizontalScale;
+                    var textWidth = node.Right.Value.ToString().Length + 2;
+                    Console.SetCursorPosition(x + textWidth - 1, y + (level - 1) * 4 + 1);
+                    Console.WriteLine("\\");
+                    Console.SetCursorPosition(x + textWidth, y + (level - 1) * 4 + 2);
+                    var width = branchX - x - textWidth;
+                    Console.WriteLine(width > 1 ? "".PadRight(width, '-') : "\\");
+                    Console.SetCursorPosition(branchX + (width < 1 ? width * -1 + 1 : 0), y + (level - 1) * 4 + 3);
+                    Console.WriteLine("\\");
+                    node = node.Right;
+                    x = branchX;
                 }
             }
-            return list;
         }
 
-        public void Add(int value)
+        public IEnumerable<TreeNode> BreadthFirstSearch()
+        {
+            var result = new List<TreeNode>();
+            var queue = new Queue<TreeNode>();
+            queue.Enqueue(Root);
+            while (queue.Count != 0)
+            {
+                var current = queue.Dequeue();
+                result.Add(current);
+                if (current.Left != null) queue.Enqueue(current.Left);
+                if (current.Right != null) queue.Enqueue(current.Right);
+            }
+
+            return result;
+        }
+
+        public IEnumerable<TreeNode> DeepFirstSearch()
+        {
+            var result = new List<TreeNode>();
+            var stack = new Stack<TreeNode>();
+            stack.Push(Root);
+            while (stack.Count != 0)
+            {
+                var current = stack.Pop();
+                result.Add(current);
+                if (current.Right != null) stack.Push(current.Right);
+                if (current.Left != null) stack.Push(current.Left);
+            }
+
+            return result;
+        }
+
+        private void Add(int value)
         {
             var node = new TreeNode(value);
             if (node.Value.CompareTo(Value) == -1)
             {
-                if (Left == null)
-                {
-                    Left = node;
-                }
-                else
-                {
-                    Left.Add(value);
-                }
+                if (Left == null) Left = node;
+                else Left.Add(value);
             }
             else
             {
-                if (Right == null)
-                {
-                    Right = node;
-                }
-                else
-                {
-                    Right.Add(value);
-                }
+                if (Right == null) Right = node;
+                else Right.Add(value);
             }
         }
     }
