@@ -25,6 +25,7 @@ namespace lesson_8.HomeWork
 
             GetSort("BubbleSort", new BubbleSort<int>(), items);
             GetSort("CocktailSort", new CocktailSort<int>(), items);
+            GetSort("ShellSort", new CocktailSort<int>(), items);
         }
 
         private static void GetSort(string sortName, AlgorithmBase<int> baseSort, IEnumerable<int> items)
@@ -35,7 +36,7 @@ namespace lesson_8.HomeWork
             baseSort.Sort();
             Console.WriteLine();
             Console.WriteLine();
-            Console.WriteLine("{0}: SwopCount:{2} {1}", sortName, stopwatch.Elapsed, baseSort.SwopCount);
+            Console.WriteLine("{0}:\nSwopCount:{2} {1}", sortName, stopwatch.Elapsed, baseSort.SwopCount);
             stopwatch.Stop();
             foreach (var item in baseSort.Items)
             {
