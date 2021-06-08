@@ -340,3 +340,5 @@ ASALocalRun/
 
 # BeatPulse healthcheck temp database
 healthchecksdb
+/2. Algorithms/AlgorithmSortTest/AlgorithmSortTest.csproj
+/2. Algorithms/AlgorithmSortTest/UnitTest1.cs
