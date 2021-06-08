@@ -28,6 +28,7 @@ namespace WeatherForecast.Controllers
         [HttpPost("create")]
         public IActionResult Create([FromQuery] DateTime dateTime, [FromQuery] int temperature)
         {
+            if(Verification(temperature)) return NotFound("температура не может быть ниже -273 по Цельсию");
             _weatherForecast.TemperaturesList.Add(new DateTemperatures(dateTime, temperature));
             return Ok();
         }
@@ -44,7 +45,7 @@ namespace WeatherForecast.Controllers
         [HttpPut("update")]
         public IActionResult Update([FromQuery] DateTime dateTime, [FromQuery] int temperature)
         {
-            if (temperature < -273) return NotFound("температура не может быть ниже -273 по Цельсию");
+            if (Verification(temperature)) return NotFound("температура не может быть ниже -273 по Цельсию");
             var dateTemperature = _weatherForecast.TemperaturesList.FirstOrDefault(item => item.Date == dateTime);
             if (dateTemperature == null)
             {
@@ -64,5 +65,8 @@ namespace WeatherForecast.Controllers
             _weatherForecast.TemperaturesList.RemoveAll(item => item.Date >= fromDateTime && item.Date <= toDateTime);
             return Ok();
         }
+
+
+        private static bool Verification(int t) => t < -273;
     }
 }
