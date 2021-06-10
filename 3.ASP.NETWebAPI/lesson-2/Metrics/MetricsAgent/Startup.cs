@@ -12,40 +12,30 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
-namespace MetricsAgent
-{
-public class Startup
-{
-    public Startup(IConfiguration configuration)
-    {
-        Configuration = configuration;
+namespace MetricsAgent {
+public class Startup {
+  public Startup(IConfiguration configuration) {
+    Configuration = configuration;
+  }
+
+  public IConfiguration Configuration { get; }
+
+  public void ConfigureServices(IServiceCollection services) {
+    services.AddControllers();
+  }
+
+  public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
+    if (env.IsDevelopment()) {
+      app.UseDeveloperExceptionPage();
     }
 
-    public IConfiguration Configuration {
-        get;
-    }
+    app.UseHttpsRedirection();
 
-    public void ConfigureServices(IServiceCollection services)
-    {
-        services.AddControllers();
-    }
+    app.UseRouting();
 
-    public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-    {
-        if (env.IsDevelopment())
-        {
-            app.UseDeveloperExceptionPage();
-        }
+    app.UseAuthorization();
 
-        app.UseHttpsRedirection();
-
-        app.UseRouting();
-
-        app.UseAuthorization();
-
-        app.UseEndpoints(endpoints => {
-            endpoints.MapControllers();
-        });
-    }
+    app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+  }
 }
 }
