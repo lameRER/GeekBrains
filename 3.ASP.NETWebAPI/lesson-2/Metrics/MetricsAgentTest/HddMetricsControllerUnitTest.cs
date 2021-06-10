@@ -5,24 +5,24 @@ using Xunit;
 
 namespace MetricsAgentTest
 {
-    public class HddMetricsControllerUnitTest
-    {
-        private readonly HddMetricsController _controller;
-        private readonly TimeSpan _fromTime;
-        private readonly TimeSpan _toTime;
+public class HddMetricsControllerUnitTest
+{
+    private readonly HddMetricsController _controller;
+    private readonly TimeSpan _fromTime;
+    private readonly TimeSpan _toTime;
 
-        public HddMetricsControllerUnitTest()
-        {
-            _controller = new HddMetricsController();
-            _fromTime = TimeSpan.FromSeconds(new Random().Next(0, 100));
-            _toTime = TimeSpan.FromSeconds(new Random().Next(101, 200));
-        }
-        
-        [Fact]
-        public void GetMetricsFromAgent_ReturnOk()
-        {
-            var result = _controller.GetMetricsFromAgent(_fromTime, _toTime);
-            Assert.IsAssignableFrom<IActionResult>(result);
-        }
+    public HddMetricsControllerUnitTest()
+    {
+        _controller = new HddMetricsController();
+        _fromTime = TimeSpan.FromSeconds(new Random().Next(0, 100));
+        _toTime = TimeSpan.FromSeconds(new Random().Next(101, 200));
     }
+
+    [Fact]
+    public void GetMetricsFromAgent_ReturnOk()
+    {
+        var result = _controller.GetMetricsFromAgent(_fromTime, _toTime);
+        Assert.IsAssignableFrom<IActionResult>(result);
+    }
+}
 }

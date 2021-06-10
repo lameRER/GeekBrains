@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MetricsAgent.Controllers
 {
-    [Route("api/metrics/network")]
-    [ApiController]
-    public class NetworkMetricsController : ControllerBase
+[Route("api/metrics/network")]
+[ApiController]
+public class NetworkMetricsController : ControllerBase
+{
+    [HttpGet("from/{fromTime}/to/{toTime}")]
+    public IActionResult GetMetricsFromAgent([FromRoute] TimeSpan fromTime, [FromRoute] TimeSpan toTime)
     {
-        [HttpGet("from/{fromTime}/to/{toTime}")]
-        public IActionResult GetMetricsFromAgent([FromRoute] TimeSpan fromTime, [FromRoute] TimeSpan toTime)
-        {
-            return Ok(new {FromTime = fromTime, ToTime = toTime});
-        }
+        return Ok(new {FromTime = fromTime, ToTime = toTime});
     }
+}
 }
