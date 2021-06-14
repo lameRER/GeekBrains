@@ -9,15 +9,17 @@ namespace MetricsManagerTest
     {
         private readonly RamMetricsController _controller;
         private readonly int _agentId;
-        private readonly TimeSpan _fromTime;
-        private readonly TimeSpan _toTime;
+        private readonly DateTimeOffset _fromTime;
+        private readonly DateTimeOffset _toTime;
 
         public RamMetricsControllerUnitTest()
         {
             _controller = new RamMetricsController();
             _agentId = new Random().Next(1, 9999999);
-            _fromTime = TimeSpan.FromSeconds(new Random().Next(0, 100));
-            _toTime = TimeSpan.FromSeconds(new Random().Next(101, 200));
+            _fromTime = new DateTimeOffset(2021, 06, new Random().Next(1, 30), new Random().Next(0, 24),
+                new Random().Next(0, 60), 00, TimeSpan.Zero);
+            _toTime = new DateTimeOffset(2021, 06, new Random().Next(1, 30), new Random().Next(0, 24),
+                new Random().Next(0, 60), 00, TimeSpan.Zero);
         }
 
         [Fact]

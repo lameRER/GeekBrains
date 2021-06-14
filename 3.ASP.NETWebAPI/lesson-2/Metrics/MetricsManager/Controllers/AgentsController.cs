@@ -25,10 +25,7 @@ namespace MetricsManager.Controllers
         [HttpPost("register")]
         public IActionResult RegisterAgent([FromBody] AgentInfo agentInfo)
         {
-            _agentList.AgentInfos.Add(
-                new AgentInfo(
-                new Random().Next(1, 9999999), 
-                new Uri($"http:\\192.168.{new Random().Next(0,3)}.{new Random().Next(0,254)}:5000")));
+            _agentList.AgentInfos.Add(agentInfo);
             return Ok();
         }
 
