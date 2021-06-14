@@ -15,9 +15,9 @@ namespace MetricsAgentTest
         {
             _controller = new DotNetMetricsController();
             _fromTime = new DateTimeOffset(2021, 06, new Random().Next(1, 30), new Random().Next(0, 24),
-                new Random().Next(0, 60), 00, TimeSpan.FromSeconds(new Random().Next(0,100)));
+                new Random().Next(0, 60), 00, TimeSpan.Zero);
             _toTime = new DateTimeOffset(2021, 06, new Random().Next(1, 30), new Random().Next(0, 24),
-                new Random().Next(0, 60), 00, TimeSpan.FromSeconds(new Random().Next(0,100)));
+                new Random().Next(0, 60), 00, TimeSpan.Zero);
         }
         
         [Fact]
