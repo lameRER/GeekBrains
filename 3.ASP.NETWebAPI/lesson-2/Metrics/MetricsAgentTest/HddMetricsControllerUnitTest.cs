@@ -8,14 +8,16 @@ namespace MetricsAgentTest
     public class HddMetricsControllerUnitTest
     {
         private readonly HddMetricsController _controller;
-        private readonly TimeSpan _fromTime;
-        private readonly TimeSpan _toTime;
+        private readonly DateTimeOffset _fromTime;
+        private readonly DateTimeOffset _toTime;
 
         public HddMetricsControllerUnitTest()
         {
             _controller = new HddMetricsController();
-            _fromTime = TimeSpan.FromSeconds(new Random().Next(0, 100));
-            _toTime = TimeSpan.FromSeconds(new Random().Next(101, 200));
+            _fromTime = new DateTimeOffset(2021, 06, new Random().Next(1, 30), new Random().Next(0, 24),
+                new Random().Next(0, 60), 00, TimeSpan.FromSeconds(new Random().Next(0,100)));
+            _toTime = new DateTimeOffset(2021, 06, new Random().Next(1, 30), new Random().Next(0, 24),
+                new Random().Next(0, 60), 00, TimeSpan.FromSeconds(new Random().Next(0,100)));
         }
         
         [Fact]
