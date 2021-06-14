@@ -3,14 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace MetricsAgent.Controllers
 {
-    [Route("api/metrics/ram")]
-    [ApiController]
-    public class RamMetricsController : ControllerBase
+[Route("api/metrics/ram")]
+[ApiController]
+public class RamMetricsController : ControllerBase
+{
+    [HttpGet("available/from/{fromTime}/to/{toTime}")]
+    public IActionResult GetMetricsFromAgent([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
     {
-        [HttpGet("available/from/{fromTime}/to/{toTime}")]
-        public IActionResult GetMetricsFromAgent([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
-        {
-            return Ok(new {FromTime = fromTime, ToTime = toTime});
-        }
+        return Ok(new {FromTime = fromTime, ToTime = toTime});
     }
+}
 }
