@@ -1,15 +1,23 @@
 using System;
 using System.Collections.Generic;
+using MetricsLogging;
 
 namespace MetricsManager
 {
     public class AgentsList
     {
-        public readonly List<AgentInfo> AgentInfos = new List<AgentInfo>();
+        public readonly List<AgentInfo> AgentInfos = new();
 
         public AgentsList()
         {
-            DataGrid();
+            try
+            {
+                DataGrid();
+            }
+            catch (Exception e)
+            {
+                Logging.Log.Error(e);
+            }
         }
 
         private void DataGrid()

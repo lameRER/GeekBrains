@@ -6,6 +6,11 @@
 
     <ItemGroup>
         <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
+        <PackageReference Include="System.Data.SQLite.Core" Version="1.0.114.2" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\MetricsLogging\MetricsLogging.csproj" />
     </ItemGroup>
 
 </Project>

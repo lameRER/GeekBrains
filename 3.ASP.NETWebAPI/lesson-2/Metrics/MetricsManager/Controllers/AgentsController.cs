@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using MetricsLogging;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MetricsManager.Controllers
@@ -13,13 +14,28 @@ namespace MetricsManager.Controllers
         
         public AgentsController(AgentsList agentList)
         {
-            _agentList = agentList;
+            try
+            {
+                _agentList = agentList;
+            }
+            catch (Exception e)
+            {
+                Logging.Log.Error(e);
+            }
         }
         
         [HttpGet]
         public IActionResult GetRegisteredAgents()
         {
-            return Ok(_agentList.AgentInfos.ToList());
+            try
+            {
+                return Ok(_agentList.AgentInfos.ToList());
+            }
+            catch (Exception e)
+            {
+                Logging.Log.Error(e);
+                return BadRequest(e.Message);
+            }
         }
         
         [HttpPost("register")]
@@ -32,13 +48,29 @@ namespace MetricsManager.Controllers
         [HttpPut("enable/{agentId:int}")]
         public IActionResult EnableAgentById([FromRoute] int agentId)
         {
-            return Ok(_agentList.AgentInfos.Where(item => item.AgentId == agentId));
+            try
+            {
+                return Ok(_agentList.AgentInfos.Where(item => item.AgentId == agentId));
+            }
+            catch (Exception e)
+            {
+                Logging.Log.Error(e);
+                return BadRequest(e.Message);
+            }
         }
 
         [HttpPut("disable/{agentId:int}")]
         public IActionResult DisableAgentById([FromRoute] int agentId)
         {
-            return Ok(_agentList.AgentInfos.Where(item => item.AgentId == agentId));
+            try
+            {
+                return Ok(_agentList.AgentInfos.Where(item => item.AgentId == agentId));
+            }
+            catch (Exception e)
+            {
+                Logging.Log.Error(e);
+                return BadRequest(e.Message);
+            }
         }
     }
 }
