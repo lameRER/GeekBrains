@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NLog;
+using NLog.Web;
+using ILogger = NLog.ILogger;
 
 namespace MetricsAgent
 {
@@ -15,7 +18,8 @@ namespace MetricsAgent
     {
         public static void Main(string[] args)
         {
-            Logging.Log.Debug("Start MetricsAgent");
+            var log = LogManager.GetCurrentClassLogger();
+            log.Debug("Start MetricsAgent");
             CreateHostBuilder(args).Build().Run();
         }
 

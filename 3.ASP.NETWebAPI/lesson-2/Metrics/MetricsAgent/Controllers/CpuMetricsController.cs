@@ -6,8 +6,8 @@ using MetricsAgent.DAL.Model;
 using MetricsAgent.DAL.Responses;
 using MetricsAgent.Request;
 using Microsoft.AspNetCore.Mvc;
-using MetricsLogging;
 using Microsoft.AspNetCore.Routing;
+using NLog;
 
 namespace MetricsAgent.Controllers
 {
@@ -17,9 +17,12 @@ namespace MetricsAgent.Controllers
     {
         private readonly ICpuMetricsRepository _repository;
 
-        public CpuMetricsController(ICpuMetricsRepository repository)
+        private readonly ILogger _logger;
+
+        public CpuMetricsController(ICpuMetricsRepository repository, ILogger logger)
         {
             _repository = repository;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
         
         [HttpGet("from/{fromTime}/to/{toTime}")]
@@ -27,7 +30,7 @@ namespace MetricsAgent.Controllers
         {
             try
             {
-                Logging.Log.Debug($"Route(api/metrics/cpu): Running the GetMetricsFromAgent method");
+                _logger.Debug($"Route(api/metrics/cpu): Running the GetMetricsFromAgent method");
                 var metrics = _repository.GetByPeriod(fromTime, toTime);
                 var response = new MetricsResponse<CpuMetricDto>();
                 foreach (var item in metrics)
@@ -39,12 +42,12 @@ namespace MetricsAgent.Controllers
                         Time = item.Time
                     });
                 }
-                Logging.Log.Debug($"Route(api/metrics/cpu): GetMetricsFromAgent method completed successfully");
+                _logger.Debug($"Route(api/metrics/cpu): GetMetricsFromAgent method completed successfully");
                 return Ok(response.Metrics.ToList());
             }
             catch (Exception e)
             {
-                Logging.Log.Error(e);
+                _logger.Error(e);
                 return BadRequest(e.Message);
             }
         }
@@ -54,18 +57,18 @@ namespace MetricsAgent.Controllers
         {
             try
             {
-                Logging.Log.Debug($"Route(api/metrics/cpu): Running the Create method");
+                _logger.Debug($"Route(api/metrics/cpu): Running the Create method");
                 _repository.Create(new CpuMetric
                 {
                     Value = metric.Value,
                     Time = metric.Time,
                 });
-                Logging.Log.Debug($"Route(api/metrics/cpu): Create method completed successfully");
+                _logger.Debug($"Route(api/metrics/cpu): Create method completed successfully");
                 return Ok();
             }
             catch (Exception e)
             {
-                Logging.Log.Error(e);
+                _logger.Error(e);
                 return BadRequest(e.Message);
             }
         }
