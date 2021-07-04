@@ -5,14 +5,18 @@ using System.Data.SQLite;
 using MetricsAgent.Controllers;
 using MetricsAgent.DAL.Interface;
 using MetricsAgent.DAL.Model;
-using MetricsLogging;
+using NLog;
 using Microsoft.Extensions.Configuration;
 
 namespace MetricsAgent.DAL.Repository
 {
     public class DotNetMetricsRepository : BaseMetricsRepository, IDotNetMetricsRepository
     {
-        public DotNetMetricsRepository(IConfiguration configuration) : base(configuration) { }
+        private readonly ILogger _logger;
+        public DotNetMetricsRepository(IConfiguration configuration, ILogger logger) : base(configuration)
+        {
+            _logger = logger;
+        }
 
         public List<DotNetMetric> GetByPeriod(DateTimeOffset fromTime, DateTimeOffset toTime)
         {
@@ -48,7 +52,7 @@ namespace MetricsAgent.DAL.Repository
             {
                 CommandText = $"INSERT INTO DotNetMetric(value, Time) VALUES({item.Value}, {item.Time.ToUnixTimeSeconds()})"
             };
-            Logging.Log.Debug(cmd.CommandText);
+            _logger.Debug(cmd.CommandText);
             cmd.ExecuteNonQuery();
         }
     }

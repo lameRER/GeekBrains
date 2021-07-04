@@ -1,6 +1,7 @@
 using System;
 using MetricsManager.Controllers;
 using Microsoft.AspNetCore.Mvc;
+using NLog;
 using Xunit;
 
 namespace MetricsManagerTest
@@ -14,7 +15,8 @@ namespace MetricsManagerTest
 
         public CpuMetricsControllerUnitTest()
         {
-            _controller = new CpuMetricsController();
+            var log = LogManager.GetCurrentClassLogger();
+            _controller = new CpuMetricsController(log);
             _agentId = new Random().Next(1, 9999999);
             _fromTime = new DateTimeOffset(2021, 06, new Random().Next(1, 30), new Random().Next(0, 24),
                 new Random().Next(0, 60), 00, TimeSpan.Zero);

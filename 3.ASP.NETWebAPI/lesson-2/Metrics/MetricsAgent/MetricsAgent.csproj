@@ -5,6 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="NLog.Config" Version="4.7.10" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
         <PackageReference Include="System.Data.SQLite.Core" Version="1.0.114.2" />
     </ItemGroup>

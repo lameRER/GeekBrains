@@ -5,14 +5,18 @@ using System.Data.SQLite;
 using MetricsAgent.Controllers;
 using MetricsAgent.DAL.Interface;
 using MetricsAgent.DAL.Model;
-using MetricsLogging;
+using NLog;
 using Microsoft.Extensions.Configuration;
 
 namespace MetricsAgent.DAL.Repository
 {
     public class CpuMetricsRepository : BaseMetricsRepository, ICpuMetricsRepository
     {
-        public CpuMetricsRepository(IConfiguration configuration) : base(configuration) { }
+        private readonly ILogger _logger;
+        public CpuMetricsRepository(IConfiguration configuration, ILogger logger) : base(configuration)
+        {
+            _logger = logger;
+        }
 
         public List<CpuMetric> GetByPeriod(DateTimeOffset fromTime, DateTimeOffset toTime)
         {
@@ -23,7 +27,7 @@ namespace MetricsAgent.DAL.Repository
             {
                 CommandText = $"SELECT * FROM CpuMetrics WHERE Time >= {fromTime.ToUnixTimeSeconds()} AND Time <= {toTime.ToUnixTimeSeconds()}"
             };
-            Logging.Log.Debug(cmd.CommandText);
+            _logger.Debug(cmd.CommandText);
             
             var result = new List<CpuMetric>();
             using var reader = cmd.ExecuteReader();
@@ -49,7 +53,7 @@ namespace MetricsAgent.DAL.Repository
             {
                 CommandText = $"INSERT INTO CpuMetrics(value, Time) VALUES({item.Value}, {item.Time.ToUnixTimeSeconds()})"
             };
-            Logging.Log.Debug(cmd.CommandText);
+            _logger.Debug(cmd.CommandText);
             cmd.ExecuteNonQuery();
         }
     }
