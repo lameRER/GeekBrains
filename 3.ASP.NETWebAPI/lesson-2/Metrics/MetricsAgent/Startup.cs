@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MetricsAgent.DAL;
 using MetricsAgent.DAL.Interface;
 using MetricsAgent.DAL.Repository;
+using MetricsAgent.DAL.SQLite;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -32,6 +33,7 @@ namespace MetricsAgent
         public void ConfigureServices(IServiceCollection services)
         {
             var log = LogManager.GetCurrentClassLogger();
+            var connection = new ConnectionManager(Configuration);
             services.AddControllers();
             services.AddScoped<ICpuMetricsRepository, CpuMetricsRepository>();
             services.AddScoped<IDotNetMetricsRepository, DotNetMetricsRepository>();
@@ -39,6 +41,7 @@ namespace MetricsAgent
             services.AddScoped<IRamMetricsRepository, RamMetricsRepository>();
             services.AddScoped<INetworkMetricsRepository, NetworkMetricsRepository>();
             services.AddSingleton<ILogger>(log);
+            services.AddSingleton<IConnectionManager>(connection);
             ConfigureSqlLiteConnection();
         }
         

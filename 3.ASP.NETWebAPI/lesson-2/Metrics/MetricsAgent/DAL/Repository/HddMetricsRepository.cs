@@ -6,17 +6,21 @@ using MetricsAgent.Controllers;
 using MetricsAgent.DAL.Interface;
 using MetricsAgent.DAL.Model;
 using NLog;
+using MetricsAgent.DAL.SQLite;
 using Microsoft.Extensions.Configuration;
 
 namespace MetricsAgent.DAL.Repository
 {
     public class HddMetricsRepository : BaseMetricsRepository, IHddMetricsRepository
     {
-        private readonly ILogger _logger;
-        public HddMetricsRepository(IConfiguration configuration, ILogger logger) : base(configuration)
-        {
-            _logger = logger;
-        }
+        public HddMetricsRepository(
+            IConfiguration configuration, 
+            IConnectionManager connectionManager,
+            ILogger logger) 
+            : base(
+                configuration, 
+                connectionManager,
+                logger) { }
 
         public List<HddMetric> GetByPeriod(DateTimeOffset fromTime, DateTimeOffset toTime)
         {
@@ -52,7 +56,7 @@ namespace MetricsAgent.DAL.Repository
             {
                 CommandText = $"INSERT INTO HddMetric(value, Time) VALUES({item.Value}, {item.Time.ToUnixTimeSeconds()})"
             };
-            _logger.Debug(cmd.CommandText);
+            Logger.Debug(cmd.CommandText);
             cmd.ExecuteNonQuery();
         }
     }
