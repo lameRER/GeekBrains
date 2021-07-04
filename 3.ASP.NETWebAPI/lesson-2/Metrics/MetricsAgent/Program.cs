@@ -8,6 +8,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using NLog;
+using NLog.Web;
+using ILogger = NLog.ILogger;
 
 namespace MetricsAgent
 {
