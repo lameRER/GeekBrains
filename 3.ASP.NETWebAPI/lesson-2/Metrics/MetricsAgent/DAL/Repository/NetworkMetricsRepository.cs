@@ -5,14 +5,18 @@ using System.Data.SQLite;
 using MetricsAgent.Controllers;
 using MetricsAgent.DAL.Interface;
 using MetricsAgent.DAL.Model;
-using MetricsLogging;
+using NLog;
 using Microsoft.Extensions.Configuration;
 
 namespace MetricsAgent.DAL.Repository
 {
     public class NetworkMetricsRepository : BaseMetricsRepository, INetworkMetricsRepository
     {
-        public NetworkMetricsRepository(IConfiguration configuration) : base(configuration) { }
+        private readonly ILogger _logger;
+        public NetworkMetricsRepository(IConfiguration configuration, ILogger logger) : base(configuration)
+        {
+            _logger = logger;
+        }
 
         public List<NetworkMetric> GetByPeriod(DateTimeOffset fromTime, DateTimeOffset toTime)
         {
@@ -48,7 +52,7 @@ namespace MetricsAgent.DAL.Repository
             {
                 CommandText = $"INSERT INTO NetworkMetric(value, Time) VALUES({item.Value}, {item.Time.ToUnixTimeSeconds()})"
             };
-            Logging.Log.Debug(cmd.CommandText);
+            _logger.Debug(cmd.CommandText);
             cmd.ExecuteNonQuery();
         }
     }
