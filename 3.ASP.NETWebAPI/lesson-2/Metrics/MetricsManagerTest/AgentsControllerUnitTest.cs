@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using MetricsManager;
 using MetricsManager.Controllers;
 using Microsoft.AspNetCore.Mvc;
+using NLog;
 using Xunit;
 
 namespace MetricsManagerTest
@@ -14,8 +15,9 @@ namespace MetricsManagerTest
 
         public AgentsControllerUnitTest()
         {
+            var log = LogManager.GetCurrentClassLogger();
             var agentList = new AgentsList();
-            _controller = new AgentsController(agentList);
+            _controller = new AgentsController(agentList, log);
             _agentInfo = new AgentInfo(
                 new Random().Next(1, 9999999), 
                 new Uri($"http:\\\\192.168.{new Random().Next(0,3)}.{new Random().Next(0,254)}:5000"));

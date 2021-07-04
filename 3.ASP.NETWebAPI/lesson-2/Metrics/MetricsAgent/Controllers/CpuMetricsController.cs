@@ -22,9 +22,9 @@ namespace MetricsAgent.Controllers
         public CpuMetricsController(ICpuMetricsRepository repository, ILogger logger)
         {
             _repository = repository;
-            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _logger = logger;
         }
-        
+
         [HttpGet("from/{fromTime}/to/{toTime}")]
         public IActionResult GetMetricsFromAgent([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
         {

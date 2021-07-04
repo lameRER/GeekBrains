@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using MetricsLogging;
 
 namespace MetricsManager
 {
@@ -10,14 +9,7 @@ namespace MetricsManager
 
         public AgentsList()
         {
-            try
-            {
-                DataGrid();
-            }
-            catch (Exception e)
-            {
-                Logging.Log.Error(e);
-            }
+            DataGrid();
         }
 
         private void DataGrid()

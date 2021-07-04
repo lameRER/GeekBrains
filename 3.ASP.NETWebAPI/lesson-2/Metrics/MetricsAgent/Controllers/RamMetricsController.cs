@@ -16,13 +16,13 @@ namespace MetricsAgent.Controllers
         private readonly IRamMetricsRepository _repository;
 
         private readonly ILogger _logger;
-
+        
         public RamMetricsController(IRamMetricsRepository repository, ILogger logger)
         {
             _repository = repository;
             _logger = logger;
         }
-        
+
         [HttpGet("available/from/{fromTime}/to/{toTime}")]
         public IActionResult GetMetricsFromAgent([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
         {
