@@ -4,7 +4,7 @@ using MetricsAgent.DAL.Interface;
 using MetricsAgent.DAL.Model;
 using MetricsAgent.DAL.Responses;
 using MetricsAgent.Request;
-using MetricsLogging;
+using NLog;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MetricsAgent.Controllers
@@ -15,9 +15,12 @@ namespace MetricsAgent.Controllers
     {
         private readonly IHddMetricsRepository _repository;
 
-        public HddMetricsController(IHddMetricsRepository repository)
+        private readonly ILogger _logger;
+
+        public HddMetricsController(IHddMetricsRepository repository, ILogger logger)
         {
             _repository = repository;
+            _logger = logger;
         }
         
         [HttpGet("left/from/{fromTime}/to/{toTime}")]
@@ -25,7 +28,7 @@ namespace MetricsAgent.Controllers
         {
             try
             {
-                Logging.Log.Debug($"Route(api/metrics/hdd): Running the GetMetricsFromAgent method");
+                _logger.Debug($"Route(api/metrics/hdd): Running the GetMetricsFromAgent method");
                 var metrics = _repository.GetByPeriod(fromTime, toTime);
                 var response = new MetricsResponse<HddMetricsDto>();
                 foreach (var item in metrics)
@@ -37,12 +40,12 @@ namespace MetricsAgent.Controllers
                         Time = item.Time
                     });
                 }
-                Logging.Log.Debug($"Route(api/metrics/hdd): GetMetricsFromAgent method completed successfully");
+                _logger.Debug($"Route(api/metrics/hdd): GetMetricsFromAgent method completed successfully");
                 return Ok(response.Metrics.ToList());
             }
             catch (Exception e)
             {
-                Logging.Log.Error(e);
+                _logger.Error(e);
                 return BadRequest(e.Message);
             }
         }
@@ -52,18 +55,18 @@ namespace MetricsAgent.Controllers
         {
             try
             {
-                Logging.Log.Debug($"Route(api/metrics/hdd): Running the Create method");
+                _logger.Debug($"Route(api/metrics/hdd): Running the Create method");
                 _repository.Create(new HddMetric
                 {
                     Value = metric.Value,
                     Time = metric.Time,
                 });
-                Logging.Log.Debug($"Route(api/metrics/hdd): Create method completed successfully");
+                _logger.Debug($"Route(api/metrics/hdd): Create method completed successfully");
                 return Ok();
             }
             catch (Exception e)
             {
-                Logging.Log.Error(e);
+                _logger.Error(e);
                 return BadRequest(e.Message);
             }
         }
