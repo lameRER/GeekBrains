@@ -5,6 +5,7 @@ using System.Data.SQLite;
 using MetricsAgent.Controllers;
 using MetricsAgent.DAL.Interface;
 using MetricsAgent.DAL.Model;
+using MetricsAgent.DAL.SQLite;
 using MetricsLogging;
 using Microsoft.Extensions.Configuration;
 
@@ -12,7 +13,7 @@ namespace MetricsAgent.DAL.Repository
 {
     public class HddMetricsRepository : BaseMetricsRepository, IHddMetricsRepository
     {
-        public HddMetricsRepository(IConfiguration configuration) : base(configuration) { }
+        public HddMetricsRepository(IConfiguration configuration, IConnectionManager connectionManager) : base(configuration, connectionManager) { }
 
         public List<HddMetric> GetByPeriod(DateTimeOffset fromTime, DateTimeOffset toTime)
         {
