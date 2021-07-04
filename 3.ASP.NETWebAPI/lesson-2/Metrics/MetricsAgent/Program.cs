@@ -2,10 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MetricsAgent.Request;
+using MetricsLogging;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NLog;
+using NLog.Web;
+using ILogger = NLog.ILogger;
 
 namespace MetricsAgent
 {
@@ -13,6 +18,8 @@ namespace MetricsAgent
     {
         public static void Main(string[] args)
         {
+            var log = LogManager.GetCurrentClassLogger();
+            log.Debug("Start MetricsAgent");
             CreateHostBuilder(args).Build().Run();
         }
 
