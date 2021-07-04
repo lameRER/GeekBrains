@@ -1,8 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using MetricsLogging;
 using Microsoft.AspNetCore.Mvc;
+using NLog;
 
 namespace MetricsManager.Controllers
 {
@@ -11,16 +11,19 @@ namespace MetricsManager.Controllers
     public class AgentsController : ControllerBase
     {
         private readonly AgentsList _agentList;
+
+        private readonly ILogger _logger;
         
-        public AgentsController(AgentsList agentList)
+        public AgentsController(AgentsList agentList, ILogger logger)
         {
+            _logger = logger;
             try
             {
                 _agentList = agentList;
             }
             catch (Exception e)
             {
-                Logging.Log.Error(e);
+                _logger.Error(e);
             }
         }
         
@@ -33,7 +36,7 @@ namespace MetricsManager.Controllers
             }
             catch (Exception e)
             {
-                Logging.Log.Error(e);
+                _logger.Error(e);
                 return BadRequest(e.Message);
             }
         }
@@ -54,7 +57,7 @@ namespace MetricsManager.Controllers
             }
             catch (Exception e)
             {
-                Logging.Log.Error(e);
+                _logger.Error(e);
                 return BadRequest(e.Message);
             }
         }
@@ -68,7 +71,7 @@ namespace MetricsManager.Controllers
             }
             catch (Exception e)
             {
-                Logging.Log.Error(e);
+                _logger.Error(e);
                 return BadRequest(e.Message);
             }
         }

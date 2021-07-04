@@ -4,7 +4,7 @@ using MetricsAgent.DAL.Interface;
 using MetricsAgent.DAL.Model;
 using MetricsAgent.DAL.Responses;
 using MetricsAgent.Request;
-using MetricsLogging;
+using NLog;
 using Microsoft.AspNetCore.Mvc;
 
 namespace MetricsAgent.Controllers
@@ -14,10 +14,13 @@ namespace MetricsAgent.Controllers
     public class NetworkMetricsController : ControllerBase
     {
         private readonly INetworkMetricsRepository _repository;
+        
+        private readonly ILogger _logger;
 
-        public NetworkMetricsController(INetworkMetricsRepository repository)
+        public NetworkMetricsController(INetworkMetricsRepository repository, ILogger logger)
         {
             _repository = repository;
+            _logger = logger;
         }
         
         [HttpGet("from/{fromTime}/to/{toTime}")]
@@ -25,7 +28,7 @@ namespace MetricsAgent.Controllers
         {
             try
             {
-                Logging.Log.Debug($"Route(api/metrics/network): Running the GetMetricsFromAgent method");
+                _logger.Debug($"Route(api/metrics/network): Running the GetMetricsFromAgent method");
                 var metrics = _repository.GetByPeriod(fromTime, toTime);
                 var response = new MetricsResponse<HddMetricsDto>();
                 foreach (var item in metrics)
@@ -37,12 +40,12 @@ namespace MetricsAgent.Controllers
                         Time = item.Time
                     });
                 }
-                Logging.Log.Debug($"Route(api/metrics/network): GetMetricsFromAgent method completed successfully");
+                _logger.Debug($"Route(api/metrics/network): GetMetricsFromAgent method completed successfully");
                 return Ok(response.Metrics.ToList());
             }
             catch (Exception e)
             {
-                Logging.Log.Error(e);
+                _logger.Error(e);
                 return BadRequest(e.Message);
             }
         }
@@ -52,18 +55,18 @@ namespace MetricsAgent.Controllers
         {
             try
             {
-                Logging.Log.Debug($"Route(api/metrics/network): Running the Create method");
+                _logger.Debug($"Route(api/metrics/network): Running the Create method");
                 _repository.Create(new NetworkMetric
                 {
                     Value = metric.Value,
                     Time = metric.Time,
                 });
-                Logging.Log.Debug($"Route(api/metrics/network): Create method completed successfully");
+                _logger.Debug($"Route(api/metrics/network): Create method completed successfully");
                 return Ok();
             }
             catch (Exception e)
             {
-                Logging.Log.Error(e);
+                _logger.Error(e);
                 return BadRequest(e.Message);
             }
         }

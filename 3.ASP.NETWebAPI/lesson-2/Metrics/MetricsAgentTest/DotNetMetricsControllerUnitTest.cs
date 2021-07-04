@@ -5,6 +5,7 @@ using MetricsAgent.DAL.Model;
 using MetricsAgent.Request;
 using Microsoft.AspNetCore.Mvc;
 using Moq;
+using NLog;
 using Xunit;
 
 namespace MetricsAgentTest
@@ -17,8 +18,9 @@ namespace MetricsAgentTest
 
         public DotNetMetricsControllerUnitTest()
         {
+            var log = LogManager.GetCurrentClassLogger();
             _mock = new Mock<IDotNetMetricsRepository>();
-            _controller = new DotNetMetricsController(_mock.Object);
+            _controller = new DotNetMetricsController(_mock.Object, log);
             _time = new DateTimeOffset(2021, 06, new Random().Next(1, 30), new Random().Next(0, 24),
                 new Random().Next(0, 60), 00, TimeSpan.Zero);
         }

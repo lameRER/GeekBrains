@@ -15,6 +15,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
+using NLog;
+using ILogger = NLog.ILogger;
 
 namespace MetricsAgent
 {
@@ -29,12 +31,14 @@ namespace MetricsAgent
 
         public void ConfigureServices(IServiceCollection services)
         {
+            var log = LogManager.GetCurrentClassLogger();
             services.AddControllers();
             services.AddScoped<ICpuMetricsRepository, CpuMetricsRepository>();
             services.AddScoped<IDotNetMetricsRepository, DotNetMetricsRepository>();
             services.AddScoped<IHddMetricsRepository, HddMetricsRepository>();
             services.AddScoped<IRamMetricsRepository, RamMetricsRepository>();
             services.AddScoped<INetworkMetricsRepository, NetworkMetricsRepository>();
+            services.AddSingleton<ILogger>(log);
             ConfigureSqlLiteConnection();
         }
         
