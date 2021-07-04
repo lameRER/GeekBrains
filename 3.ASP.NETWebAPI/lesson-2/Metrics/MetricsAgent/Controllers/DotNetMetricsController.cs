@@ -14,7 +14,7 @@ namespace MetricsAgent.Controllers
     public class DotNetMetricsController : ControllerBase
     {
         private readonly IDotNetMetricsRepository _repository;
-        
+
         private readonly ILogger _logger;
 
         public DotNetMetricsController(IDotNetMetricsRepository repository, ILogger logger)
@@ -22,7 +22,7 @@ namespace MetricsAgent.Controllers
             _repository = repository;
             _logger = logger;
         }
-        
+
         [HttpGet("errors-count/from/{fromTime}/to/{toTime}")]
         public IActionResult GetMetricsFromAgent([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
         {

@@ -14,7 +14,7 @@ namespace MetricsAgent.Controllers
     public class NetworkMetricsController : ControllerBase
     {
         private readonly INetworkMetricsRepository _repository;
-        
+
         private readonly ILogger _logger;
 
         public NetworkMetricsController(INetworkMetricsRepository repository, ILogger logger)
@@ -22,7 +22,7 @@ namespace MetricsAgent.Controllers
             _repository = repository;
             _logger = logger;
         }
-        
+
         [HttpGet("from/{fromTime}/to/{toTime}")]
         public IActionResult GetMetricsFromAgent([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
         {
