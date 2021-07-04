@@ -1,4 +1,6 @@
+using MetricsAgent.DAL.SQLite;
 using Microsoft.Extensions.Configuration;
+using NLog;
 
 namespace MetricsAgent.DAL.Repository
 {
@@ -6,9 +8,16 @@ namespace MetricsAgent.DAL.Repository
     {
         protected readonly IConfiguration Configuration;
 
-        protected BaseMetricsRepository(IConfiguration configuration)
+        protected readonly IConnectionManager ConnectionManager;
+
+        protected readonly ILogger Logger;
+
+        protected BaseMetricsRepository(IConfiguration configuration, IConnectionManager connectionManager,
+            ILogger logger)
         {
             Configuration = configuration;
+            ConnectionManager = connectionManager;
+            Logger = logger;
         }
     }
 }

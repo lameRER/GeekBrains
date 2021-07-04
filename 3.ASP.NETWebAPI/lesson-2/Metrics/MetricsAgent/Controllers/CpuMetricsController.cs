@@ -6,8 +6,8 @@ using MetricsAgent.DAL.Model;
 using MetricsAgent.DAL.Responses;
 using MetricsAgent.Request;
 using Microsoft.AspNetCore.Mvc;
-using NLog;
 using Microsoft.AspNetCore.Routing;
+using NLog;
 
 namespace MetricsAgent.Controllers
 {
@@ -24,7 +24,7 @@ namespace MetricsAgent.Controllers
             _repository = repository;
             _logger = logger;
         }
-        
+
         [HttpGet("from/{fromTime}/to/{toTime}")]
         public IActionResult GetMetricsFromAgent([FromRoute] DateTimeOffset fromTime, [FromRoute] DateTimeOffset toTime)
         {

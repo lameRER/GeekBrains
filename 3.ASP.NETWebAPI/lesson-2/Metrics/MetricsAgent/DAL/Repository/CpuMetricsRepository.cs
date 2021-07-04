@@ -6,28 +6,32 @@ using MetricsAgent.Controllers;
 using MetricsAgent.DAL.Interface;
 using MetricsAgent.DAL.Model;
 using NLog;
+using MetricsAgent.DAL.SQLite;
 using Microsoft.Extensions.Configuration;
 
 namespace MetricsAgent.DAL.Repository
 {
     public class CpuMetricsRepository : BaseMetricsRepository, ICpuMetricsRepository
     {
-        private readonly ILogger _logger;
-        public CpuMetricsRepository(IConfiguration configuration, ILogger logger) : base(configuration)
-        {
-            _logger = logger;
-        }
+        public CpuMetricsRepository(
+            IConfiguration configuration, 
+            IConnectionManager connectionManager, 
+            ILogger logger) 
+            : base(
+                configuration, 
+                connectionManager, 
+                logger) { }
 
         public List<CpuMetric> GetByPeriod(DateTimeOffset fromTime, DateTimeOffset toTime)
         {
-            var connectionString = Configuration.GetConnectionString("SqlLite");
+            var connectionString = ConnectionManager.CreateOpenedConnection();// Configuration.GetConnectionString("SqlLite");
             using var connection = new SQLiteConnection(connectionString);
             connection.Open();
             var cmd = new SQLiteCommand(connection)
             {
                 CommandText = $"SELECT * FROM CpuMetrics WHERE Time >= {fromTime.ToUnixTimeSeconds()} AND Time <= {toTime.ToUnixTimeSeconds()}"
             };
-            _logger.Debug(cmd.CommandText);
+            Logger.Debug(cmd.CommandText);
             
             var result = new List<CpuMetric>();
             using var reader = cmd.ExecuteReader();
@@ -53,7 +57,7 @@ namespace MetricsAgent.DAL.Repository
             {
                 CommandText = $"INSERT INTO CpuMetrics(value, Time) VALUES({item.Value}, {item.Time.ToUnixTimeSeconds()})"
             };
-            _logger.Debug(cmd.CommandText);
+            Logger.Debug(cmd.CommandText);
             cmd.ExecuteNonQuery();
         }
     }
