@@ -5,6 +5,7 @@ using System.Data.SQLite;
 using MetricsAgent.Controllers;
 using MetricsAgent.DAL.Interface;
 using MetricsAgent.DAL.Model;
+using MetricsAgent.DAL.SQLite;
 using MetricsLogging;
 using Microsoft.Extensions.Configuration;
 
@@ -12,11 +13,11 @@ namespace MetricsAgent.DAL.Repository
 {
     public class CpuMetricsRepository : BaseMetricsRepository, ICpuMetricsRepository
     {
-        public CpuMetricsRepository(IConfiguration configuration) : base(configuration) { }
+        public CpuMetricsRepository(IConfiguration configuration, IConnectionManager connectionManager) : base(configuration, connectionManager){}
 
         public List<CpuMetric> GetByPeriod(DateTimeOffset fromTime, DateTimeOffset toTime)
         {
-            var connectionString = Configuration.GetConnectionString("SqlLite");
+            var connectionString = ConnectionManager.CreateOpenedConnection();// Configuration.GetConnectionString("SqlLite");
             using var connection = new SQLiteConnection(connectionString);
             connection.Open();
             var cmd = new SQLiteCommand(connection)

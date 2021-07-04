@@ -5,6 +5,7 @@ using System.Data.SQLite;
 using MetricsAgent.Controllers;
 using MetricsAgent.DAL.Interface;
 using MetricsAgent.DAL.Model;
+using MetricsAgent.DAL.SQLite;
 using MetricsLogging;
 using Microsoft.Extensions.Configuration;
 
@@ -12,7 +13,7 @@ namespace MetricsAgent.DAL.Repository
 {
     public class RamMetricsRepository : BaseMetricsRepository, IRamMetricsRepository
     {
-        public RamMetricsRepository(IConfiguration configuration) : base(configuration) { }
+        public RamMetricsRepository(IConfiguration configuration, IConnectionManager connectionManager) : base(configuration, connectionManager) { }
 
         public List<RamMetric> GetByPeriod(DateTimeOffset fromTime, DateTimeOffset toTime)
         {
