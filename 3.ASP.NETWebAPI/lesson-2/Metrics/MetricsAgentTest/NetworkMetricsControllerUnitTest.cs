@@ -1,4 +1,5 @@
 using System;
+using AutoMapper;
 using MetricsAgent.Controllers;
 using MetricsAgent.DAL.Interface;
 using MetricsAgent.DAL.Model;
@@ -18,9 +19,10 @@ namespace MetricsAgentTest
 
         public NetworkMetricsControllerUnitTest()
         {
-            var log = LogManager.GetCurrentClassLogger();
+            var logger = new Mock<ILogger>();
+            var mapper = new Mock<IMapper>();
             _mock = new Mock<INetworkMetricsRepository>();
-            _controller = new NetworkMetricsController(_mock.Object, log);
+            _controller = new NetworkMetricsController(_mock.Object, logger.Object, mapper.Object);
             _time = new DateTimeOffset(2021, 06, new Random().Next(1, 30), new Random().Next(0, 24),
                 new Random().Next(0, 60), 00, TimeSpan.Zero);
         }

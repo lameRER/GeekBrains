@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using AutoMapper;
 using MetricsAgent.DAL.Interface;
 using MetricsAgent.DAL.Model;
 using MetricsAgent.DAL.Responses;
@@ -17,10 +18,13 @@ namespace MetricsAgent.Controllers
 
         private readonly ILogger _logger;
 
-        public NetworkMetricsController(INetworkMetricsRepository repository, ILogger logger)
+        private readonly IMapper _mapper;
+
+        public NetworkMetricsController(INetworkMetricsRepository repository, ILogger logger, IMapper mapper)
         {
             _repository = repository;
             _logger = logger;
+            _mapper = mapper;
         }
 
         [HttpGet("from/{fromTime}/to/{toTime}")]
@@ -30,15 +34,10 @@ namespace MetricsAgent.Controllers
             {
                 _logger.Debug($"Route(api/metrics/network): Running the GetMetricsFromAgent method");
                 var metrics = _repository.GetByPeriod(fromTime, toTime);
-                var response = new MetricsResponse<HddMetricsDto>();
+                var response = new MetricsResponse<NetworkMetricsDto>();
                 foreach (var item in metrics)
                 {
-                    response.Metrics.Add(new HddMetricsDto
-                    {
-                        Id = item.Id,
-                        Value = item.Value,
-                        Time = item.Time
-                    });
+                    response.Metrics.Add(_mapper.Map<NetworkMetricsDto>(item));
                 }
                 _logger.Debug($"Route(api/metrics/network): GetMetricsFromAgent method completed successfully");
                 return Ok(response.Metrics.ToList());
@@ -56,11 +55,7 @@ namespace MetricsAgent.Controllers
             try
             {
                 _logger.Debug($"Route(api/metrics/network): Running the Create method");
-                _repository.Create(new NetworkMetric
-                {
-                    Value = metric.Value,
-                    Time = metric.Time,
-                });
+                _repository.Create(_mapper.Map<NetworkMetric>(metric));
                 _logger.Debug($"Route(api/metrics/network): Create method completed successfully");
                 return Ok();
             }

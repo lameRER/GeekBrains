@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using AutoMapper;
 using MetricsAgent.DAL;
 using MetricsAgent.DAL.Interface;
 using MetricsAgent.DAL.Model;
@@ -19,10 +20,13 @@ namespace MetricsAgent.Controllers
 
         private readonly ILogger _logger;
 
-        public CpuMetricsController(ICpuMetricsRepository repository, ILogger logger)
+        private readonly IMapper _mapper;
+
+        public CpuMetricsController(ICpuMetricsRepository repository, ILogger logger, IMapper mapper)
         {
             _repository = repository;
             _logger = logger;
+            _mapper = mapper;
         }
 
         [HttpGet("from/{fromTime}/to/{toTime}")]
@@ -35,12 +39,7 @@ namespace MetricsAgent.Controllers
                 var response = new MetricsResponse<CpuMetricDto>();
                 foreach (var item in metrics)
                 {
-                    response.Metrics.Add(new CpuMetricDto
-                    {
-                        Id = item.Id,
-                        Value = item.Value,
-                        Time = item.Time
-                    });
+                    response.Metrics.Add(_mapper.Map<CpuMetricDto>(item));
                 }
                 _logger.Debug($"Route(api/metrics/cpu): GetMetricsFromAgent method completed successfully");
                 return Ok(response.Metrics.ToList());
@@ -58,11 +57,7 @@ namespace MetricsAgent.Controllers
             try
             {
                 _logger.Debug($"Route(api/metrics/cpu): Running the Create method");
-                _repository.Create(new CpuMetric
-                {
-                    Value = metric.Value,
-                    Time = metric.Time,
-                });
+                _repository.Create(_mapper.Map<CpuMetric>(metric));
                 _logger.Debug($"Route(api/metrics/cpu): Create method completed successfully");
                 return Ok();
             }
