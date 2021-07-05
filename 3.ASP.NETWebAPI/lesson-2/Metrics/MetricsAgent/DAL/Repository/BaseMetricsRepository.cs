@@ -6,18 +6,18 @@ namespace MetricsAgent.DAL.Repository
 {
     public abstract class BaseMetricsRepository
     {
-        protected readonly IConfiguration Configuration;
+        private readonly IConfiguration _configuration;
 
         protected readonly IConnectionManager ConnectionManager;
 
-        protected readonly ILogger Logger;
+        private readonly ILogger _logger;
 
         protected BaseMetricsRepository(IConfiguration configuration, IConnectionManager connectionManager,
             ILogger logger)
         {
-            Configuration = configuration;
+            _configuration = configuration;
             ConnectionManager = connectionManager;
-            Logger = logger;
+            _logger = logger;
         }
     }
 }

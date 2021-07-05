@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
+using System.Linq;
+using Dapper;
 using MetricsAgent.Controllers;
 using MetricsAgent.DAL.Interface;
 using MetricsAgent.DAL.Model;
@@ -24,40 +26,26 @@ namespace MetricsAgent.DAL.Repository
 
         public List<NetworkMetric> GetByPeriod(DateTimeOffset fromTime, DateTimeOffset toTime)
         {
-            var connectionString = Configuration.GetConnectionString("SqlLite");
-            using var connection = new SQLiteConnection(connectionString);
-            connection.Open();
-            var cmd = new SQLiteCommand(connection)
-            {
-                CommandText = $"SELECT * FROM NetworkMetric WHERE Time >= ({fromTime} AND Time <= {toTime}"
-            };
-            
-            var result = new List<NetworkMetric>();
-            using var reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                result.Add(new NetworkMetric
+            var connectionString = ConnectionManager.CreateOpenedConnection();
+            var result = connectionString.Query<NetworkMetric>(
+                "SELECT * FROM NetworkMetrics WHERE Time >= @fromTime AND Time <= @toTime",
+                new
                 {
-                    Id = (int)reader["Id"], 
-                    Value = (int)reader["Value"], 
-                    Time = (DateTimeOffset)reader["Time"]
-                });
-            }
-            
+                    fromTime,
+                    toTime
+                }).ToList();
             return result;
         }
 
         public void Create(NetworkMetric item)
         {
-            var connectionString = Configuration.GetConnectionString("SqlLite");
-            using var connection = new SQLiteConnection(connectionString);
-            connection.Open();
-            var cmd = new SQLiteCommand(connection)
-            {
-                CommandText = $"INSERT INTO NetworkMetric(value, Time) VALUES({item.Value}, {item.Time.ToUnixTimeSeconds()})"
-            };
-            Logger.Debug(cmd.CommandText);
-            cmd.ExecuteNonQuery();
+            var connectionString = ConnectionManager.CreateOpenedConnection();
+            connectionString.Execute("INSERT INTO NetworkMetrics(value, Time) VALUES(@Value, @Time)",
+                new
+                {
+                    item.Value,
+                    item.Time
+                });
         }
     }
 }
