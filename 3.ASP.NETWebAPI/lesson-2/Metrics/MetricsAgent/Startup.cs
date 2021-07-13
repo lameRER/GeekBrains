@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using System.Data.SQLite;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
+using Dapper;
 using MetricsAgent.DAL;
 using MetricsAgent.DAL.Interface;
 using MetricsAgent.DAL.Repository;
 using MetricsAgent.DAL.SQLite;
+using MetricsAgent.Mapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -14,10 +17,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using NLog;
-using ILogger = NLog.ILogger;
 
 namespace MetricsAgent
 {
@@ -34,6 +35,8 @@ namespace MetricsAgent
         {
             var log = LogManager.GetCurrentClassLogger();
             var connection = new ConnectionManager(Configuration);
+            var mapperConfiguration = new MapperConfiguration(mp => mp.AddProfile(new MapperProfile()));
+            var mapper = mapperConfiguration.CreateMapper(); 
             services.AddControllers();
             services.AddScoped<ICpuMetricsRepository, CpuMetricsRepository>();
             services.AddScoped<IDotNetMetricsRepository, DotNetMetricsRepository>();
@@ -42,7 +45,16 @@ namespace MetricsAgent
             services.AddScoped<INetworkMetricsRepository, NetworkMetricsRepository>();
             services.AddSingleton<ILogger>(log);
             services.AddSingleton<IConnectionManager>(connection);
+            services.AddSingleton(mapper);
             ConfigureSqlLiteConnection();
+            ConfigureMapper();
+        }
+
+        private void ConfigureMapper()
+        {
+            SqlMapper.AddTypeHandler(new DateTimeOffsetHandler());
+            SqlMapper.RemoveTypeMap(typeof(DateTimeOffset));
+            SqlMapper.RemoveTypeMap(typeof(DateTimeOffset?));
         }
         
         private void ConfigureSqlLiteConnection()

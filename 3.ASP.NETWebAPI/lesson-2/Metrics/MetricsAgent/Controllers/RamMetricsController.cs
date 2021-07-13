@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using AutoMapper;
 using MetricsAgent.DAL.Interface;
 using MetricsAgent.DAL.Model;
 using MetricsAgent.DAL.Responses;
@@ -16,11 +17,14 @@ namespace MetricsAgent.Controllers
         private readonly IRamMetricsRepository _repository;
 
         private readonly ILogger _logger;
-        
-        public RamMetricsController(IRamMetricsRepository repository, ILogger logger)
+
+        private readonly IMapper _mapper;
+
+        public RamMetricsController(IRamMetricsRepository repository, ILogger logger, IMapper mapper)
         {
             _repository = repository;
             _logger = logger;
+            _mapper = mapper;
         }
 
         [HttpGet("available/from/{fromTime}/to/{toTime}")]
@@ -33,12 +37,7 @@ namespace MetricsAgent.Controllers
                 var response = new MetricsResponse<RamMetricsDto>();
                 foreach (var item in metrics)
                 {
-                    response.Metrics.Add(new RamMetricsDto
-                    {
-                        Id = item.Id,
-                        Value = item.Value,
-                        Time = item.Time
-                    });
+                    response.Metrics.Add(_mapper.Map<RamMetricsDto>(item));
                 }
                 _logger.Debug($"Route(api/metrics/ram): GetMetricsFromAgent method completed successfully");
                 return Ok(response.Metrics.ToList());
@@ -56,11 +55,7 @@ namespace MetricsAgent.Controllers
             try
             {
                 _logger.Debug($"Route(api/metrics/ram): Running the Create method");
-                _repository.Create(new RamMetric()
-                {
-                    Value = metric.Value,
-                    Time = metric.Time,
-                });
+                _repository.Create(_mapper.Map<RamMetric>(metric));
                 _logger.Debug($"Route(api/metrics/ram): Create method completed successfully");
                 return Ok();
             }

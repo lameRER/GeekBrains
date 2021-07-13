@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using AutoMapper;
 using MetricsAgent.DAL.Interface;
 using MetricsAgent.DAL.Model;
 using MetricsAgent.DAL.Responses;
@@ -17,10 +18,13 @@ namespace MetricsAgent.Controllers
 
         private readonly ILogger _logger;
 
-        public HddMetricsController(IHddMetricsRepository repository, ILogger logger)
+        private readonly IMapper _mapper;
+
+        public HddMetricsController(IHddMetricsRepository repository, ILogger logger, IMapper mapper)
         {
             _repository = repository;
             _logger = logger;
+            _mapper = mapper;
         }
 
         [HttpGet("left/from/{fromTime}/to/{toTime}")]
@@ -33,12 +37,7 @@ namespace MetricsAgent.Controllers
                 var response = new MetricsResponse<HddMetricsDto>();
                 foreach (var item in metrics)
                 {
-                    response.Metrics.Add(new HddMetricsDto
-                    {
-                        Id = item.Id,
-                        Value = item.Value,
-                        Time = item.Time
-                    });
+                    response.Metrics.Add(_mapper.Map<HddMetricsDto>(item));
                 }
                 _logger.Debug($"Route(api/metrics/hdd): GetMetricsFromAgent method completed successfully");
                 return Ok(response.Metrics.ToList());
@@ -56,11 +55,7 @@ namespace MetricsAgent.Controllers
             try
             {
                 _logger.Debug($"Route(api/metrics/hdd): Running the Create method");
-                _repository.Create(new HddMetric
-                {
-                    Value = metric.Value,
-                    Time = metric.Time,
-                });
+                _repository.Create(_mapper.Map<HddMetric>(metric));
                 _logger.Debug($"Route(api/metrics/hdd): Create method completed successfully");
                 return Ok();
             }

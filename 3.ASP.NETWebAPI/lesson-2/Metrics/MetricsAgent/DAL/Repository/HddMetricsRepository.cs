@@ -2,6 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SQLite;
+using System.Linq;
+using Dapper;
 using MetricsAgent.Controllers;
 using MetricsAgent.DAL.Interface;
 using MetricsAgent.DAL.Model;
@@ -24,40 +26,26 @@ namespace MetricsAgent.DAL.Repository
 
         public List<HddMetric> GetByPeriod(DateTimeOffset fromTime, DateTimeOffset toTime)
         {
-            var connectionString = Configuration.GetConnectionString("SqlLite");
-            using var connection = new SQLiteConnection(connectionString);
-            connection.Open();
-            var cmd = new SQLiteCommand(connection)
-            {
-                CommandText = $"SELECT * FROM HddMetric WHERE Time >= ({fromTime} AND Time <= {toTime}"
-            };
-            
-            var result = new List<HddMetric>();
-            using var reader = cmd.ExecuteReader();
-            while (reader.Read())
-            {
-                result.Add(new HddMetric
+            var connectionString = ConnectionManager.CreateOpenedConnection();
+            var result = connectionString.Query<HddMetric>(
+                "SELECT * FROM HddMetrics WHERE Time >= @fromTime AND Time <= @toTime",
+                new
                 {
-                    Id = (int)reader["Id"], 
-                    Value = (int)reader["Value"], 
-                    Time = (DateTimeOffset)reader["Time"]
-                });
-            }
-            
+                    fromTime,
+                    toTime
+                }).ToList();
             return result;
         }
 
         public void Create(HddMetric item)
         {
-            var connectionString = Configuration.GetConnectionString("SqlLite");
-            using var connection = new SQLiteConnection(connectionString);
-            connection.Open();
-            var cmd = new SQLiteCommand(connection)
-            {
-                CommandText = $"INSERT INTO HddMetric(value, Time) VALUES({item.Value}, {item.Time.ToUnixTimeSeconds()})"
-            };
-            Logger.Debug(cmd.CommandText);
-            cmd.ExecuteNonQuery();
+            var connectionString = ConnectionManager.CreateOpenedConnection();
+            connectionString.Execute("INSERT INTO HddMetrics(value, Time) VALUES(@Value, @Time)",
+                new
+                {
+                    item.Value,
+                    item.Time
+                });
         }
     }
 }

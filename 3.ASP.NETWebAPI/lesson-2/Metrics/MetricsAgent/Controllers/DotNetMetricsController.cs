@@ -1,5 +1,6 @@
 using System;
 using System.Linq;
+using AutoMapper;
 using MetricsAgent.DAL.Interface;
 using MetricsAgent.DAL.Model;
 using MetricsAgent.DAL.Responses;
@@ -17,10 +18,13 @@ namespace MetricsAgent.Controllers
 
         private readonly ILogger _logger;
 
-        public DotNetMetricsController(IDotNetMetricsRepository repository, ILogger logger)
+        private readonly IMapper _mapper;
+
+        public DotNetMetricsController(IDotNetMetricsRepository repository, ILogger logger, IMapper mapper)
         {
             _repository = repository;
             _logger = logger;
+            _mapper = mapper;
         }
 
         [HttpGet("errors-count/from/{fromTime}/to/{toTime}")]
@@ -33,12 +37,7 @@ namespace MetricsAgent.Controllers
                 var response = new MetricsResponse<DotNetMetricsDto>();
                 foreach (var item in metrics)
                 {
-                    response.Metrics.Add(new DotNetMetricsDto
-                    {
-                        Id = item.Id,
-                        Value = item.Value,
-                        Time = item.Time
-                    });
+                    response.Metrics.Add(_mapper.Map<DotNetMetricsDto>(item));
                 }
                 _logger.Debug($"Route(api/metrics/dotnet): GetMetricsFromAgent method completed successfully");
                 return Ok(response.Metrics.ToList());
@@ -56,11 +55,7 @@ namespace MetricsAgent.Controllers
             try
             {
                 _logger.Debug($"Route(api/metrics/dotnet): Running the Create method");
-                _repository.Create(new DotNetMetric
-                {
-                    Value = metric.Value,
-                    Time = metric.Time,
-                });
+                _repository.Create(_mapper.Map<DotNetMetric>(metric));
                 _logger.Debug($"Route(api/metrics/dotnet): Create method completed successfully");
                 return Ok();
             }

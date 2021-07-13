@@ -1,4 +1,5 @@
 using System;
+using AutoMapper;
 using MetricsAgent.Controllers;
 using MetricsAgent.DAL.Interface;
 using MetricsAgent.DAL.Model;
@@ -18,9 +19,10 @@ namespace MetricsAgentTest
 
         public HddMetricsControllerUnitTest()
         {
-            var log = LogManager.GetCurrentClassLogger();
+            var logger = new Mock<ILogger>();
+            var mapper = new Mock<IMapper>();
             _mock = new Mock<IHddMetricsRepository>();
-            _controller = new HddMetricsController(_mock.Object, log);
+            _controller = new HddMetricsController(_mock.Object, logger.Object, mapper.Object);
             _time = new DateTimeOffset(2021, 06, new Random().Next(1, 30), new Random().Next(0, 24),
                 new Random().Next(0, 60), 00, TimeSpan.Zero);
         }
