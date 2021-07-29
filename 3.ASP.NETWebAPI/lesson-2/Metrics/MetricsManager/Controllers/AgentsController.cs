@@ -1,6 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using AutoMapper;
+using MetricsManager.Client.Requests;
+using MetricsManager.DAL.Interface;
+using MetricsManager.Responses.Agents;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
 
@@ -10,16 +14,19 @@ namespace MetricsManager.Controllers
     [ApiController]
     public class AgentsController : ControllerBase
     {
-        private readonly AgentsList _agentList;
+        private readonly IAgentsRepository _repository;
 
         private readonly ILogger _logger;
+
+        private readonly IMapper _mapper;
         
-        public AgentsController(AgentsList agentList, ILogger logger)
+        public AgentsController(ILogger logger, IMapper mapper, IAgentsRepository repository)
         {
-            _logger = logger;
             try
             {
-                _agentList = agentList;
+                _repository = repository;
+                _logger = logger;
+                _mapper = mapper;
             }
             catch (Exception e)
             {
@@ -32,7 +39,10 @@ namespace MetricsManager.Controllers
         {
             try
             {
-                return Ok(_agentList.AgentInfos.ToList());
+                var agentsList = _repository.GetRegistered();
+                var response = new AgentInfoResponse();
+                response.Agengs.AddRange(_mapper.Map<List<AgentInfoDto>>(agentsList));
+                return Ok(response);
             }
             catch (Exception e)
             {
@@ -42,10 +52,11 @@ namespace MetricsManager.Controllers
         }
         
         [HttpPost("register")]
-        public IActionResult RegisterAgent([FromBody] AgentInfo agentInfo)
+        public IActionResult RegisterAgent([FromBody] AgentInfoRequest agentInfo)
         {
-            _agentList.AgentInfos.Add(agentInfo);
-            return Ok();
+            _repository.Create(_mapper.Map<AgentInfo>(agentInfo));
+            // _agentList.AgentInfos.Add(agentInfo);
+            return Ok(agentInfo);
         }
 
         [HttpPut("enable/{agentId:int}")]
@@ -53,7 +64,8 @@ namespace MetricsManager.Controllers
         {
             try
             {
-                return Ok(_agentList.AgentInfos.Where(item => item.AgentId == agentId));
+                _repository.EnableById(agentId);
+                return Ok();
             }
             catch (Exception e)
             {
@@ -67,7 +79,8 @@ namespace MetricsManager.Controllers
         {
             try
             {
-                return Ok(_agentList.AgentInfos.Where(item => item.AgentId == agentId));
+                _repository.DisableById(agentId);
+                return Ok();
             }
             catch (Exception e)
             {

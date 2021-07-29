@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using NLog;
 
 namespace MetricsManager
 {
@@ -13,7 +14,15 @@ namespace MetricsManager
     {
         public static void Main(string[] args)
         {
-            CreateHostBuilder(args).Build().Run();
+            var log = LogManager.GetCurrentClassLogger();
+            try
+            {
+                CreateHostBuilder(args).Build().Run();
+            }
+            catch (Exception ex)
+            {
+                log.Error(ex.Message);                   
+            }
         }
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>

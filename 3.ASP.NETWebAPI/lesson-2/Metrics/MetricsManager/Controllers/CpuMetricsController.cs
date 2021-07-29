@@ -1,4 +1,8 @@
 using System;
+using System.Collections.Generic;
+using AutoMapper;
+using MetricsManager.DAL.Interface;
+using MetricsManager.Responses.Metrics;
 using Microsoft.AspNetCore.Mvc;
 using NLog;
 
@@ -10,9 +14,15 @@ namespace MetricsManager.Controllers
     {
         private readonly ILogger _logger;
 
-        public CpuMetricsController(ILogger logger)
+        private ICpuMetricsRepository _repository;
+
+        private readonly IMapper _mapper;
+
+        public CpuMetricsController(ILogger logger, ICpuMetricsRepository repository, IMapper mapper)
         {
             _logger = logger;
+            _repository = repository;
+            _mapper = mapper;
         }
 
         [HttpGet("agent/{agentId:int}/from/{fromTime}/to/{toTime}")]
@@ -20,7 +30,10 @@ namespace MetricsManager.Controllers
         {
             try
             {
-                return Ok(new {AgentId = agentId, FromTime = fromTime, ToTime = toTime});
+                var metricslist = _repository.GetByPeriodFormAgent(agentId, fromTime, toTime);
+                var response = new MetricResponse<CpuMetricsDto>();
+                response.Metrics.AddRange(_mapper.Map<List<CpuMetricsDto>>(metricslist));
+                return Ok(response);
             }
             catch (Exception e)
             {
@@ -34,7 +47,10 @@ namespace MetricsManager.Controllers
         {
             try
             {
-                return Ok(new {FromTime = fromTime, ToTime = toTime});
+                var metricslist = _repository.GetByPeriod(fromTime, toTime);
+                var response = new MetricResponse<CpuMetricsDto>();
+                response.Metrics.AddRange(_mapper.Map<List<CpuMetricsDto>>(metricslist));
+                return Ok(response);
             }
             catch (Exception e)
             {

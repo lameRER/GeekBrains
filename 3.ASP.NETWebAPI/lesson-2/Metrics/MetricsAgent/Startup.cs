@@ -65,11 +65,11 @@ namespace MetricsAgent
             services.AddSingleton<HddMetricJob>();
             services.AddSingleton<NetworkMecricsJob>();
             services.AddSingleton<RamMetricsJob>();
-            services.AddSingleton(new JobSchedule(jobType: typeof(CpuMetricJob), cronExpression: "0/5 * * * * ?"));
-            services.AddSingleton(new JobSchedule(jobType: typeof(DotNetMetricJob), cronExpression: "0/5 * * * * ?"));
-            services.AddSingleton(new JobSchedule(jobType: typeof(HddMetricJob), cronExpression: "0/5 * * * * ?"));
+            services.AddSingleton(new JobSchedule(jobType: typeof(CpuMetricJob), cronExpression: "0/30 * * * * ?"));
+            services.AddSingleton(new JobSchedule(jobType: typeof(DotNetMetricJob), cronExpression: "0/30 * * * * ?"));
+            services.AddSingleton(new JobSchedule(jobType: typeof(HddMetricJob), cronExpression: "0/30 * * * * ?"));
             services.AddSingleton(new JobSchedule(jobType: typeof(NetworkMecricsJob), cronExpression: "0/30 * * * * ?"));
-            services.AddSingleton(new JobSchedule(jobType: typeof(RamMetricsJob), cronExpression: "0/5 * * * * ?"));
+            services.AddSingleton(new JobSchedule(jobType: typeof(RamMetricsJob), cronExpression: "0/30 * * * * ?"));
             services.AddHostedService<QuartzHostedService>();
             ConfigureMapper();
         }
@@ -95,7 +95,7 @@ namespace MetricsAgent
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
-            
+
             migrationRunner.MigrateUp();
         }
     }
