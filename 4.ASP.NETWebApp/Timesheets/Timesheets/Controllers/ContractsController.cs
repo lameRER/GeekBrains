@@ -33,8 +33,9 @@ namespace Timesheets.Controllers
             if (entity == null)
                 return BadRequest($"Контракт с идентификатором {Contract.Id} не найден");
             entity.Name = Contract.Name;
-            entity.Date = Contract.Date;
-            entity.ClientId = Contract.ClientId;
+            entity.SetDate = Contract.SetDate;
+            entity.EndDate = Contract.EndDate;
+            entity.CustomerId = Contract.CustomerId;
             entity.Number = Contract.Number;
             return Ok();
         }

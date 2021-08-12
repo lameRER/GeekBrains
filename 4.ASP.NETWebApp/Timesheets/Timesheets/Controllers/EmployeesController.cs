@@ -27,7 +27,7 @@ namespace Timesheets.Controllers
         }
 
         [HttpPost("modify")]
-        public IActionResult Modify([FromBody]Employee employee)
+        public IActionResult Modify([FromBody] Employee employee)
         {
             var entity = EmployeesRepository.SingleOrDefault(item => item.Id == employee.Id);
             if (entity == null)
@@ -37,7 +37,7 @@ namespace Timesheets.Controllers
         }
 
         [HttpPut("add")]
-        public IActionResult Add([FromBody]Employee employee)
+        public IActionResult Add([FromBody] Employee employee)
         {
             if (EmployeesRepository.Any(item => item.Name == employee.Name.Trim()))
                 return BadRequest($"Сотрудник с идентификатором {employee.Id} уже существует.");
@@ -48,7 +48,7 @@ namespace Timesheets.Controllers
         }
 
         [HttpDelete("delete/{id}")]
-        public IActionResult Delete([FromRoute]int id)
+        public IActionResult Delete([FromRoute] int id)
         {
             var index = EmployeesRepository.FindIndex(item => item.Id == id);
             if (index == -1)

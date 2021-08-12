@@ -29,9 +29,9 @@ namespace Timesheets.Controllers
         [HttpPost("modify")]
         public IActionResult Modify([FromBody] Invoice Invoice)
         {
-            var entity = InvoicesRepository.SingleOrDefault(item => item.ContractId == Invoice.ContractId && item.Date == Invoice.Date && item.EmployeeId == Invoice.EmployeeId);
+            var entity = InvoicesRepository.SingleOrDefault(item => item.ContractId == Invoice.ContractId && item.Date == Invoice.Date);
             if (entity == null)
-                return BadRequest($"Счет с контрактом = {Invoice.ContractId}; Дата = {Invoice.Date}; Сотрудник = {Invoice.EmployeeId} не найден");
+                return BadRequest($"Счет с контрактом = {Invoice.ContractId}; Дата = {Invoice.Date};");
             entity.Description = Invoice.Description;
             entity.Total = Invoice.Total;
             return Ok();
@@ -40,8 +40,8 @@ namespace Timesheets.Controllers
         [HttpPut("add")]
         public IActionResult Add([FromBody] Invoice Invoice)
         {
-            if (InvoicesRepository.Any(item => item.ContractId == Invoice.ContractId && item.Date == Invoice.Date && item.EmployeeId == Invoice.EmployeeId))
-                return BadRequest($"Счет с контрактом = {Invoice.ContractId}; Дата = {Invoice.Date}; Сотрудник = {Invoice.EmployeeId} уже существует");
+            if (InvoicesRepository.Any(item => item.ContractId == Invoice.ContractId && item.Date == Invoice.Date))
+                return BadRequest($"Счет с контрактом = {Invoice.ContractId}; Дата = {Invoice.Date};");
             InvoicesRepository.Add(Invoice);
             return Ok();
         }
@@ -49,9 +49,9 @@ namespace Timesheets.Controllers
         [HttpDelete("delete/{id}")]
         public IActionResult Delete([FromBody] Invoice Invoice)
         {
-            var index = InvoicesRepository.FindIndex(item => item.ContractId == Invoice.ContractId && item.Date == Invoice.Date && item.EmployeeId == Invoice.EmployeeId);
+            var index = InvoicesRepository.FindIndex(item => item.ContractId == Invoice.ContractId && item.Date == Invoice.Date);
             if (index == -1)
-                return BadRequest($"Счет с контрактом = {Invoice.ContractId}; Дата = {Invoice.Date}; Сотрудник = {Invoice.EmployeeId} не найден");
+                return BadRequest($"Счет с контрактом = {Invoice.ContractId}; Дата = {Invoice.Date};");
             InvoicesRepository.RemoveAt(index);
             return Ok();
         }
