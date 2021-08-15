@@ -10,7 +10,7 @@ namespace Timesheets.DAL.Model
             InvoiceTasksCollection = new HashSet<InvoiceTask>();
         }
         
-        public int Id { get; set;}
+        public int Id { get; set; }
         
         public int ContractId { get; set; }
 
