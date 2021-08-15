@@ -9,7 +9,7 @@
 *.user
 *.userosscache
 *.sln.docstates
-*.json
+#*.json
 *.txt
 
 # User-specific files (MonoDevelop/Xamarin Studio)
@@ -342,3 +342,6 @@ ASALocalRun/
 healthchecksdb
 /2. Algorithms/AlgorithmSortTest/AlgorithmSortTest.csproj
 /2. Algorithms/AlgorithmSortTest/UnitTest1.cs
+3.ASP.NETWebAPI/lesson-1/WeatherForecast/WeatherForecast/Properties/
+3.ASP.NETWebAPI/lesson-1/WeatherForecast/WeatherForecast/appsettings.Development.json
+3.ASP.NETWebAPI/lesson-1/WeatherForecast/WeatherForecast/appsettings.json
