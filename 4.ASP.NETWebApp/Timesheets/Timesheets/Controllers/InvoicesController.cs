@@ -55,6 +55,5 @@ namespace Timesheets.Controllers
             InvoicesRepository.RemoveAt(index);
             return Ok();
         }
-
     }
 }

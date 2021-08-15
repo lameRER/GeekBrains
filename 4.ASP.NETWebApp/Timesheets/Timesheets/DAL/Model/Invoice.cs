@@ -14,11 +14,11 @@ namespace Timesheets.DAL.Model
         
         public int ContractId { get; set; }
 
-        public DateTime Date { get; set;}
+        public DateTime Date { get; set; }
 
-        public decimal Total { get; set;}
+        public decimal Total { get; set; }
 
-        public string Description { get; set;}
+        public string Description { get; set; }
         
         public virtual Contract Contract { get; set; }
         

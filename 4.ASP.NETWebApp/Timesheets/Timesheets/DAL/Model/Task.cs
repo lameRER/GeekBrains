@@ -10,11 +10,11 @@ namespace Timesheets.DAL.Model
             TaskExecutions = new HashSet<TaskEmployee>();
         }
         
-        public int Id { get; set;}
+        public int Id { get; set; }
         
-        public string Name { get; set;}
+        public string Name { get; set; }
 
-        public int Amount { get; set;}
+        public int Amount { get; set; }
 
         public virtual ICollection<InvoiceTask> InvoiceTasks { get; set; }
         

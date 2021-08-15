@@ -56,6 +56,5 @@ namespace Timesheets.Controllers
             EmployeesRepository.RemoveAt(index);
             return Ok();
         }
-
     }
 }
