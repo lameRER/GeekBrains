@@ -1,4 +1,4 @@
-namespace Timesheets.DAL.Model
+namespace Timesheets.DAL.Models
 {
     public class TaskEmployee
     {

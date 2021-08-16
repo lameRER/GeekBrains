@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Timesheets.DAL.Model
+namespace Timesheets.DAL.Models
 {
     public class Invoice
     {
