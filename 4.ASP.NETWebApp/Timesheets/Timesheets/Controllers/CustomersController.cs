@@ -1,10 +1,11 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Timesheets.DAL.Model;
+using Timesheets.DAL.Models;
+using Timesheets.Request;
 
 namespace Timesheets.Controllers
 {
@@ -12,60 +13,61 @@ namespace Timesheets.Controllers
     [Route("api/[controller]")]
     public class CustomersController : ControllerBase
     {
-        private static readonly List<Customer> ClientsRepository = new();
-        
-        private readonly ILogger<CustomersController> _logger;
+        private static readonly List<Customer> CustomRepository = new();
 
-        public CustomersController(ILogger<CustomersController> logger)
+        private readonly ILogger<CustomersController> _logger;
+        private readonly IMediator _mediator;
+
+        public CustomersController(ILogger<CustomersController> logger, IMediator mediator)
         {
             _logger = logger;
+            _mediator = mediator;
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            return Ok(ClientsRepository);
+            await _mediator.Send(new GetCustomerQuery());
+            return Ok(CustomRepository);
         }
-        
-        [HttpGet("/{id}")]
-        public IActionResult Get([FromRoute] int id)
+
+        [HttpGet("{id}")]
+        public async Task<IActionResult> Get([FromRoute] int id)
         {
-            return Ok(ClientsRepository.SingleOrDefault(item => item.Id == id));
+            return Ok(CustomRepository.SingleOrDefault(item => item.Id == id));
         }
 
         [HttpPut("modify")]
-        public IActionResult Modify([FromBody] Customer customer)
+        public async Task<IActionResult> Modify([FromBody] Customer customer)
         {
-            var entity = ClientsRepository.SingleOrDefault(item => item.Id == customer.Id);
+            var entity = CustomRepository.SingleOrDefault(item => item.Id == customer.Id);
             if (entity == null)
                 return BadRequest($"Клиент с идентификатором {customer.Id} не найден");
             entity.Name = customer.Name;
             return Ok();
         }
 
-        [HttpPost("add")]
-        public IActionResult Add([FromBody] Customer customer)
+        [HttpPost]
+        public async Task<IActionResult> Add([FromBody] Customer customer)
         {
-            if (ClientsRepository.Any(item => item.Name == customer.Name.Trim()))
+            if (CustomRepository.Any(item => item.Name == customer.Name.Trim()))
             {
-                return BadRequest($"Клиент с идентификатором {ClientsRepository.Where(item => item.Name == customer.Name.Trim()).Select(item => item.Id).First()} уже существует");
+                return BadRequest($"Клиент с идентификатором {CustomRepository.Where(item => item.Name == customer.Name.Trim()).Select(item => item.Id).First()} уже существует");
             }
-            else
-            {
-                var maxId = (ClientsRepository.Any(item => item.Id != 0)) ? ClientsRepository.Max(item => item.Id) : 0;
-                customer.Id = maxId + 1;
-                ClientsRepository.Add(customer);
-                return Ok($"Клиент '{customer.Name}' успешно добавлен");
-            }
+
+            var maxId = (CustomRepository.Any(item => item.Id != 0)) ? CustomRepository.Max(item => item.Id) : 0;
+            customer.Id = maxId + 1;
+            CustomRepository.Add(customer);
+            return Ok($"Клиент '{customer.Name}' успешно добавлен");
         }
 
-        [HttpDelete("delete/{id}")]
-        public IActionResult Delete([FromRoute] int id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Delete([FromRoute] int id)
         {
-            var index = ClientsRepository.FindIndex(item => item.Id == id);
+            var index = CustomRepository.FindIndex(item => item.Id == id);
             if (index == -1)
                 return BadRequest($"Клиент с идентификатором {id} не найден");
-            ClientsRepository.RemoveAt(index);
+            CustomRepository.RemoveAt(index);
             return Ok();
         }
     }

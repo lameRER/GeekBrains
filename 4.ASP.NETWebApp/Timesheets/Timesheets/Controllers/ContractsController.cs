@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Timesheets.DAL.Model;
+using Timesheets.DAL.Models;
 
 namespace Timesheets.Controllers
 {
@@ -27,27 +27,27 @@ namespace Timesheets.Controllers
         }
 
         [HttpPost("modify")]
-        public IActionResult Modify([FromBody] Contract Contract)
+        public IActionResult Modify([FromBody] Contract contract)
         {
-            var entity = ContractsRepository.SingleOrDefault(item => item.Id == Contract.Id);
+            var entity = ContractsRepository.SingleOrDefault(item => item.Id == contract.Id);
             if (entity == null)
-                return BadRequest($"Контракт с идентификатором {Contract.Id} не найден");
-            entity.Name = Contract.Name;
-            entity.SetDate = Contract.SetDate;
-            entity.EndDate = Contract.EndDate;
-            entity.CustomerId = Contract.CustomerId;
-            entity.Number = Contract.Number;
+                return BadRequest($"Контракт с идентификатором {contract.Id} не найден");
+            entity.Name = contract.Name;
+            entity.SetDate = contract.SetDate;
+            entity.EndDate = contract.EndDate;
+            entity.CustomerId = contract.CustomerId;
+            entity.Number = contract.Number;
             return Ok();
         }
 
         [HttpPut("add")]
-        public IActionResult Add([FromBody] Contract Contract)
+        public IActionResult Add([FromBody] Contract contract)
         {
-            if (ContractsRepository.Any(item => item.Name == Contract.Name.Trim()))
-                return BadRequest($"Контракт с идентификатором {Contract.Id} уже существует");
+            if (ContractsRepository.Any(item => item.Name == contract.Name.Trim()))
+                return BadRequest($"Контракт с идентификатором {contract.Id} уже существует");
             var maxId = ContractsRepository.Max(item => item.Id);
-            Contract.Id = maxId + 1;
-            ContractsRepository.Add(Contract);
+            contract.Id = maxId + 1;
+            ContractsRepository.Add(contract);
             return Ok();
         }
 
