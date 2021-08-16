@@ -1,13 +1,16 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.Reflection;
+using AutoMapper;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
+using Timesheets.DAL;
+using Timesheets.DAL.Interfaces;
+using Timesheets.DAL.Repositories;
+using Timesheets.Mapper;
 
 namespace Timesheets
 {
@@ -34,6 +37,12 @@ namespace Timesheets
                     }
                 });
             });
+            services.AddSingleton<ICustomerRepository, CustomerRepository>();
+            services.AddSingleton<DataBaseContext>();
+            services.AddMediatR(Assembly.GetExecutingAssembly());
+            var mapperConfiguration = new MapperConfiguration(mp => mp.AddProfile(new MapperProfile()));
+            var mapper = mapperConfiguration.CreateMapper(); 
+            services.AddSingleton(mapper);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
