@@ -19,8 +19,4 @@
         </PackageReference>
     </ItemGroup>
 
-    <ItemGroup>
-      <ProjectReference Include="..\MetricsManager\MetricsManager.csproj" />
-    </ItemGroup>
-
 </Project>
