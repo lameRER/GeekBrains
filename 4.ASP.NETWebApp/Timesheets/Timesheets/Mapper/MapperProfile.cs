@@ -1,5 +1,6 @@
 using AutoMapper;
 using Timesheets.DAL.Models;
+using Timesheets.Request;
 using Timesheets.Responses;
 
 namespace Timesheets.Mapper
@@ -8,6 +9,8 @@ namespace Timesheets.Mapper
     {
         public MapperProfile()
         {
+            CreateMap<AddCustomerQuery, Customer>();
+            CreateMap<GetCustomerByIdQuery, Customer>();
             CreateMap<Customer, CustomerDto>();
         }
     }

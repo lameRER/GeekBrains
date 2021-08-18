@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -6,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Timesheets.DAL.Models;
 using Timesheets.Request;
+using Task = System.Threading.Tasks.Task;
 
 namespace Timesheets.Controllers
 {
@@ -27,14 +29,40 @@ namespace Timesheets.Controllers
         [HttpGet]
         public async Task<IActionResult> Get()
         {
-            await _mediator.Send(new GetCustomerQuery());
-            return Ok(CustomRepository);
+            return Ok(await _mediator.Send(new GetCustomerQuery()));
         }
 
         [HttpGet("{id}")]
         public async Task<IActionResult> Get([FromRoute] int id)
         {
-            return Ok(CustomRepository.SingleOrDefault(item => item.Id == id));
+            var response = await _mediator.Send(new GetCustomerByIdQuery(id));
+            return Ok(response);
+            // return Ok(CustomRepository.SingleOrDefault(item => item.Id == id));
+        }
+
+        [HttpGet("{CustomerId}/Contracts")]
+        public async Task<IActionResult> GetCustomerContract([FromRoute] GetCustomerContractQuery request)
+        {
+            return Ok();
+        }
+
+        [HttpGet("Contract/{ContractId}/Invoices/From/{DateFrom}/To/{DateTo}")]
+        public async Task<IActionResult> GetContractInvoices([FromRoute] int ContractId, [FromRoute] DateTime DateFrom,
+            [FromRoute] DateTime DateTo)
+        {
+            return Ok();
+        }
+
+        [HttpPost("{CustomerId}/Contract")]
+        public async Task<IActionResult> AddContract(AddContractCommand request)
+        {
+            return Ok();
+        }
+
+        [HttpPost("Contract/{ContractId}/Invoice")]
+        public async Task<IActionResult> AddInvoice(AddInvoiceCommand request)
+        {
+            return Ok();
         }
 
         [HttpPut("modify")]
@@ -48,17 +76,9 @@ namespace Timesheets.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] Customer customer)
+        public async Task<IActionResult> Add([FromBody] AddCustomerQuery request)
         {
-            if (CustomRepository.Any(item => item.Name == customer.Name.Trim()))
-            {
-                return BadRequest($"Клиент с идентификатором {CustomRepository.Where(item => item.Name == customer.Name.Trim()).Select(item => item.Id).First()} уже существует");
-            }
-
-            var maxId = (CustomRepository.Any(item => item.Id != 0)) ? CustomRepository.Max(item => item.Id) : 0;
-            customer.Id = maxId + 1;
-            CustomRepository.Add(customer);
-            return Ok($"Клиент '{customer.Name}' успешно добавлен");
+            return Ok(await _mediator.Send(request));
         }
 
         [HttpDelete("{id}")]

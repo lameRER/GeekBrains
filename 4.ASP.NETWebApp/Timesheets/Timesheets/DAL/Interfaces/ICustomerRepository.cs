@@ -1,7 +1,8 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Timesheets.DAL.Models;
-using Task = Timesheets.DAL.Models.Task;
+using Timesheets.Responses;
+using Task = System.Threading.Tasks.Task;
 
 namespace Timesheets.DAL.Interfaces
 {
@@ -11,8 +12,8 @@ namespace Timesheets.DAL.Interfaces
 
         Task<Customer> GetById(int id);
 
-        Task<Customer> Create(Customer entity);
+        Task<Customer> Create(Customer customer);
 
-        Task AddContract(Contract entity);
+        Task AddContract(Contract contract);
     }
 }

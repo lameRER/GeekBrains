@@ -1,8 +1,9 @@
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Timesheets.DAL.Interfaces;
 using Timesheets.DAL.Models;
-using Task = Timesheets.DAL.Models.Task;
+using Task = System.Threading.Tasks.Task;
 
 namespace Timesheets.DAL.Repositories
 {
@@ -16,24 +17,40 @@ namespace Timesheets.DAL.Repositories
         }
         public async Task<ICollection<Customer>> Get()
         {
-            var result = await System.Threading.Tasks.Task.Run<ICollection<Customer>>
+            var result = await Task.Run<ICollection<Customer>>
             (() => _baseContext.Customers);
             return result;
         }
 
-        public Task<Customer> GetById(int id)
+        public async Task<Customer> GetById(int id)
         {
-            throw new System.NotImplementedException();
+            var result = await Task.Run(() =>
+            {
+                return _baseContext.Customers.SingleOrDefault(i => i.Id == id);
+            });
+            return result;
         }
 
-        public Task<Customer> Create(Customer entity)
+        public async Task<Customer> Create(Customer customer)
         {
-            throw new System.NotImplementedException();
+            await Task.Run(() =>
+            {
+                var maxId = (_baseContext.Customers.Any(item => item.Id != 0)) ? _baseContext.Customers.Max(item => item.Id) : 0;
+                customer.Id = maxId + 1;
+                _baseContext.Customers.Add(customer);
+                return customer;
+            });
+
+            return customer;
         }
 
-        public Task AddContract(Contract entity)
+        public async Task AddContract(Contract contract)
         {
-            throw new System.NotImplementedException();
+            await Task.Run(() =>
+            {
+                var customer = _baseContext.Customers.FirstOrDefault(i => i.Id == contract.Customer.Id);
+                customer?.Contracts.Add(contract);
+            });
         }
     }
 }

@@ -9,9 +9,9 @@ using Timesheets.Responses;
 
 namespace Timesheets.Request
 {
-    public class GetCustomerQuery : IRequest<TimesheetResponse<Customer>>
+    public class GetCustomerQuery : IRequest<TimesheetResponse<CustomerDto>>
     {
-        public class GetCustomerQueryHandler : IRequestHandler<GetCustomerQuery ,TimesheetResponse<Customer>>
+        public class GetCustomerQueryHandler : IRequestHandler<GetCustomerQuery ,TimesheetResponse<CustomerDto>>
         {
             private readonly ICustomerRepository _repository;
 
@@ -23,12 +23,12 @@ namespace Timesheets.Request
                 _mapper = mapper;
             }
 
-            public async Task<TimesheetResponse<Customer>> Handle(GetCustomerQuery query,
+            public async Task<TimesheetResponse<CustomerDto>> Handle(GetCustomerQuery query,
                 CancellationToken cancellationToken)
             {
                 var customers = await _repository.Get();
-                var response = new TimesheetResponse<Customer>();
-                response.Timesheet.AddRange(_mapper.Map<List<Customer>>(customers));
+                var response = new TimesheetResponse<CustomerDto>();
+                response.Timesheet.AddRange(_mapper.Map<List<CustomerDto>>(customers));
                 return response;
             }
         }
