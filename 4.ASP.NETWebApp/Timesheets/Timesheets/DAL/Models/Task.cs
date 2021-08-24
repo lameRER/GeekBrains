@@ -6,8 +6,8 @@ namespace Timesheets.DAL.Models
     {
         public Task()
         {
-            InvoiceTasks = new HashSet<InvoiceTask>();
-            TaskExecutions = new HashSet<TaskEmployee>();
+            Invoices = new HashSet<Invoice>();
+            TaskEmployee = new HashSet<TaskEmployee>();
         }
         
         public int Id { get; set; }
@@ -16,8 +16,8 @@ namespace Timesheets.DAL.Models
 
         public int Amount { get; set; }
 
-        public virtual ICollection<InvoiceTask> InvoiceTasks { get; set; }
+        public virtual ICollection<Invoice> Invoices { get; set; }
         
-        public virtual ICollection<TaskEmployee> TaskExecutions { get; set; }
+        public virtual ICollection<TaskEmployee> TaskEmployee { get; set; }
     }
 }

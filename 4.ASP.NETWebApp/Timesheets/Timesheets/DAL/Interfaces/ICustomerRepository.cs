@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Timesheets.DAL.Models;
-using Timesheets.Responses;
 using Task = System.Threading.Tasks.Task;
 
 namespace Timesheets.DAL.Interfaces

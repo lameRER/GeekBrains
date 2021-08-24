@@ -7,7 +7,7 @@ namespace Timesheets.DAL.Models
     {
         public Invoice()
         {
-            InvoiceTasksCollection = new HashSet<InvoiceTask>();
+            Tasks = new HashSet<Task>();
         }
         
         public int Id { get; set; }
@@ -22,6 +22,6 @@ namespace Timesheets.DAL.Models
         
         public virtual Contract Contract { get; set; }
         
-        public virtual ICollection<InvoiceTask> InvoiceTasksCollection { get; set; }
+        public virtual ICollection<Task> Tasks { get; set; }
     }
 }

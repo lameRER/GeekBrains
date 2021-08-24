@@ -1,4 +1,3 @@
-using System;
 using System.Reflection;
 using AutoMapper;
 using MediatR;
@@ -31,13 +30,14 @@ namespace Timesheets
                     {
                         Name = "lameR",
                     },
-                    License = new OpenApiLicense
-                    {
-                        Url = new Uri("https://example.com/license"),
-                    }
                 });
             });
             services.AddSingleton<ICustomerRepository, CustomerRepository>();
+            services.AddSingleton<IContractRepository, ContractRepository>();
+            services.AddSingleton<ITaskRepository, TaskRepository>();
+            services.AddSingleton<IInvoiceRepository, InvoiceRepository>();
+            services.AddSingleton<IEmployeeRepository, EmployeeRepository>();
+            services.AddSingleton<ITaskEmployeeRepository, TaskEmployeeRepository>();
             services.AddSingleton<DataBaseContext>();
             services.AddMediatR(Assembly.GetExecutingAssembly());
             var mapperConfiguration = new MapperConfiguration(mp => mp.AddProfile(new MapperProfile()));
