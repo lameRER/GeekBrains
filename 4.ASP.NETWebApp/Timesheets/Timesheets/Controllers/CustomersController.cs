@@ -1,13 +1,9 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Timesheets.DAL.Models;
 using Timesheets.Request;
-using Task = System.Threading.Tasks.Task;
 
 namespace Timesheets.Controllers
 {
@@ -15,8 +11,6 @@ namespace Timesheets.Controllers
     [Route("api/[controller]")]
     public class CustomersController : ControllerBase
     {
-        private static readonly List<Customer> CustomRepository = new();
-
         private readonly ILogger<CustomersController> _logger;
         private readonly IMediator _mediator;
 
@@ -32,63 +26,41 @@ namespace Timesheets.Controllers
             return Ok(await _mediator.Send(new GetCustomerQuery()));
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> Get([FromRoute] int id)
-        {
-            var response = await _mediator.Send(new GetCustomerByIdQuery(id));
-            return Ok(response);
-            // return Ok(CustomRepository.SingleOrDefault(item => item.Id == id));
-        }
-
-        [HttpGet("{CustomerId}/Contracts")]
-        public async Task<IActionResult> GetCustomerContract([FromRoute] GetCustomerContractQuery request)
-        {
-            return Ok();
-        }
-
-        [HttpGet("Contract/{ContractId}/Invoices/From/{DateFrom}/To/{DateTo}")]
-        public async Task<IActionResult> GetContractInvoices([FromRoute] int ContractId, [FromRoute] DateTime DateFrom,
-            [FromRoute] DateTime DateTo)
-        {
-            return Ok();
-        }
-
-        [HttpPost("{CustomerId}/Contract")]
-        public async Task<IActionResult> AddContract(AddContractCommand request)
-        {
-            return Ok();
-        }
-
-        [HttpPost("Contract/{ContractId}/Invoice")]
-        public async Task<IActionResult> AddInvoice(AddInvoiceCommand request)
-        {
-            return Ok();
-        }
-
-        [HttpPut("modify")]
-        public async Task<IActionResult> Modify([FromBody] Customer customer)
-        {
-            var entity = CustomRepository.SingleOrDefault(item => item.Id == customer.Id);
-            if (entity == null)
-                return BadRequest($"Клиент с идентификатором {customer.Id} не найден");
-            entity.Name = customer.Name;
-            return Ok();
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> Add([FromBody] AddCustomerQuery request)
+        [HttpGet("{Id:int}")]
+        public async Task<IActionResult> Get([FromRoute] GetCustomerByIdQuery request)
         {
             return Ok(await _mediator.Send(request));
         }
 
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete([FromRoute] int id)
+        [HttpGet("{CustomerId:int}/Contracts")]
+        public async Task<IActionResult> GetCustomerContract([FromRoute] GetCustomerContractQuery request)
         {
-            var index = CustomRepository.FindIndex(item => item.Id == id);
-            if (index == -1)
-                return BadRequest($"Клиент с идентификатором {id} не найден");
-            CustomRepository.RemoveAt(index);
-            return Ok();
+            return Ok(await _mediator.Send(request));
+        }
+
+        [HttpGet("Contract/{ContractId:int}/Invoices/From/{DateFrom:datetime}/To/{DateTo:datetime}")]
+        public async Task<IActionResult> GetContractInvoices([FromRoute] int contractId, [FromRoute] DateTime dateFrom,
+            [FromRoute] DateTime dateTo)
+        {
+            return Ok(await _mediator.Send(new GetContractInvoicesByIdQuery { ContractId = contractId, DateFrom = dateFrom, DateTo = dateTo }));
+        }
+
+        [HttpPost("{CustomerId:int}/Contract")]
+        public async Task<IActionResult> AddContract(AddContractInsert request)
+        {
+            return Ok(await _mediator.Send(request));
+        }
+
+        [HttpPost("Contract/{ContractId:int}/Invoice")]
+        public async Task<IActionResult> AddInvoice(AddInvoiceInsert request)
+        {
+            return Ok(await _mediator.Send(request));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add([FromBody] AddCustomerInsert request)
+        {
+            return Ok(await _mediator.Send(request));
         }
     }
 }

@@ -1,8 +1,8 @@
-using System.Collections.Generic;
-using System.Linq;
+using System.Threading.Tasks;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Timesheets.DAL.Models;
+using Timesheets.Request;
 
 namespace Timesheets.Controllers
 {
@@ -10,51 +10,37 @@ namespace Timesheets.Controllers
     [Route("api/[controller]")]
     public class EmployeesController : ControllerBase
     {
-        private static readonly List<Employee> EmployeesRepository = new();
-        
         private readonly ILogger<EmployeesController> _logger;
+        private readonly IMediator _mediator;
 
-        public EmployeesController(ILogger<EmployeesController> logger)
+        public EmployeesController(ILogger<EmployeesController> logger, IMediator mediator)
         {
             _logger = logger;
+            _mediator = mediator;
         }
 
         [HttpGet]
-        public IActionResult Get()
+        public async Task<IActionResult> Get()
         {
-            _logger.LogDebug("");
-            return Ok(EmployeesRepository);
+            return Ok(await _mediator.Send(new GetEmployeesQuery()));
         }
 
-        [HttpPost("modify")]
-        public IActionResult Modify([FromBody] Employee employee)
+        [HttpPost]
+        public async Task<IActionResult> Add([FromBody] AddEmployeeInsert request)
         {
-            var entity = EmployeesRepository.SingleOrDefault(item => item.Id == employee.Id);
-            if (entity == null)
-                return BadRequest($"Сотрудник с идентификатором {employee.Id} не найден");
-            entity.Name = employee.Name;
-            return Ok();
+            return Ok(await _mediator.Send(request));
         }
-
-        [HttpPut("add")]
-        public IActionResult Add([FromBody] Employee employee)
+        
+        [HttpGet("{EmployeeId:int}/Executions")]
+        public async Task<IActionResult> GetEmployeeExecutions([FromRoute] GetEmployeeExecutionsQuery request)
         {
-            if (EmployeesRepository.Any(item => item.Name == employee.Name.Trim()))
-                return BadRequest($"Сотрудник с идентификатором {employee.Id} уже существует.");
-            var maxId = EmployeesRepository.Max(item => item.Id);
-            employee.Id = maxId + 1;
-            EmployeesRepository.Add(employee);
-            return Ok();
+            return Ok(await _mediator.Send(request));
         }
-
-        [HttpDelete("delete/{id}")]
-        public IActionResult Delete([FromRoute] int id)
+        
+        [HttpPost("{EmployeeId:int}/Task/{TaskId:int}/Execution/{TimeSpent:int}")]
+        public async Task<IActionResult> AddEmployeeTaskExecution([FromRoute] AddEmployeeTaskExecutionInsert request)
         {
-            var index = EmployeesRepository.FindIndex(item => item.Id == id);
-            if (index == -1)
-                return BadRequest($"Сотрудник с идентификатором {id} не найден");
-            EmployeesRepository.RemoveAt(index);
-            return Ok();
+            return Ok(await _mediator.Send(request));
         }
     }
 }
