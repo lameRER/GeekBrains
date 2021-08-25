@@ -1,0 +1,34 @@
+using System.Threading.Tasks;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
+using Timesheets.Request;
+
+namespace Timesheets.Controllers
+{
+    [ApiController]
+    [Route("Api/[controller]")]
+    public class TasksController : Controller
+    {
+        private readonly ILogger<TasksController> _logger;
+        private readonly IMediator _mediator;
+
+        public TasksController(ILogger<TasksController> logger, IMediator mediator)
+        {
+            _logger = logger;
+            _mediator = mediator;
+        }
+        
+        [HttpGet]
+        public async Task<IActionResult> Get()
+        {
+            return Ok(await _mediator.Send(new GetTasksQuery()));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Add([FromBody] AddTaskInsert request)
+        {
+            return Ok(await _mediator.Send(request));
+        }
+    }
+}
