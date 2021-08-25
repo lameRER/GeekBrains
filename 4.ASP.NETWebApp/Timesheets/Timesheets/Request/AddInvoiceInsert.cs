@@ -50,12 +50,10 @@ namespace Timesheets.Request
                 if (contract == null) return null;
                 var invoice = _mapper.Map<Invoice>(request);
                 invoice.Contract = contract;
-                var amount = 0;
                 foreach (var taskItem in request.Tasks)
                 {
                     var task = await _taskRepository.GetById(taskItem.Id);
                     invoice.Tasks.Add(task);
-                    amount += task.Amount;
                 }
 
                 invoice = await _invoiceRepository.Create(invoice);

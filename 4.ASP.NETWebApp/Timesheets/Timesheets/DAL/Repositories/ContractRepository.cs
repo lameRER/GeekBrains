@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -28,13 +29,17 @@ namespace Timesheets.DAL.Repositories
 
         public async Task<Contract> Create(Contract contract)
         {
-            return await Task.Run(() =>
+            try
             {
-                var maxId = (_baseContext.Contracts.Any(i => i.Id != 0)) ? _baseContext.Contracts.Max(i => i.Id) : 0;
-                contract.Id = maxId + 1;
-                _baseContext.Contracts.Add(contract);
+                await _baseContext.Contracts.AddAsync(contract);
+                await _baseContext.SaveChangesAsync();
                 return contract;
-            });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
 
         public async Task AddInvoice(Invoice invoice)

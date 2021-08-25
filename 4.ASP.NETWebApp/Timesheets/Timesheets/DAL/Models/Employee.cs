@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Timesheets.DAL.Models
 {
-    public class Employee
+    public sealed class Employee
     {
         public Employee()
         {
@@ -13,6 +13,6 @@ namespace Timesheets.DAL.Models
         
         public string Rate { get; set; }
         
-        public virtual ICollection<TaskEmployee> TaskEmployee { get; set; }
+        public ICollection<TaskEmployee> TaskEmployee { get; set; }
     }
 }

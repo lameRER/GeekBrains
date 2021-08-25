@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Timesheets.DAL.Models
 {
-    public class Invoice
+    public sealed class Invoice
     {
         public Invoice()
         {
@@ -20,8 +20,8 @@ namespace Timesheets.DAL.Models
 
         public string Description { get; set; }
         
-        public virtual Contract Contract { get; set; }
+        public Contract Contract { get; set; }
         
-        public virtual ICollection<Task> Tasks { get; set; }
+        public ICollection<Task> Tasks { get; set; }
     }
 }

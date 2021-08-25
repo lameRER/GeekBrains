@@ -24,13 +24,17 @@ namespace Timesheets.DAL.Repositories
 
         public async Task<Invoice> Create(Invoice invoice)
         {
-            return await Task.Run(() =>
+            try
             {
-                var maxId = (_baseContext.Invoices.Any(item => item.Id != 0)) ? _baseContext.Invoices.Max(item => item.Id) : 0;
-                invoice.Id = maxId + 1;
-                _baseContext.Invoices.Add(invoice);
+                await _baseContext.Invoices.AddAsync(invoice);
+                await _baseContext.SaveChangesAsync();
                 return invoice;
-            });
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                throw;
+            }
         }
     }
 }
