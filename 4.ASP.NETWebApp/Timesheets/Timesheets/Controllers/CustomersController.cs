@@ -1,6 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Timesheets.Request;
@@ -8,6 +9,7 @@ using Timesheets.Request;
 namespace Timesheets.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/[controller]")]
     public class CustomersController : ControllerBase
     {
