@@ -4,9 +4,9 @@ using AutoMapper;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Timesheets.DAL.Interfaces;
-using Timesheets.Responses;
+using Timesheets.Service.Responses;
 
-namespace Timesheets.Request
+namespace Timesheets.Service.Request
 {
     public class GetCustomerByIdQuery : IRequest<TimesheetResponse<CustomerDto>>
     {

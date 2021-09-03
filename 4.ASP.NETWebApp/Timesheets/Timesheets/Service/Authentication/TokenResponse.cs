@@ -1,4 +1,4 @@
-namespace Timesheets.Authentication
+namespace Timesheets.Service.Authentication
 {
     public class TokenResponse
     {

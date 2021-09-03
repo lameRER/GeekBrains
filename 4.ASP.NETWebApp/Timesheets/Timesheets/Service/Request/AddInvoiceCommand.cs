@@ -7,10 +7,10 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Timesheets.DAL.Interfaces;
 using Timesheets.DAL.Models;
-using Timesheets.Responses;
+using Timesheets.Service.Responses;
 using Task = Timesheets.DAL.Models.Task;
 
-namespace Timesheets.Request
+namespace Timesheets.Service.Request
 {
     public class AddInvoiceCommand : IRequest<InvoiceDto>
     {

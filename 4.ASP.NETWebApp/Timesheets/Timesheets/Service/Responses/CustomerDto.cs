@@ -1,4 +1,4 @@
-namespace Timesheets.Responses
+namespace Timesheets.Service.Responses
 {
     public class CustomerDto
     {

@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Timesheets.Authentication;
+using Timesheets.Service.Authentication;
 
 namespace Timesheets.Controllers
 {

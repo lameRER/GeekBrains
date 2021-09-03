@@ -1,6 +1,6 @@
 using System;
 
-namespace Timesheets.Responses
+namespace Timesheets.Service.Responses
 {
     public class ContractDto
     {

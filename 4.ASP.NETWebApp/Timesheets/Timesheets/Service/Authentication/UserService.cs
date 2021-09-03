@@ -5,7 +5,7 @@ using System.Security.Claims;
 using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
-namespace Timesheets.Authentication
+namespace Timesheets.Service.Authentication
 {
     public class UserService : IUserService
     {

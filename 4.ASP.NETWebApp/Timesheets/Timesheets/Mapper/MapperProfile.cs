@@ -1,7 +1,7 @@
 using AutoMapper;
 using Timesheets.DAL.Models;
-using Timesheets.Request;
-using Timesheets.Responses;
+using Timesheets.Service.Request;
+using Timesheets.Service.Responses;
 
 namespace Timesheets.Mapper
 {

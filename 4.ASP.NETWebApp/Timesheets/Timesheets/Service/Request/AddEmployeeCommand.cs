@@ -4,9 +4,9 @@ using AutoMapper;
 using MediatR;
 using Timesheets.DAL.Interfaces;
 using Timesheets.DAL.Models;
-using Timesheets.Responses;
+using Timesheets.Service.Responses;
 
-namespace Timesheets.Request
+namespace Timesheets.Service.Request
 {
     public class AddEmployeeCommand : IRequest<EmployeeDto>
     {

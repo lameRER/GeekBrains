@@ -3,7 +3,7 @@ using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Timesheets.Request;
+using Timesheets.Service.Request;
 
 namespace Timesheets.Controllers
 {

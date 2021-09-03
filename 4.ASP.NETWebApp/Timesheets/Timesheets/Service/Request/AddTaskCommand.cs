@@ -3,10 +3,10 @@ using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
 using Timesheets.DAL.Interfaces;
-using Timesheets.Responses;
+using Timesheets.Service.Responses;
 using Task = Timesheets.DAL.Models.Task;
 
-namespace Timesheets.Request
+namespace Timesheets.Service.Request
 {
     public class AddTaskCommand : IRequest<TaskDto>
     {

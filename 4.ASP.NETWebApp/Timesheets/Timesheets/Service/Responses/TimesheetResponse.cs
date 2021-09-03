@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace Timesheets.Responses
+namespace Timesheets.Service.Responses
 {
     public class TimesheetResponse<T>
     {

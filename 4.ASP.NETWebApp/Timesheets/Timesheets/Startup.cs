@@ -13,12 +13,11 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
-using Timesheets.Authentication;
-using Timesheets.DAL;
 using Timesheets.DAL.EF;
 using Timesheets.DAL.Interfaces;
 using Timesheets.DAL.Repositories;
 using Timesheets.Mapper;
+using Timesheets.Service.Authentication;
 
 namespace Timesheets
 {
