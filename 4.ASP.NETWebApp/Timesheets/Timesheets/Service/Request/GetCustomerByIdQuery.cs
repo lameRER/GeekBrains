@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -21,8 +22,8 @@ namespace Timesheets.Service.Request
 
             public GetCustomerByIdQueryHandler(ICustomerRepository customerRepository, IMapper mapper)
             {
-                _customerRepository = customerRepository;
-                _mapper = mapper;
+                _customerRepository = customerRepository ?? throw new ArgumentNullException(nameof(customerRepository));
+                _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             }
 
             public async Task<TimesheetResponse<CustomerDto>> Handle(GetCustomerByIdQuery query,

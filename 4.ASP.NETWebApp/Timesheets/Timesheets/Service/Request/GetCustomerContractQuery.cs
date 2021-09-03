@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -22,9 +23,9 @@ namespace Timesheets.Service.Request
 
             public GetCustomerContractQueryHandler(IContractRepository contractRepository, ICustomerRepository customerRepository, IMapper mapper)
             {
-                _contractRepository = contractRepository;
-                _customerRepository = customerRepository;
-                _mapper = mapper;
+                _contractRepository = contractRepository ?? throw new ArgumentNullException(nameof(contractRepository));
+                _customerRepository = customerRepository ?? throw new ArgumentNullException(nameof(customerRepository));
+                _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             }
 
             public async Task<TimesheetResponse<ContractDto>> Handle(GetCustomerContractQuery query, CancellationToken cancellationToken)

@@ -38,10 +38,10 @@ namespace Timesheets.Service.Request
 
             public AddInvoiceCommandHandler(IInvoiceRepository invoiceRepository, IMapper mapper, IContractRepository contractRepository, ITaskRepository taskRepository)
             {
-                _invoiceRepository = invoiceRepository;
-                _mapper = mapper;
-                _contractRepository = contractRepository;
-                _taskRepository = taskRepository;
+                _invoiceRepository = invoiceRepository ?? throw new ArgumentNullException(nameof(invoiceRepository));
+                _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+                _contractRepository = contractRepository ?? throw new ArgumentNullException(nameof(contractRepository));
+                _taskRepository = taskRepository ?? throw new ArgumentNullException(nameof(taskRepository));
             }
 
             public async Task<InvoiceDto> Handle(AddInvoiceCommand request, CancellationToken cancellationToken)

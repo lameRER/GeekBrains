@@ -15,7 +15,7 @@ namespace Timesheets.DAL.Repositories
 
         public InvoiceRepository(DataBaseContext baseContext)
         {
-            _baseContext = baseContext;
+            _baseContext = baseContext ?? throw new ArgumentNullException(nameof(baseContext));
         }
 
         public async Task<ICollection<Invoice>> GetContractInvoiceByPeriod(Contract contract, DateTime dateFrom, DateTime dateTo)

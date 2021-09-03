@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -11,6 +12,7 @@ namespace Timesheets.Service.Request
     public class AddTaskCommand : IRequest<TaskDto>
     {
         public string Name { get; set;}
+        
         public int Amount { get; set;}
         
         public class AddTaskCommandHandler : IRequestHandler<AddTaskCommand, TaskDto>
@@ -20,8 +22,8 @@ namespace Timesheets.Service.Request
 
             public AddTaskCommandHandler(ITaskRepository taskRepository, IMapper mapper)
             {
-                _taskRepository = taskRepository;
-                _mapper = mapper;
+                _taskRepository = taskRepository ?? throw new ArgumentNullException(nameof(taskRepository));
+                _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             }
 
             public async Task<TaskDto> Handle(AddTaskCommand request, CancellationToken cancellationToken)

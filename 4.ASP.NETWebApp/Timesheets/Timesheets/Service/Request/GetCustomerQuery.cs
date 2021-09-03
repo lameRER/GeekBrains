@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,8 +19,8 @@ namespace Timesheets.Service.Request
 
             public GetCustomerQueryHandler(ICustomerRepository repository, IMapper mapper)
             {
-                _repository = repository;
-                _mapper = mapper;
+                _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+                _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             }
 
             public async Task<TimesheetResponse<CustomerDto>> Handle(GetCustomerQuery query,

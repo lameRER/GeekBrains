@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -17,8 +18,8 @@ namespace Timesheets.Service.Request
 
             public AddEmployeeCommandHandler(IEmployeeRepository employeeRepository, IMapper mapper)
             {
-                _employeeRepository = employeeRepository;
-                _mapper = mapper;
+                _employeeRepository = employeeRepository ?? throw new ArgumentNullException(nameof(employeeRepository));
+                _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             }
 
             public async Task<EmployeeDto> Handle(AddEmployeeCommand request, CancellationToken cancellationToken)

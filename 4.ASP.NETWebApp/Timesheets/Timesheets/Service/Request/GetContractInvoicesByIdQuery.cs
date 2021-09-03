@@ -23,9 +23,9 @@ namespace Timesheets.Service.Request
 
             public GetContractInvoicesByIdQueryHandler(IInvoiceRepository invoiceRepository, IContractRepository contractRepository, IMapper mapper)
             {
-                _invoiceRepository = invoiceRepository;
-                _contractRepository = contractRepository;
-                _mapper = mapper;
+                _invoiceRepository = invoiceRepository ?? throw new ArgumentNullException(nameof(invoiceRepository));
+                _contractRepository = contractRepository ?? throw new ArgumentNullException(nameof(contractRepository));
+                _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             }
 
             public async Task<TimesheetResponse<InvoiceDto>> Handle(GetContractInvoicesByIdQuery query,

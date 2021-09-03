@@ -18,8 +18,8 @@ namespace Timesheets.Controllers
 
         public CustomersController(ILogger<CustomersController> logger, IMediator mediator)
         {
-            _logger = logger;
-            _mediator = mediator;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
         [HttpGet]

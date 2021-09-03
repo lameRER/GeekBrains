@@ -35,9 +35,9 @@ namespace Timesheets.Service.Request
 
             public AddContractCommandHandler(ICustomerRepository customerRepository, IMapper mapper, IContractRepository contractRepository)
             {
-                _customerRepository = customerRepository;
-                _mapper = mapper;
-                _contractRepository = contractRepository;
+                _customerRepository = customerRepository ?? throw new ArgumentNullException(nameof(customerRepository));
+                _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
+                _contractRepository = contractRepository ?? throw new ArgumentNullException(nameof(contractRepository));
             }
 
             public async Task<CustomerDto> Handle(AddContractCommand request, CancellationToken cancellationToken)

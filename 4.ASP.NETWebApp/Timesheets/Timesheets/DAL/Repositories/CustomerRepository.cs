@@ -16,7 +16,7 @@ namespace Timesheets.DAL.Repositories
 
         public CustomerRepository(DataBaseContext baseContext)
         {
-            _baseContext = baseContext;
+            _baseContext = baseContext ?? throw new ArgumentNullException(nameof(baseContext));
         }
         public async Task<ICollection<Customer>> Get()
         {

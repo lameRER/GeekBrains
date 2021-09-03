@@ -1,3 +1,4 @@
+using System;
 using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -21,8 +22,8 @@ namespace Timesheets.Service.Request
 
             public AddCustomerCommandHandler(ICustomerRepository repository, IMapper mapper)
             {
-                _repository = repository;
-                _mapper = mapper;
+                _repository = repository ?? throw new ArgumentNullException(nameof(repository));
+                _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             }
 
             public async Task<CustomerDto> Handle(AddCustomerCommand query, CancellationToken cancellationToken)

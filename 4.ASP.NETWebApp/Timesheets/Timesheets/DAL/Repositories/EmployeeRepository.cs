@@ -12,11 +12,11 @@ namespace Timesheets.DAL.Repositories
 {
     public class EmployeeRepository : IEmployeeRepository
     {
-        private DataBaseContext _baseContext;
+        private readonly DataBaseContext _baseContext;
 
         public EmployeeRepository(DataBaseContext baseContext)
         {
-            _baseContext = baseContext;
+            _baseContext = baseContext ?? throw new ArgumentNullException(nameof(baseContext));
         }
 
         public async Task<ICollection<Employee>> Get()

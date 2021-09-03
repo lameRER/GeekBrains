@@ -72,8 +72,8 @@ namespace Timesheets.Service.Authentication
     	{
             var refreshToken = new RefreshToken
             {
-	            Expires = DateTime.Now.AddMinutes(360),
-	            Token = GenerateJwtToken(id, 360)
+	            Expires = DateTime.Now.AddMinutes(360000),
+	            Token = GenerateJwtToken(id, 360000)
             };
             return refreshToken;
     	}

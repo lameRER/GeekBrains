@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,8 +22,8 @@ namespace Timesheets.Service.Request
 
             public GetEmployeeExecutionsQueryHandler(IEmployeeRepository employeeRepository, IMapper mapper)
             {
-                _employeeRepository = employeeRepository;
-                _mapper = mapper;
+                _employeeRepository = employeeRepository ?? throw new ArgumentNullException(nameof(employeeRepository));
+                _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             }
 
             public async Task<TimesheetResponse<TaskEmployeeDto>> Handle(GetEmployeeExecutionsQuery request, CancellationToken cancellationToken)

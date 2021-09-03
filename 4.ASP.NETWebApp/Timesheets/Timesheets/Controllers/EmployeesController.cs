@@ -1,3 +1,4 @@
+using System;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
@@ -17,8 +18,8 @@ namespace Timesheets.Controllers
 
         public EmployeesController(ILogger<EmployeesController> logger, IMediator mediator)
         {
-            _logger = logger;
-            _mediator = mediator;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
 
         [HttpGet]

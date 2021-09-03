@@ -15,7 +15,7 @@ namespace Timesheets.DAL.Repositories
 
         public TaskEmployeeRepository(DataBaseContext baseContext)
         {
-            _baseContext = baseContext;
+            _baseContext = baseContext ?? throw new ArgumentNullException(nameof(baseContext));
         }
 
         public async Task<ICollection<TaskEmployee>> GetEmployeeTaskExecutions(Employee employee)

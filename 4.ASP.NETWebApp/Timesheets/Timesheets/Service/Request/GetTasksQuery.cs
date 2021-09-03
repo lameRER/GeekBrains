@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,8 +18,8 @@ namespace Timesheets.Service.Request
 
             public GetTasksQueryHandler(ITaskRepository taskRepository, IMapper mapper)
             {
-                _taskRepository = taskRepository;
-                _mapper = mapper;
+                _taskRepository = taskRepository ?? throw new ArgumentNullException(nameof(taskRepository));
+                _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
             }
 
             public async Task<TimesheetResponse<TaskDto>> Handle(GetTasksQuery request, CancellationToken cancellationToken)

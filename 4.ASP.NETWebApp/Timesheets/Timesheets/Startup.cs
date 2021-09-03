@@ -2,6 +2,7 @@ using System;
 using System.Reflection;
 using System.Text;
 using AutoMapper;
+using FluentValidation;
 using Microsoft.Extensions.Configuration;
 using MediatR;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -13,11 +14,13 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using Timesheets.Behaviours;
 using Timesheets.DAL.EF;
 using Timesheets.DAL.Interfaces;
 using Timesheets.DAL.Repositories;
 using Timesheets.Mapper;
 using Timesheets.Service.Authentication;
+using Timesheets.Validations;
 
 namespace Timesheets
 {
@@ -75,8 +78,11 @@ namespace Timesheets
             services.AddScoped<ITaskEmployeeRepository, TaskEmployeeRepository>();
             services.AddScoped<DataBaseContext>();
             services.AddSingleton<IUserService, UserService>();	
+            services.AddSingleton<IErrorCodes, ErrorCodes>();
             services.AddCors();
             services.AddMediatR(Assembly.GetExecutingAssembly());
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(ValidationBehaviour<,>));
+            services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
             var mapperConfiguration = new MapperConfiguration(mp => mp.AddProfile(new MapperProfile()));
             var mapper = mapperConfiguration.CreateMapper(); 
             services.AddSingleton(mapper);

@@ -14,8 +14,8 @@ namespace Timesheets.Controllers
 
         public UserController(IUserService userService, ILogger<UserController> logger)
         {
-            _userService = userService;
-            _logger = logger;
+            _userService = userService ?? throw new ArgumentNullException(nameof(userService));
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
         }
         
         [AllowAnonymous]
