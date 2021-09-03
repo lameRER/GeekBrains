@@ -15,6 +15,7 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Timesheets.Authentication;
 using Timesheets.DAL;
+using Timesheets.DAL.EF;
 using Timesheets.DAL.Interfaces;
 using Timesheets.DAL.Repositories;
 using Timesheets.Mapper;

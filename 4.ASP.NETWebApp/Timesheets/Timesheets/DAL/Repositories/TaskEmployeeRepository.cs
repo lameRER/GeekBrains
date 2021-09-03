@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Timesheets.DAL.EF;
 using Timesheets.DAL.Interfaces;
 using Timesheets.DAL.Models;
 using Task = System.Threading.Tasks.Task;

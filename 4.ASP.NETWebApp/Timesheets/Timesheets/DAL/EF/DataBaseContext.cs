@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Timesheets.DAL.Models;
 
-namespace Timesheets.DAL
+namespace Timesheets.DAL.EF
 {
     public class DataBaseContext : DbContext
     {
