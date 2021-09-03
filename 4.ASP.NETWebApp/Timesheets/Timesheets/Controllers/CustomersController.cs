@@ -29,7 +29,7 @@ namespace Timesheets.Controllers
         }
 
         [HttpGet("{Id:int}")]
-        public async Task<IOperationRelult<IActionResult>> Get([FromRoute] GetCustomerByIdQuery request)
+        public async Task<IActionResult> Get([FromRoute] GetCustomerByIdQuery request)
         {
             return Ok(await _mediator.Send(request));
         }
@@ -48,7 +48,7 @@ namespace Timesheets.Controllers
         }
 
         [HttpPost("{CustomerId:int}/Contract")]
-        public async Task<IActionResult> AddContract(AddContractInsert request)
+        public async Task<IActionResult> AddContract(AddContractCommand request)
         {
             return Ok(await _mediator.Send(request));
         }
@@ -60,7 +60,7 @@ namespace Timesheets.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] AddCustomerInsert request)
+        public async Task<IActionResult> Add([FromBody] AddCustomerCommand request)
         {
             return Ok(await _mediator.Send(request));
         }

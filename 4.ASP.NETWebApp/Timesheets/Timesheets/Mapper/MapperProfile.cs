@@ -9,10 +9,10 @@ namespace Timesheets.Mapper
     {
         public MapperProfile()
         {
-            CreateMap<AddCustomerInsert, Customer>();
+            CreateMap<AddCustomerCommand, Customer>();
             CreateMap<Customer, CustomerDto>();
 
-            CreateMap<AddContractInsert, Contract>();
+            CreateMap<AddContractCommand, Contract>();
             CreateMap<Contract, ContractDto>();
             
             CreateMap<AddInvoiceCommand, Invoice>();
