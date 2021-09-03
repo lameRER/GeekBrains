@@ -5,10 +5,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
 using Dapper;
+using FluentMigrator.Runner;
 using MetricsAgent.DAL;
 using MetricsAgent.DAL.Interface;
 using MetricsAgent.DAL.Repository;
 using MetricsAgent.DAL.SQLite;
+using MetricsAgent.Jobs;
 using MetricsAgent.Mapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -19,6 +21,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using NLog;
+using Quartz;
+using Quartz.Impl;
+using Quartz.Spi;
 
 namespace MetricsAgent
 {
@@ -36,17 +41,36 @@ namespace MetricsAgent
             var log = LogManager.GetCurrentClassLogger();
             var connection = new ConnectionManager(Configuration);
             var mapperConfiguration = new MapperConfiguration(mp => mp.AddProfile(new MapperProfile()));
-            var mapper = mapperConfiguration.CreateMapper(); 
+            var mapper = mapperConfiguration.CreateMapper();
+            var connectionString = Configuration.GetConnectionString("SqlLite");
             services.AddControllers();
-            services.AddScoped<ICpuMetricsRepository, CpuMetricsRepository>();
-            services.AddScoped<IDotNetMetricsRepository, DotNetMetricsRepository>();
-            services.AddScoped<IHddMetricsRepository, HddMetricsRepository>();
-            services.AddScoped<IRamMetricsRepository, RamMetricsRepository>();
-            services.AddScoped<INetworkMetricsRepository, NetworkMetricsRepository>();
+            services.AddSingleton<ICpuMetricsRepository, CpuMetricsRepository>();
+            services.AddSingleton<IDotNetMetricsRepository, DotNetMetricsRepository>();
+            services.AddSingleton<IHddMetricsRepository, HddMetricsRepository>();
+            services.AddSingleton<IRamMetricsRepository, RamMetricsRepository>();
+            services.AddSingleton<INetworkMetricsRepository, NetworkMetricsRepository>();
             services.AddSingleton<ILogger>(log);
             services.AddSingleton<IConnectionManager>(connection);
             services.AddSingleton(mapper);
-            ConfigureSqlLiteConnection();
+            services.AddFluentMigratorCore().ConfigureRunner(e => e.AddSQLite()
+                    .WithGlobalConnectionString(connectionString)
+                    .ScanIn(typeof(Startup).Assembly)
+                    .For
+                    .Migrations())
+                .AddLogging(l => l.AddFluentMigratorConsole());
+            services.AddSingleton<IJobFactory, SingletonJobFactory>();
+            services.AddSingleton<ISchedulerFactory, StdSchedulerFactory>();
+            services.AddSingleton<CpuMetricJob>();
+            services.AddSingleton<DotNetMetricJob>();
+            services.AddSingleton<HddMetricJob>();
+            services.AddSingleton<NetworkMecricsJob>();
+            services.AddSingleton<RamMetricsJob>();
+            services.AddSingleton(new JobSchedule(jobType: typeof(CpuMetricJob), cronExpression: "0/5 * * * * ?"));
+            services.AddSingleton(new JobSchedule(jobType: typeof(DotNetMetricJob), cronExpression: "0/5 * * * * ?"));
+            services.AddSingleton(new JobSchedule(jobType: typeof(HddMetricJob), cronExpression: "0/5 * * * * ?"));
+            services.AddSingleton(new JobSchedule(jobType: typeof(NetworkMecricsJob), cronExpression: "0/30 * * * * ?"));
+            services.AddSingleton(new JobSchedule(jobType: typeof(RamMetricsJob), cronExpression: "0/5 * * * * ?"));
+            services.AddHostedService<QuartzHostedService>();
             ConfigureMapper();
         }
 
@@ -56,47 +80,8 @@ namespace MetricsAgent
             SqlMapper.RemoveTypeMap(typeof(DateTimeOffset));
             SqlMapper.RemoveTypeMap(typeof(DateTimeOffset?));
         }
-        
-        private void ConfigureSqlLiteConnection()
-        {
-            var connectionString = Configuration.GetConnectionString("SqlLite");
-            var connection = new SQLiteConnection(connectionString);
-            connection.Open();
-            PrepareSchema(connection);
-        }
 
-        private void PrepareSchema(SQLiteConnection connection)
-        {
-            using var command = new SQLiteCommand(connection);
-            var Time = DateTimeOffset.Now;
-            var tableList = new List<string>(){"CpuMetrics", "DotNetMetrics", "HddMetrics", "NetworkMetrics", "RamMetrics"};
-            foreach (var table in tableList)
-            {
-                command.CommandText = @$"DROP TABLE IF EXISTS {table}";
-                command.ExecuteNonQuery();
-                command.CommandText = @$"CREATE TABLE {table}(id INTEGER PRIMARY KEY, value INT, time INTEGER)";
-                command.ExecuteNonQuery();
-                for (var i = 0; i < new Random().Next(3, 100); i++)
-                {
-                    command.CommandText = $"INSERT INTO {table}(Value, Time) VALUES({new Random().Next(0,100)}, {Time.ToUnixTimeSeconds()})";
-                    command.ExecuteNonQuery();
-                    Time = Time.AddMinutes(new Random().Next(1, 50));
-                }
-            }
-
-                
-            
-            command.ExecuteNonQuery();
-            
-            DataGrip(connection);
-        }
-
-        private void DataGrip(SQLiteConnection connection)
-        {
-            
-        }
-
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IMigrationRunner migrationRunner)
         {
             if (env.IsDevelopment())
             {
@@ -110,6 +95,8 @@ namespace MetricsAgent
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            
+            migrationRunner.MigrateUp();
         }
     }
 }

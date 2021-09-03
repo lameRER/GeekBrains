@@ -4,6 +4,6 @@ namespace MetricsAgent.DAL.Responses
 {
     public class MetricsResponse<T>
     {
-        public List<T> Metrics { get; set; } = new();
+        public List<T> Metrics { get; set; } = new List<T>();
     }
 }
