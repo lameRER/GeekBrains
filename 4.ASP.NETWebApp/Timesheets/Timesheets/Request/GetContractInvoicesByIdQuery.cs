@@ -17,13 +17,13 @@ namespace Timesheets.Request
         
         public class GetContractInvoicesByIdQueryHandler : IRequestHandler<GetContractInvoicesByIdQuery, TimesheetResponse<InvoiceDto>>
         {
-            private readonly IInvoiceRepository _invoceRepository;
+            private readonly IInvoiceRepository _invoiceRepository;
             private readonly IContractRepository _contractRepository;
             private readonly IMapper _mapper;
 
-            public GetContractInvoicesByIdQueryHandler(IInvoiceRepository invoceRepository, IContractRepository contractRepository, IMapper mapper)
+            public GetContractInvoicesByIdQueryHandler(IInvoiceRepository invoiceRepository, IContractRepository contractRepository, IMapper mapper)
             {
-                _invoceRepository = invoceRepository;
+                _invoiceRepository = invoiceRepository;
                 _contractRepository = contractRepository;
                 _mapper = mapper;
             }
@@ -34,7 +34,7 @@ namespace Timesheets.Request
                 var contract = await _contractRepository.GetById(query.ContractId);
                 if (contract == null) return null;
                 var invoice =
-                    await _invoceRepository.GetContractInvoiceByPeriod(contract, query.DateFrom, query.DateTo);
+                    await _invoiceRepository.GetContractInvoiceByPeriod(contract, query.DateFrom, query.DateTo);
                 var response = new TimesheetResponse<InvoiceDto>();
                 response.Timesheet.AddRange(_mapper.Map<List<InvoiceDto>>(invoice));
                 return response;
