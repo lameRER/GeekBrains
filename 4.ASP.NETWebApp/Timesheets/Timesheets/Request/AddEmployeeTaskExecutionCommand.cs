@@ -9,7 +9,7 @@ using Timesheets.Responses;
 
 namespace Timesheets.Request
 {
-    public class AddEmployeeTaskExecutionInsert : IRequest<TaskEmployeeDto>
+    public class AddEmployeeTaskExecutionCommand : IRequest<TaskEmployeeDto>
     {
         [FromRoute]
         public int TaskId { get; set; }
@@ -20,14 +20,14 @@ namespace Timesheets.Request
         [FromRoute]
         public int TimeSpent { get; set; }
         
-        public class AddEmployeeTaskExecutionInsertHandler : IRequestHandler<AddEmployeeTaskExecutionInsert, TaskEmployeeDto>
+        public class AddEmployeeTaskExecutionCommandHandler : IRequestHandler<AddEmployeeTaskExecutionCommand, TaskEmployeeDto>
         {
             private readonly ITaskEmployeeRepository _taskEmployeeRepository;
             private readonly IEmployeeRepository _employeeRepository;
             private readonly ITaskRepository _taskRepository;
             private readonly IMapper _mapper;
 
-            public AddEmployeeTaskExecutionInsertHandler(ITaskEmployeeRepository taskEmployeeRepository, IEmployeeRepository employeeRepository, ITaskRepository taskRepository, IMapper mapper)
+            public AddEmployeeTaskExecutionCommandHandler(ITaskEmployeeRepository taskEmployeeRepository, IEmployeeRepository employeeRepository, ITaskRepository taskRepository, IMapper mapper)
             {
                 _taskEmployeeRepository = taskEmployeeRepository;
                 _employeeRepository = employeeRepository;
@@ -35,7 +35,7 @@ namespace Timesheets.Request
                 _mapper = mapper;
             }
 
-            public async Task<TaskEmployeeDto> Handle(AddEmployeeTaskExecutionInsert request, CancellationToken cancellationToken)
+            public async Task<TaskEmployeeDto> Handle(AddEmployeeTaskExecutionCommand request, CancellationToken cancellationToken)
             {
                 var task = await _taskRepository.GetById(request.TaskId);
                 var employee = await _employeeRepository.GetById(request.EmployeeId);

@@ -28,7 +28,7 @@ namespace Timesheets.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] AddEmployeeInsert request)
+        public async Task<IActionResult> Add([FromBody] AddEmployeeCommand request)
         {
             return Ok(await _mediator.Send(request));
         }
@@ -40,7 +40,7 @@ namespace Timesheets.Controllers
         }
         
         [HttpPost("{EmployeeId:int}/Task/{TaskId:int}/Execution/{TimeSpent:int}")]
-        public async Task<IActionResult> AddEmployeeTaskExecution([FromRoute] AddEmployeeTaskExecutionInsert request)
+        public async Task<IActionResult> AddEmployeeTaskExecution([FromRoute] AddEmployeeTaskExecutionCommand request)
         {
             return Ok(await _mediator.Send(request));
         }

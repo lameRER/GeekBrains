@@ -10,7 +10,7 @@ using Timesheets.Responses;
 
 namespace Timesheets.Request
 {
-    public class AddContractInsert : IRequest<CustomerDto>
+    public class AddContractCommand : IRequest<CustomerDto>
     {
         [FromBody]
         public string Name { get; set; }
@@ -27,20 +27,20 @@ namespace Timesheets.Request
         [FromBody]
         public DateTime EndDate { get; set; }
         
-        public class AddContractInsertHandler : IRequestHandler<AddContractInsert, CustomerDto>
+        public class AddContractCommandHandler : IRequestHandler<AddContractCommand, CustomerDto>
         {
             private readonly ICustomerRepository _customerRepository;
             private readonly IContractRepository _contractRepository;
             private readonly IMapper _mapper;
 
-            public AddContractInsertHandler(ICustomerRepository customerRepository, IMapper mapper, IContractRepository contractRepository)
+            public AddContractCommandHandler(ICustomerRepository customerRepository, IMapper mapper, IContractRepository contractRepository)
             {
                 _customerRepository = customerRepository;
                 _mapper = mapper;
                 _contractRepository = contractRepository;
             }
 
-            public async Task<CustomerDto> Handle(AddContractInsert request, CancellationToken cancellationToken)
+            public async Task<CustomerDto> Handle(AddContractCommand request, CancellationToken cancellationToken)
             {
                 var customer = await _customerRepository.GetById(request.CustomerId);
                 if (customer == null) return null;

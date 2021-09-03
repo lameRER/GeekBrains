@@ -15,13 +15,13 @@ namespace Timesheets.Mapper
             CreateMap<AddContractInsert, Contract>();
             CreateMap<Contract, ContractDto>();
             
-            CreateMap<AddInvoiceInsert, Invoice>();
+            CreateMap<AddInvoiceCommand, Invoice>();
             CreateMap<Invoice, InvoiceDto>();
             
-            CreateMap<AddEmployeeInsert, Employee>();
+            CreateMap<AddEmployeeCommand, Employee>();
             CreateMap<Employee, EmployeeDto>();
             
-            CreateMap<AddTaskInsert, Task>();
+            CreateMap<AddTaskCommand, Task>();
             CreateMap<Task, TaskDto>();
         }
     }

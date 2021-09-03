@@ -28,7 +28,7 @@ namespace Timesheets.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] AddTaskInsert request)
+        public async Task<IActionResult> Add([FromBody] AddTaskCommand request)
         {
             return Ok(await _mediator.Send(request));
         }

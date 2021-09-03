@@ -8,23 +8,23 @@ using Task = Timesheets.DAL.Models.Task;
 
 namespace Timesheets.Request
 {
-    public class AddTaskInsert : IRequest<TaskDto>
+    public class AddTaskCommand : IRequest<TaskDto>
     {
         public string Name { get; set;}
         public int Amount { get; set;}
         
-        public class AddTaskInsertHandler : IRequestHandler<AddTaskInsert, TaskDto>
+        public class AddTaskCommandHandler : IRequestHandler<AddTaskCommand, TaskDto>
         {
             private readonly ITaskRepository _taskRepository;
             private readonly IMapper _mapper;
 
-            public AddTaskInsertHandler(ITaskRepository taskRepository, IMapper mapper)
+            public AddTaskCommandHandler(ITaskRepository taskRepository, IMapper mapper)
             {
                 _taskRepository = taskRepository;
                 _mapper = mapper;
             }
 
-            public async Task<TaskDto> Handle(AddTaskInsert request, CancellationToken cancellationToken)
+            public async Task<TaskDto> Handle(AddTaskCommand request, CancellationToken cancellationToken)
             {
                 var task = await _taskRepository.Create(_mapper.Map<Task>(request));
                 return _mapper.Map<TaskDto>(task);

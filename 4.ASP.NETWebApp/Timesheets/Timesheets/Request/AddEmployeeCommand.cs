@@ -8,20 +8,20 @@ using Timesheets.Responses;
 
 namespace Timesheets.Request
 {
-    public class AddEmployeeInsert : IRequest<EmployeeDto>
+    public class AddEmployeeCommand : IRequest<EmployeeDto>
     {
-        public class AddEmployeeInsertHandler : IRequestHandler<AddEmployeeInsert, EmployeeDto>
+        public class AddEmployeeCommandHandler : IRequestHandler<AddEmployeeCommand, EmployeeDto>
         {
             private readonly IEmployeeRepository _employeeRepository;
             private readonly IMapper _mapper;
 
-            public AddEmployeeInsertHandler(IEmployeeRepository employeeRepository, IMapper mapper)
+            public AddEmployeeCommandHandler(IEmployeeRepository employeeRepository, IMapper mapper)
             {
                 _employeeRepository = employeeRepository;
                 _mapper = mapper;
             }
 
-            public async Task<EmployeeDto> Handle(AddEmployeeInsert request, CancellationToken cancellationToken)
+            public async Task<EmployeeDto> Handle(AddEmployeeCommand request, CancellationToken cancellationToken)
             {
                 var employee = await _employeeRepository.Create(_mapper.Map<Employee>(request));
                 return _mapper.Map<EmployeeDto>(employee);

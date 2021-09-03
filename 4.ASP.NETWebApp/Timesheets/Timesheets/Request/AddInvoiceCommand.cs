@@ -12,7 +12,7 @@ using Task = Timesheets.DAL.Models.Task;
 
 namespace Timesheets.Request
 {
-    public class AddInvoiceInsert : IRequest<InvoiceDto>
+    public class AddInvoiceCommand : IRequest<InvoiceDto>
     {
         [FromRoute]
         public int ContractId { get; set; }
@@ -29,14 +29,14 @@ namespace Timesheets.Request
         [FromBody]
         public ICollection<Task> Tasks { get; set; }
 
-        public class AddInvoiceInsertHandler : IRequestHandler<AddInvoiceInsert, InvoiceDto>
+        public class AddInvoiceCommandHandler : IRequestHandler<AddInvoiceCommand, InvoiceDto>
         {
             private readonly IInvoiceRepository _invoiceRepository;
             private readonly IContractRepository _contractRepository;
             private readonly ITaskRepository _taskRepository;
             private readonly IMapper _mapper;
 
-            public AddInvoiceInsertHandler(IInvoiceRepository invoiceRepository, IMapper mapper, IContractRepository contractRepository, ITaskRepository taskRepository)
+            public AddInvoiceCommandHandler(IInvoiceRepository invoiceRepository, IMapper mapper, IContractRepository contractRepository, ITaskRepository taskRepository)
             {
                 _invoiceRepository = invoiceRepository;
                 _mapper = mapper;
@@ -44,7 +44,7 @@ namespace Timesheets.Request
                 _taskRepository = taskRepository;
             }
 
-            public async Task<InvoiceDto> Handle(AddInvoiceInsert request, CancellationToken cancellationToken)
+            public async Task<InvoiceDto> Handle(AddInvoiceCommand request, CancellationToken cancellationToken)
             {
                 var contract = await _contractRepository.GetById(request.ContractId);
                 if (contract == null) return null;

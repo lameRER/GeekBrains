@@ -9,23 +9,23 @@ using Timesheets.Responses;
 
 namespace Timesheets.Request
 {
-    public class AddCustomerInsert : IRequest<CustomerDto>
+    public class AddCustomerCommand : IRequest<CustomerDto>
     {
         [FromBody]
         public string Name { get; set; }
 
-        public class AddCustomerInsertHandler : IRequestHandler<AddCustomerInsert, CustomerDto>
+        public class AddCustomerCommandHandler : IRequestHandler<AddCustomerCommand, CustomerDto>
         {
             private readonly ICustomerRepository _repository;
             private readonly IMapper _mapper;
 
-            public AddCustomerInsertHandler(ICustomerRepository repository, IMapper mapper)
+            public AddCustomerCommandHandler(ICustomerRepository repository, IMapper mapper)
             {
                 _repository = repository;
                 _mapper = mapper;
             }
 
-            public async Task<CustomerDto> Handle(AddCustomerInsert query, CancellationToken cancellationToken)
+            public async Task<CustomerDto> Handle(AddCustomerCommand query, CancellationToken cancellationToken)
             {
                 var customer = await _repository.Create(_mapper.Map<Customer>(query));
                 return _mapper.Map<CustomerDto>(customer);
