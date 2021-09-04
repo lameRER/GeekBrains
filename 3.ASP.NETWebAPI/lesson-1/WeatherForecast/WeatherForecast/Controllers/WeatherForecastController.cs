@@ -11,19 +11,16 @@ namespace WeatherForecast.Controllers
     {
         private readonly WeatherForecast _weatherForecast;
         
-
         public WeatherForecastController(WeatherForecast weatherForecast)
         {
             _weatherForecast = weatherForecast;
         }
 
-        
         [HttpGet]
         public List<DateTemperatures> Get()
         {
             return _weatherForecast.TemperaturesList.ToList();
         }
-        
 
         [HttpPost("create")]
         public IActionResult Create([FromQuery] DateTime dateTime, [FromQuery] int temperature)
@@ -33,14 +30,12 @@ namespace WeatherForecast.Controllers
             return Ok();
         }
 
-        
         [HttpGet("read")]
         public IActionResult Read([FromQuery] DateTime fromDateTime, [FromQuery] DateTime toDateTime)
         {
             return Ok(_weatherForecast.TemperaturesList.Where(item =>
                 item.Date >= fromDateTime && item.Date <= toDateTime));
         }
-        
 
         [HttpPut("update")]
         public IActionResult Update([FromQuery] DateTime dateTime, [FromQuery] int temperature)
@@ -58,15 +53,13 @@ namespace WeatherForecast.Controllers
             }
         }
 
-        
         [HttpDelete("delete")]
         public IActionResult Delete([FromQuery] DateTime fromDateTime, [FromQuery] DateTime toDateTime)
         {
             _weatherForecast.TemperaturesList.RemoveAll(item => item.Date >= fromDateTime && item.Date <= toDateTime);
             return Ok();
         }
-
-
+        
         private static bool Verification(int t) => t < -273;
     }
 }
