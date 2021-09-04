@@ -73,8 +73,6 @@ namespace lesson_1.HomeWork_3
                 _ => sum
             };
         }
-
-
     }
     public class TestCase
     {
@@ -106,6 +104,4 @@ namespace lesson_1.HomeWork_3
             }
         }
     }
-
-
 }
