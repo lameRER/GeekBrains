@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Timesheets.DAL;
+using Timesheets.DAL.EF;
 
 namespace Timesheets.Migrations
 {
@@ -117,10 +117,18 @@ namespace Timesheets.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("integer");
 
+                    b.Property<int>("InvoiceId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("InvoiceId");
 
                     b.ToTable("Tasks");
                 });
@@ -172,6 +180,17 @@ namespace Timesheets.Migrations
                     b.Navigation("Contract");
                 });
 
+            modelBuilder.Entity("Timesheets.DAL.Models.Task", b =>
+                {
+                    b.HasOne("Timesheets.DAL.Models.Invoice", "Invoice")
+                        .WithMany("Tasks")
+                        .HasForeignKey("InvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Invoice");
+                });
+
             modelBuilder.Entity("Timesheets.DAL.Models.TaskEmployee", b =>
                 {
                     b.HasOne("Timesheets.DAL.Models.Employee", "Employee")
@@ -204,6 +223,11 @@ namespace Timesheets.Migrations
             modelBuilder.Entity("Timesheets.DAL.Models.Employee", b =>
                 {
                     b.Navigation("TaskEmployee");
+                });
+
+            modelBuilder.Entity("Timesheets.DAL.Models.Invoice", b =>
+                {
+                    b.Navigation("Tasks");
                 });
 
             modelBuilder.Entity("Timesheets.DAL.Models.Task", b =>

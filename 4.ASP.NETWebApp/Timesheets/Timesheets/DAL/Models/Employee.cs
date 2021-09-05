@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Timesheets.DAL.Models
 {
@@ -9,6 +10,8 @@ namespace Timesheets.DAL.Models
             TaskEmployee = new HashSet<TaskEmployee>();
         }
         public int Id { get; set; }
+        
+        [Required]
         public string Name { get; set; }
         
         public string Rate { get; set; }

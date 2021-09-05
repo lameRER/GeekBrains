@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Timesheets.DAL.Models
 {
@@ -13,12 +14,16 @@ namespace Timesheets.DAL.Models
         
         public int CustomerId { get; set; }
         
+        [Required]
         public string Number { get; set; }
         
+        [Required]
         public DateTime SetDate { get; set; }
         
+        [Required]
         public DateTime EndDate { get; set; }
         
+        [Required]
         public string Name { get; set; }
         
         public Customer Customer { get; set; }

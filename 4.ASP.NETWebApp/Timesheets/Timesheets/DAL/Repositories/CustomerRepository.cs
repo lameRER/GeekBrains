@@ -4,6 +4,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using Timesheets.DAL.EF;
 using Timesheets.DAL.Interfaces;
 using Timesheets.DAL.Models;
 using Task = System.Threading.Tasks.Task;
@@ -16,7 +17,7 @@ namespace Timesheets.DAL.Repositories
 
         public CustomerRepository(DataBaseContext baseContext)
         {
-            _baseContext = baseContext;
+            _baseContext = baseContext ?? throw new ArgumentNullException(nameof(baseContext));
         }
         public async Task<ICollection<Customer>> Get()
         {

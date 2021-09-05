@@ -1,9 +1,10 @@
+using System;
 using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Timesheets.Request;
+using Timesheets.Service.Request;
 
 namespace Timesheets.Controllers
 {
@@ -17,8 +18,8 @@ namespace Timesheets.Controllers
 
         public TasksController(ILogger<TasksController> logger, IMediator mediator)
         {
-            _logger = logger;
-            _mediator = mediator;
+            _logger = logger ?? throw new ArgumentNullException(nameof(logger));
+            _mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
         }
         
         [HttpGet]
@@ -28,7 +29,7 @@ namespace Timesheets.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Add([FromBody] AddTaskInsert request)
+        public async Task<IActionResult> Add([FromBody] AddTaskCommand request)
         {
             return Ok(await _mediator.Send(request));
         }

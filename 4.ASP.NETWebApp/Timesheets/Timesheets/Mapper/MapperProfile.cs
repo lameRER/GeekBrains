@@ -1,7 +1,7 @@
 using AutoMapper;
 using Timesheets.DAL.Models;
-using Timesheets.Request;
-using Timesheets.Responses;
+using Timesheets.Service.Request;
+using Timesheets.Service.Responses;
 
 namespace Timesheets.Mapper
 {
@@ -9,19 +9,19 @@ namespace Timesheets.Mapper
     {
         public MapperProfile()
         {
-            CreateMap<AddCustomerInsert, Customer>();
+            CreateMap<AddCustomerCommand, Customer>();
             CreateMap<Customer, CustomerDto>();
 
-            CreateMap<AddContractInsert, Contract>();
+            CreateMap<AddContractCommand, Contract>();
             CreateMap<Contract, ContractDto>();
             
-            CreateMap<AddInvoiceInsert, Invoice>();
+            CreateMap<AddInvoiceCommand, Invoice>();
             CreateMap<Invoice, InvoiceDto>();
             
-            CreateMap<AddEmployeeInsert, Employee>();
+            CreateMap<AddEmployeeCommand, Employee>();
             CreateMap<Employee, EmployeeDto>();
             
-            CreateMap<AddTaskInsert, Task>();
+            CreateMap<AddTaskCommand, Task>();
             CreateMap<Task, TaskDto>();
         }
     }

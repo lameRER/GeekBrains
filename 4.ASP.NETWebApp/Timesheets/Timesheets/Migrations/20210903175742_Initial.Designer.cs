@@ -5,14 +5,13 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-using Timesheets.DAL;
 using Timesheets.DAL.EF;
 
 namespace Timesheets.Migrations
 {
     [DbContext(typeof(DataBaseContext))]
-    [Migration("20210825191320_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20210903175742_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,21 +20,6 @@ namespace Timesheets.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 63)
                 .HasAnnotation("ProductVersion", "5.0.9")
                 .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
-
-            modelBuilder.Entity("InvoiceTask", b =>
-                {
-                    b.Property<int>("InvoicesId")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("TasksId")
-                        .HasColumnType("integer");
-
-                    b.HasKey("InvoicesId", "TasksId");
-
-                    b.HasIndex("TasksId");
-
-                    b.ToTable("InvoiceTask");
-                });
 
             modelBuilder.Entity("Timesheets.DAL.Models.Contract", b =>
                 {
@@ -135,10 +119,18 @@ namespace Timesheets.Migrations
                     b.Property<int>("Amount")
                         .HasColumnType("integer");
 
+                    b.Property<int>("InvoiceId")
+                        .HasColumnType("integer");
+
+                    b.Property<bool>("IsCompleted")
+                        .HasColumnType("boolean");
+
                     b.Property<string>("Name")
                         .HasColumnType("text");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("InvoiceId");
 
                     b.ToTable("Tasks");
                 });
@@ -168,21 +160,6 @@ namespace Timesheets.Migrations
                     b.ToTable("TaskEmployee");
                 });
 
-            modelBuilder.Entity("InvoiceTask", b =>
-                {
-                    b.HasOne("Timesheets.DAL.Models.Invoice", null)
-                        .WithMany()
-                        .HasForeignKey("InvoicesId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Timesheets.DAL.Models.Task", null)
-                        .WithMany()
-                        .HasForeignKey("TasksId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Timesheets.DAL.Models.Contract", b =>
                 {
                     b.HasOne("Timesheets.DAL.Models.Customer", "Customer")
@@ -203,6 +180,17 @@ namespace Timesheets.Migrations
                         .IsRequired();
 
                     b.Navigation("Contract");
+                });
+
+            modelBuilder.Entity("Timesheets.DAL.Models.Task", b =>
+                {
+                    b.HasOne("Timesheets.DAL.Models.Invoice", "Invoice")
+                        .WithMany("Tasks")
+                        .HasForeignKey("InvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Invoice");
                 });
 
             modelBuilder.Entity("Timesheets.DAL.Models.TaskEmployee", b =>
@@ -237,6 +225,11 @@ namespace Timesheets.Migrations
             modelBuilder.Entity("Timesheets.DAL.Models.Employee", b =>
                 {
                     b.Navigation("TaskEmployee");
+                });
+
+            modelBuilder.Entity("Timesheets.DAL.Models.Invoice", b =>
+                {
+                    b.Navigation("Tasks");
                 });
 
             modelBuilder.Entity("Timesheets.DAL.Models.Task", b =>

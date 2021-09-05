@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Timesheets.DAL.Models
 {
@@ -6,18 +7,22 @@ namespace Timesheets.DAL.Models
     {
         public Task()
         {
-            Invoices = new HashSet<Invoice>();
             TaskEmployee = new HashSet<TaskEmployee>();
         }
         
         public int Id { get; set; }
         
+        [Required]
         public string Name { get; set; }
 
         public int Amount { get; set; }
-
-        public ICollection<Invoice> Invoices { get; set; }
         
+        [Required]
+        public int InvoiceId { get; set; }
+        
+        public bool IsCompleted { get; set; }
+
+        public Invoice Invoice { get; set; }
         public ICollection<TaskEmployee> TaskEmployee { get; set; }
     }
 }
