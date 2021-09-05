@@ -9,12 +9,12 @@ namespace Timesheets.Authentication
 {
     public class UserService : IUserService
     {
-        private IDictionary<string, AuthResponse> _users = new Dictionary<string, AuthResponse>()
-    	{
-            {"test", new AuthResponse() { Password = "test"}}
+        private readonly IDictionary<string, AuthResponse> _users = new Dictionary<string, AuthResponse>
+        {
+            {"test", new AuthResponse { Password = "test"}}
     	};
 
-    	public const string SecretCode = "THIS IS SOME VERY SECRET STRING!!! Geek brains project";
+    	public static readonly string SecretCode = "THIS IS SOME VERY SECRET STRING!!! Geek brains project";
 
     	public TokenResponse Authenticate(string user, string password)
     	{
