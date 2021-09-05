@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Timesheets.DAL.Models
 {
-    public class Invoice
+    public sealed class Invoice
     {
         public Invoice()
         {
