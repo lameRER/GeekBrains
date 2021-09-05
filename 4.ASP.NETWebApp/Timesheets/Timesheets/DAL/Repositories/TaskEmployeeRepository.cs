@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Timesheets.DAL.EF;
@@ -20,7 +21,7 @@ namespace Timesheets.DAL.Repositories
 
         public async Task<ICollection<TaskEmployee>> GetEmployeeTaskExecutions(Employee employee)
         {
-            return await Task.Run<ICollection<TaskEmployee>>(() => _baseContext.TaskEmployee.Where(i => i.Employee == employee).ToList());
+            return await Task.Run<ICollection<TaskEmployee>>(() => _baseContext.TaskEmployee.Where(i => i.Employee == employee).ToList()).ConfigureAwait(false);
         }
 
         public async Task<TaskEmployee> Create(TaskEmployee taskEmployee)
@@ -33,7 +34,7 @@ namespace Timesheets.DAL.Repositories
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Debug.WriteLine(e);
                 throw;
             }
         }

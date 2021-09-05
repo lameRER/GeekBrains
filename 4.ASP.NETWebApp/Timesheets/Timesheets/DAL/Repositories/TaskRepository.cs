@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -20,12 +21,12 @@ namespace Timesheets.DAL.Repositories
 
         public async Task<ICollection<Models.Task>> Get()
         {
-            return await Task.Run(() => _baseContext.Tasks.ToListAsync());
+            return await Task.Run(() => _baseContext.Tasks.ToListAsync()).ConfigureAwait(false);
         }
 
         public async Task<Models.Task> GetById(int id)
         {
-            return await Task.Run((() => _baseContext.Tasks.SingleOrDefault(i => i.Id == id)));
+            return await Task.Run(() => _baseContext.Tasks.SingleOrDefault(i => i.Id == id)).ConfigureAwait(false);
         }
 
         public async Task<Models.Task> Create(Models.Task task)
@@ -38,9 +39,14 @@ namespace Timesheets.DAL.Repositories
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Debug.WriteLine(e);
                 throw;
             }
+        }
+
+        public async Task<ICollection<Models.Task>> GetByIdList(ICollection<int> list)
+        {
+            return await _baseContext.Tasks.Where(t => list.Contains(t.Id)).Include(i => i.Invoice).ToListAsync().ConfigureAwait(false);
         }
     }
 }

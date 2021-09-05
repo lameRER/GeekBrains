@@ -23,6 +23,9 @@ namespace Timesheets.Mapper
             
             CreateMap<AddTaskCommand, Task>();
             CreateMap<Task, TaskDto>();
+
+            CreateMap<AddEmployeeTaskExecutionCommand, TaskEmployee>();
+            CreateMap<TaskEmployee, TaskEmployeeDto>();
         }
     }
 }

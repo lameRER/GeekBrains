@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Timesheets.DAL.EF;
@@ -20,7 +21,7 @@ namespace Timesheets.DAL.Repositories
 
         public async Task<ICollection<Invoice>> GetContractInvoiceByPeriod(Contract contract, DateTime dateFrom, DateTime dateTo)
         {
-            return await Task.Run<ICollection<Invoice>>(() => _baseContext.Invoices.Where(i => i.Contract == contract && i.Date == dateFrom && i.Date < dateTo).ToList());
+            return await Task.Run<ICollection<Invoice>>(() => _baseContext.Invoices.Where(i => i.Contract == contract && i.Date == dateFrom && i.Date < dateTo).ToList()).ConfigureAwait(false);
         }
 
         public async Task<Invoice> Create(Invoice invoice)
@@ -33,7 +34,7 @@ namespace Timesheets.DAL.Repositories
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Debug.WriteLine(e);
                 throw;
             }
         }

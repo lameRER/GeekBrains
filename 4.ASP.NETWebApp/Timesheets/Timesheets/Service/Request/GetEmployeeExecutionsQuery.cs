@@ -12,7 +12,7 @@ namespace Timesheets.Service.Request
 {
     public class GetEmployeeExecutionsQuery : IRequest<TimesheetResponse<TaskEmployeeDto>>
     {
-        [FromBody]
+        [FromRoute]
         public int EmployeeId { get; set; }
         
         public class GetEmployeeExecutionsQueryHandler : IRequestHandler<GetEmployeeExecutionsQuery, TimesheetResponse<TaskEmployeeDto>>

@@ -18,9 +18,11 @@ namespace Timesheets.DAL.Models
         public string Number { get; set; }
         
         [Required]
+        [DataType(DataType.Date)]
         public DateTime SetDate { get; set; }
         
         [Required]
+        [DataType(DataType.Date)]
         public DateTime EndDate { get; set; }
         
         [Required]

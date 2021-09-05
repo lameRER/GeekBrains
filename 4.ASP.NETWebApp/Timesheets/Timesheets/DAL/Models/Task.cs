@@ -17,8 +17,7 @@ namespace Timesheets.DAL.Models
 
         public int Amount { get; set; }
         
-        [Required]
-        public int InvoiceId { get; set; }
+        public int? InvoiceId { get; set; }
         
         public bool IsCompleted { get; set; }
 
