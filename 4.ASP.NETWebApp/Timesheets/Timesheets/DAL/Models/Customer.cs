@@ -2,7 +2,7 @@ using System.Collections.Generic;
 
 namespace Timesheets.DAL.Models
 {
-    public class Customer
+    public sealed class Customer
     {
         public Customer()
         {
@@ -11,6 +11,6 @@ namespace Timesheets.DAL.Models
         public int Id { get; set; }
         public string Name { get; set; }
         
-        public virtual ICollection<Contract> Contracts { get; set; }
+        public ICollection<Contract> Contracts { get; set; }
     }
 }

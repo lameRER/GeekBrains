@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Timesheets.DAL.Interfaces;
 using Timesheets.DAL.Models;
 using Task = System.Threading.Tasks.Task;
@@ -17,9 +20,7 @@ namespace Timesheets.DAL.Repositories
         }
         public async Task<ICollection<Customer>> Get()
         {
-            return await Task.Run<ICollection<Customer>>
-            (() => _baseContext.Customers);
-            
+            return await Task.Run(() => _baseContext.Customers.ToListAsync()).ConfigureAwait(false);
         }
 
         public async Task<Customer> GetById(int id)
@@ -29,13 +30,17 @@ namespace Timesheets.DAL.Repositories
 
         public async Task<Customer> Create(Customer customer)
         {
-            return await Task.Run(() =>
+            try
             {
-                var maxId = (_baseContext.Customers.Any(item => item.Id != 0)) ? _baseContext.Customers.Max(item => item.Id) : 0;
-                customer.Id = maxId + 1;
-                _baseContext.Customers.Add(customer);
+                await _baseContext.Customers.AddAsync(customer);
+                await _baseContext.SaveChangesAsync();
                 return customer;
-            });
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                throw;
+            }
         }
 
         public async Task AddContract(Contract contract)

@@ -1,6 +1,9 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.EntityFrameworkCore;
 using Timesheets.DAL.Interfaces;
 using Timesheets.DAL.Models;
 using Task = System.Threading.Tasks.Task;
@@ -18,7 +21,7 @@ namespace Timesheets.DAL.Repositories
 
         public async Task<ICollection<Employee>> Get()
         {
-            return await Task.Run<ICollection<Employee>>(() => _baseContext.Employees);
+            return await Task.Run(() => _baseContext.Employees.ToListAsync()).ConfigureAwait(false);
         }
 
         public async Task<Employee> GetById(int id)
@@ -37,12 +40,17 @@ namespace Timesheets.DAL.Repositories
 
         public async Task<Employee> Create(Employee employee)
         {
-            return await Task.Run((() =>
+            try
             {
-                var maxId = (_baseContext.Employees.Any(item => item.Id != 0)) ? _baseContext.Employees.Max(item => item.Id) : 0;
-                employee.Id = maxId + 1;
+                await _baseContext.Employees.AddAsync(employee);
+                await _baseContext.SaveChangesAsync();
                 return employee;
-            })); 
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                throw;
+            }
         }
     }
 }

@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Timesheets.DAL.Interfaces;
@@ -23,15 +25,17 @@ namespace Timesheets.DAL.Repositories
 
         public async Task<TaskEmployee> Create(TaskEmployee taskEmployee)
         {
-            return await Task.Run(() =>
+            try
             {
-                var maxId = (_baseContext.TaskEmployee.Any(item => item.Id != 0))
-                    ? _baseContext.TaskEmployee.Max(item => item.Id)
-                    : 0;
-                taskEmployee.Id = maxId + 1;
-                _baseContext.TaskEmployee.Add(taskEmployee);
+                await _baseContext.TaskEmployee.AddAsync(taskEmployee);
+                await _baseContext.SaveChangesAsync();
                 return taskEmployee;
-            });
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e);
+                throw;
+            }
         }
     }
 }

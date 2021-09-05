@@ -1,20 +1,26 @@
-using System.Collections.Generic;
+using Microsoft.EntityFrameworkCore;
 using Timesheets.DAL.Models;
 
 namespace Timesheets.DAL
 {
-    public class DataBaseContext
+    public class DataBaseContext : DbContext
     {
-        public IList<Contract> Contracts { get; set; } = new List<Contract>();
+        public DbSet<Contract> Contracts { get; set; }
 
-        public IList<Customer> Customers { get; set; } = new List<Customer>();
+        public DbSet<Customer> Customers { get; set; }
 
-        public IList<Employee> Employees { get; set; } = new List<Employee>();
+        public DbSet<Employee> Employees { get; set; }
 
-        public IList<Task> Tasks { get; set; } = new List<Task>();
+        public DbSet<Task> Tasks { get; set; }
 
-        public IList<Invoice> Invoices { get; set; } = new List<Invoice>();
+        public DbSet<Invoice> Invoices { get; set; }
 
-        public IList<TaskEmployee> TaskEmployee { get; set; } = new List<TaskEmployee>();
+        public DbSet<TaskEmployee> TaskEmployee { get; set; }
+        
+        public DataBaseContext(DbContextOptions<DataBaseContext> options) : base(options)
+        {
+            // Database.EnsureDeleted();
+            // Database.EnsureCreated();
+        }
     }
 }
