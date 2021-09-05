@@ -6,10 +6,7 @@ namespace Timesheets.Domain
 {
     public class InvoiceAgregate : Invoice
     {
-        private InvoiceAgregate()
-        {
-            
-        }
+        private InvoiceAgregate(){}
 
         public static InvoiceAgregate Create(int contractId, DateTime date,  string description)
         {

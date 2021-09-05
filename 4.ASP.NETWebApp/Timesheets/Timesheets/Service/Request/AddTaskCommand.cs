@@ -11,9 +11,9 @@ namespace Timesheets.Service.Request
 {
     public class AddTaskCommand : IRequest<TaskDto>
     {
-        public string Name { get; set;}
+        public string Name { get; set; }
         
-        public int Amount { get; set;}
+        public int Amount { get; set; }
         
         public class AddTaskCommandHandler : IRequestHandler<AddTaskCommand, TaskDto>
         {
