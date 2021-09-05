@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +21,7 @@ namespace Timesheets.DAL.Repositories
 
         public async Task<ICollection<Employee>> Get()
         {
-            return await Task.Run(() => _baseContext.Employees.ToListAsync());
+            return await Task.Run(() => _baseContext.Employees.ToListAsync()).ConfigureAwait(false);
         }
 
         public async Task<Employee> GetById(int id)
@@ -47,7 +48,7 @@ namespace Timesheets.DAL.Repositories
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                Debug.WriteLine(e);
                 throw;
             }
         }

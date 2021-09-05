@@ -66,7 +66,6 @@ namespace Timesheets
                     }
                 });
             });
-            
             services.AddScoped<ICustomerRepository, CustomerRepository>();
             services.AddScoped<IContractRepository, ContractRepository>();
             services.AddScoped<ITaskRepository, TaskRepository>();
