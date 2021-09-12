@@ -6,3 +6,5 @@
 Master:<br>
 ![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/lameRER/GeekBrains/.NET/master)<br>
 ![GitHub branch checks state](https://img.shields.io/github/checks-status/lameRER/HTMLTemplate.core/master)<br>
+![GitHub issues](https://img.shields.io/github/issues/lamerer/GeekBrains)<br>
+![GitHub pull requests](https://img.shields.io/github/issues-pr/lamerer/GeekBrains)
