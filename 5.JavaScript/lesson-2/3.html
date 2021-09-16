@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        "use strict"
+        let a = -15;
+        let b = 19;
+        console.log(Math.sign(a));
+        console.log(Math.sign(b));
+
+        StartUp();
+
+        function startUp(){
+            a = validationCheck(+prompt("Введите первое целочисленное число"), "a");
+            b = validationCheck(+prompt("Введите второе целочисленное число"), "b");
+            positiveCheck(a,b);
+            negativeCheck(a,b);
+            differentSignsCheck(a,b);
+        }
+
+        function positiveCheck(a, b){
+            if(Math.sign(a) === Math.sign(b) === 1)
+                return alert(`${a} и ${b} положительные. Разность равна: '${a-b}'`)
+        }
+
+        function negativeCheck(a, b){
+            if(Math.sign(a) === Math.sign(b) === -1)
+                return alert(`${a} и ${b} отрицательные. Произведение равно: '${a*b}'`)
+        }
+
+        function differentSignsCheck(a, b){
+            if(Math.sign(a) != Math.sign(b))
+                return alert(`${a} и ${b} разные знаки. Сумма равна: '${a+b}'`)
+        }
+
+        function validationCheck(value, variable){
+            if(!Number.isInteger(value)){
+                alert(`Задано не целочисленное число переменной ${variable}`);
+                StartUp();
+            }
+            return value;
+        }
+    </script>
+</body>
+</html>
