@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <script>
+        "use strict"
+        const products = [
+            {
+                id: 3,
+                price: 200,
+            },
+            {
+                id: 4,
+                price: 900,
+            },
+            {
+                id: 1,
+                price: 1000,
+            },
+        ];
+
+        applyDiscount(products, 15);
+        getProduct();
+
+        /**
+         * Applies a discount on the current price
+         * @param  {array} products
+         * @param  {Number} discount
+         */
+         function applyDiscount(products, discount){
+            products.forEach(element => {
+                element.price = element.price/100*(100-discount)
+            });
+        }
+
+        /**
+         * Returns list of elements
+         */
+        function getProduct(){
+            products.forEach(element => {
+                console.log(element)});
+        }
+
+    </script>
+</body>
+
+</html>
