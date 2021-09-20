@@ -3,6 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using Timesheets.DAL.Interfaces;
 using Timesheets.DAL.Models;
 using Timesheets.Service.Responses;
@@ -11,6 +12,8 @@ namespace Timesheets.Service.Request
 {
     public class AddEmployeeCommand : IRequest<EmployeeDto>
     {
+        [FromBody]
+        public string Name { get; set; }
         public class AddEmployeeCommandHandler : IRequestHandler<AddEmployeeCommand, EmployeeDto>
         {
             private readonly IEmployeeRepository _employeeRepository;

@@ -21,7 +21,7 @@ namespace Timesheets.DAL.Repositories
 
         public async Task<ICollection<TaskEmployee>> GetEmployeeTaskExecutions(Employee employee)
         {
-            return await Task.Run<ICollection<TaskEmployee>>(() => _baseContext.TaskEmployee.Where(i => i.Employee == employee).ToList());
+            return await Task.Run<ICollection<TaskEmployee>>(() => _baseContext.TaskEmployee.Where(i => i.Employee == employee).ToList()).ConfigureAwait(false);
         }
 
         public async Task<TaskEmployee> Create(TaskEmployee taskEmployee)

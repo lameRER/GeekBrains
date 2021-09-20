@@ -27,16 +27,15 @@ namespace Timesheets.DAL.Repositories
 
         public async Task<Employee> GetById(int id)
         {
-            return await Task.Run(() => _baseContext.Employees.SingleOrDefault(i => i.Id == id));
+            return await Task.Run(() => _baseContext.Employees.SingleOrDefault(i => i.Id == id)).ConfigureAwait(false);
         }
 
         public async Task<ICollection<TaskEmployee>> GetTaskEmployees(int employeeId)
         {
-            return await Task.Run(() =>
-            {
-                var employee = _baseContext.Employees.SingleOrDefault(i => i.Id == employeeId);
-                return employee?.TaskEmployee;
-            });
+            return await Task.Run<ICollection<TaskEmployee>>(() =>
+                _baseContext.TaskEmployee.Join(_baseContext.Tasks, te => te.TaskId, t => t.Id, (te, t) => new { te, t })
+                    .Where(t1 => t1.t.IsCompleted == true && t1.te.EmployeeId == employeeId)
+                    .Select(t1 => t1.te).ToList()).ConfigureAwait(false);
         }
 
         public async Task<Employee> Create(Employee employee)

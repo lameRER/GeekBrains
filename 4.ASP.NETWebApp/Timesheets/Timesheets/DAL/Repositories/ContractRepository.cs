@@ -21,12 +21,12 @@ namespace Timesheets.DAL.Repositories
 
         public async Task<ICollection<Contract>> GetByCustomer(Customer customer)
         {
-            return await Task.Run<ICollection<Contract>>(() => _baseContext.Contracts.Where(i => i.Customer == customer).ToList());
+            return await Task.Run<ICollection<Contract>>(() => _baseContext.Contracts.Where(i => i.Customer == customer).ToList()).ConfigureAwait(false);
         }
 
         public async Task<Contract> GetById(int id)
         {
-            return await Task.Run((() => _baseContext.Contracts.SingleOrDefault(i => i.Id == id)));
+            return await Task.Run(() => _baseContext.Contracts.SingleOrDefault(i => i.Id == id)).ConfigureAwait(false);
         }
 
         public async Task<Contract> Create(Contract contract)
@@ -50,7 +50,7 @@ namespace Timesheets.DAL.Repositories
             {
                 var contract = _baseContext.Contracts.FirstOrDefault(i => i.Id == invoice.Contract.Id);
                 contract?.Invoices.Add(invoice);
-            });
+            }).ConfigureAwait(false);
         }
     }
 }

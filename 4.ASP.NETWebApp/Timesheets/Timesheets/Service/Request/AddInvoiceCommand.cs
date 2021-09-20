@@ -7,6 +7,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Timesheets.DAL.Interfaces;
 using Timesheets.DAL.Models;
+using Timesheets.Domain;
 using Timesheets.Service.Responses;
 using Task = Timesheets.DAL.Models.Task;
 
@@ -27,7 +28,7 @@ namespace Timesheets.Service.Request
         public string Decription { get; set; }
         
         [FromBody]
-        public ICollection<Task> Tasks { get; set; }
+        public ICollection<int> Tasks { get; set; }
 
         public class AddInvoiceCommandHandler : IRequestHandler<AddInvoiceCommand, InvoiceDto>
         {
@@ -48,16 +49,10 @@ namespace Timesheets.Service.Request
             {
                 var contract = await _contractRepository.GetById(request.ContractId);
                 if (contract == null) return null;
-                var invoice = _mapper.Map<Invoice>(request);
-                invoice.Contract = contract;
-                foreach (var taskItem in request.Tasks)
-                {
-                    var task = await _taskRepository.GetById(taskItem.Id);
-                    invoice.Tasks.Add(task);
-                }
-
-                invoice = await _invoiceRepository.Create(invoice);
-                await _contractRepository.AddInvoice(invoice);
+                var invoiceAggregate = InvoiceAgregate.Create(contract.Id, request.Date, request.Decription);
+                var tasks = await _taskRepository.GetByIdList(request.Tasks);
+                invoiceAggregate.IncludeSheets(tasks);
+                var invoice = await _invoiceRepository.Create(invoiceAggregate);
                 return _mapper.Map<InvoiceDto>(invoice);
             }
         }

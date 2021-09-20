@@ -26,7 +26,7 @@ namespace Timesheets.DAL.Repositories
 
         public async Task<Customer> GetById(int id)
         {
-            return await Task.Run(() => _baseContext.Customers.SingleOrDefault(i => i.Id == id));
+            return await Task.Run(() => _baseContext.Customers.SingleOrDefault(i => i.Id == id)).ConfigureAwait(false);
         }
 
         public async Task<Customer> Create(Customer customer)
@@ -50,7 +50,7 @@ namespace Timesheets.DAL.Repositories
             {
                 var customer = _baseContext.Customers.FirstOrDefault(i => i.Id == contract.Customer.Id);
                 customer?.Contracts.Add(contract);
-            });
+            }).ConfigureAwait(false);
         }
     }
 }

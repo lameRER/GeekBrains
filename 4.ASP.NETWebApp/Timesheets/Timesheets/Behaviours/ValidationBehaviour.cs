@@ -30,12 +30,6 @@ namespace Timesheets.Behaviours
 
             if (!failures.Any()) return await next();
             throw new ValidationException(failures);
-            // var fails = _validators
-            //     .Select(x => x.Validate(context))
-            //     .SelectMany(x => x.Errors)
-            //     .Where(x => x != null)
-            //     .ToList();
-            // if (fails.Count != 0) throw new ValidationException(fails);
         }
     }
 }

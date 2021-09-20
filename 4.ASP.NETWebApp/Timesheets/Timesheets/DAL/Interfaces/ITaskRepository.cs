@@ -10,5 +10,7 @@ namespace Timesheets.DAL.Interfaces
         Task<Models.Task> GetById(int id);
 
         Task<Models.Task> Create(Models.Task task);
+
+        Task<ICollection<Models.Task>> GetByIdList(ICollection<int> list);
     }
 }

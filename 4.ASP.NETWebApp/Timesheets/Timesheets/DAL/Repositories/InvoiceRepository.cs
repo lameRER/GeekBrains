@@ -21,7 +21,7 @@ namespace Timesheets.DAL.Repositories
 
         public async Task<ICollection<Invoice>> GetContractInvoiceByPeriod(Contract contract, DateTime dateFrom, DateTime dateTo)
         {
-            return await Task.Run<ICollection<Invoice>>(() => _baseContext.Invoices.Where(i => i.Contract == contract && i.Date == dateFrom && i.Date < dateTo).ToList());
+            return await Task.Run<ICollection<Invoice>>(() => _baseContext.Invoices.Where(i => i.Contract == contract && i.Date == dateFrom && i.Date < dateTo).ToList()).ConfigureAwait(false);
         }
 
         public async Task<Invoice> Create(Invoice invoice)
