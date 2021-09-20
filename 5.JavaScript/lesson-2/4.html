@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script>
+        "use strict"
+        const a = +prompt("Введите первое число");
+        const b = +prompt("Введите второе число");
+
+        alert(`Сложение: ${sum(a,b)}\nВычетание: ${diff(a,b)}\nУмножение: ${mult(a,b)}\nДеление: ${Math.round(div(a,b))}`)
+
+        /**
+        * The sum of two numbers
+        * @param {Numper} a - first number
+        * @param {Number} b - second number
+        * @returns
+        */
+        function sum(a, b) {
+        return a + b;
+        }
+
+        /**
+        * Subtracting two numbers
+        * @param {Numper} a - first number
+        * @param {Number} b - second number
+        * @returns
+        */
+        function diff(a,b){
+            return a - b;
+        }
+
+        /**
+        * Product of two numbers
+        * @param {Numper} a - first number
+        * @param {Number} b - second number
+        * @returns
+        */
+        function mult(a, b){
+            return a * b;
+        }
+
+        /**
+        * Division of two numbers
+        * @param {Numper} a - first number
+        * @param {Number} b - second number
+        * @returns
+        */
+        function div(a, b){
+            return a / b;
+        }
+    </script>
+</body>
+</html>
