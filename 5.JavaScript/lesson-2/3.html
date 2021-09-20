@@ -14,37 +14,42 @@
         console.log(Math.sign(a));
         console.log(Math.sign(b));
 
-        StartUp();
+        startUp();
 
         function startUp(){
-            a = validationCheck(+prompt("Введите первое целочисленное число"), "a");
-            b = validationCheck(+prompt("Введите второе целочисленное число"), "b");
-            positiveCheck(a,b);
-            negativeCheck(a,b);
-            differentSignsCheck(a,b);
+            a = +prompt("Введите первое целочисленное число");
+            b = +prompt("Введите второе целочисленное число");
+            if(validationCheck(a) === validationCheck(b) && validationCheck(b) === true){
+                positiveCheck(a,b);
+                negativeCheck(a,b);
+                differentSignsCheck(a,b);
+            }
+            else{
+                alert('Задано не целочисленное число');
+                startUp();
+            }
         }
 
         function positiveCheck(a, b){
-            if(Math.sign(a) === Math.sign(b) === 1)
-                return alert(`${a} и ${b} положительные. Разность равна: '${a-b}'`)
+            if(Math.sign(a) === Math.sign(b) && Math.sign(b) === 1)
+                alert(`${a} и ${b} положительные. Разность равна: '${a-b}'`)
         }
 
         function negativeCheck(a, b){
-            if(Math.sign(a) === Math.sign(b) === -1)
-                return alert(`${a} и ${b} отрицательные. Произведение равно: '${a*b}'`)
+            if(Math.sign(a) === Math.sign(b) && Math.sign(b) === -1)
+                alert(`${a} и ${b} отрицательные. Произведение равно: '${a*b}'`)
         }
 
         function differentSignsCheck(a, b){
             if(Math.sign(a) != Math.sign(b))
-                return alert(`${a} и ${b} разные знаки. Сумма равна: '${a+b}'`)
+                alert(`${a} и ${b} разные знаки. Сумма равна: '${a+b}'`)
         }
 
-        function validationCheck(value, variable){
-            if(!Number.isInteger(value)){
-                alert(`Задано не целочисленное число переменной ${variable}`);
-                StartUp();
+        function validationCheck(value){
+            if(Number.isInteger(value)){
+                return true;
             }
-            return value;
+            return false;
         }
     </script>
 </body>

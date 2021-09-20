@@ -9,16 +9,10 @@
 <body>
     <script>
         "use strict"
-        let arg1;
-        let arg2;
-        let operation;
-
-        while (true){
-            arg1 = +prompt("Введите первое число");
-            operation = prompt("Введите оператор ('+', '-', '*', '/')");
-            arg2 = +prompt("Введите второе число");
-            alert(`Результат: ${mathOperation(arg1, arg2, operation)}`);
-        }
+        let arg1 = +prompt("Введите первое число");
+        let operation = prompt("Введите оператор ('+', '-', '*', '/')");
+        let arg2 = +prompt("Введите второе число");
+        alert(`Результат: ${mathOperation(arg1, arg2, operation)}`);
 
         function mathOperation(arg1, arg2, operation){
             switch(operation){
@@ -36,20 +30,44 @@
 
         }
 
+        /**
+        * The sum of two numbers
+        * @param {Numper} a - first number
+        * @param {Number} b - second number
+        * @returns
+        */
         function sum(a, b){
             return a + b;
         }
 
+        /**
+        * The sum of two numbers
+        * @param {Numper} a - first number
+        * @param {Number} b - second number
+        * @returns
+        */
         function diff(a,b){
             return a - b;
         }
 
+        /**
+        * The sum of two numbers
+        * @param {Numper} a - first number
+        * @param {Number} b - second number
+        * @returns
+        */
         function mult(a, b){
             return a * b;
         }
 
+        /**
+        * The sum of two numbers
+        * @param {Numper} a - first number
+        * @param {Number} b - second number
+        * @returns
+        */
         function div(a, b){
-            return Math.round(a / b);
+            return a / b;
         }
     </script>
 </body>

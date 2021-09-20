@@ -12,22 +12,46 @@
         const a = +prompt("Введите первое число");
         const b = +prompt("Введите второе число");
 
-        alert(`Сложение: ${sum(a,b)}\nВычетание: ${diff(a,b)}\nУмножение: ${mult(a,b)}\nДеление: ${div(a,b)}`)
+        alert(`Сложение: ${sum(a,b)}\nВычетание: ${diff(a,b)}\nУмножение: ${mult(a,b)}\nДеление: ${Math.round(div(a,b))}`)
 
-        function sum(a, b){
-            return a + b;
+        /**
+        * The sum of two numbers
+        * @param {Numper} a - first number
+        * @param {Number} b - second number
+        * @returns
+        */
+        function sum(a, b) {
+        return a + b;
         }
 
+        /**
+        * Subtracting two numbers
+        * @param {Numper} a - first number
+        * @param {Number} b - second number
+        * @returns
+        */
         function diff(a,b){
             return a - b;
         }
 
+        /**
+        * Product of two numbers
+        * @param {Numper} a - first number
+        * @param {Number} b - second number
+        * @returns
+        */
         function mult(a, b){
             return a * b;
         }
 
+        /**
+        * Division of two numbers
+        * @param {Numper} a - first number
+        * @param {Number} b - second number
+        * @returns
+        */
         function div(a, b){
-            return Math.round(a / b);
+            return a / b;
         }
     </script>
 </body>
