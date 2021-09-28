@@ -32,20 +32,21 @@
         /**
          * Applies a discount on the current price
          * @param  {array} products
-         * @param  {Number} discount
+         * @param  {number} discount
          */
-         function applyDiscount(products, discount){
+        function applyDiscount(products, discount) {
             products.forEach(element => {
-                element.price = element.price/100*(100-discount)
+                element.price = element.price / 100 * (100 - discount)
             });
         }
 
         /**
          * Returns list of elements
          */
-        function getProduct(){
+        function getProduct() {
             products.forEach(element => {
-                console.log(element)});
+                console.log(element)
+            });
         }
 
     </script>

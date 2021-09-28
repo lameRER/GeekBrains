@@ -39,17 +39,17 @@
         ];
 
         console.log(elementFilter(products, 'photos'));
-        console.log(products.sort((low, high) => low.price - high.price));
+        console.log(products.sort((a, b) => a.price - b.price));
 
 
         /**
         * returns a filter by a passive element
-        * @param {Array} products
-        * @param {String} element
+        * @param {array} products
+        * @param {string} element
         * @returns
         */
         function elementFilter(products, element) {
-            return products.filter(i => (i) => element in i && i.photos.length>0);
+            return products.filter(i => (i) => element in i && i.photos.length > 0);
         }
 
     </script>
