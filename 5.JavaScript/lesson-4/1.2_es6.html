@@ -33,6 +33,7 @@
         }
 
         class AttachedPost extends Post {
+            highLighted = false;
             /**
             * @param {string} author
             * @param {string} text
@@ -40,7 +41,6 @@
             */
             constructor(author, text, date) {
                 super(author, text, date);
-                this.highLighted = false;
             }
 
             makeTextHighlighted() {
