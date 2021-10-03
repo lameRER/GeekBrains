@@ -28,8 +28,8 @@
 </body>
 <script>
     "use strict"
-    const elements = document.querySelector('.product');
-    elements.addEventListener('click', event => {
+    const element = document.querySelector('.product');
+    element.addEventListener('click', event => {
         event.target.innerHTML = `<div>Другой товар</div>
     <div>Другое описание</div>`;
     });
