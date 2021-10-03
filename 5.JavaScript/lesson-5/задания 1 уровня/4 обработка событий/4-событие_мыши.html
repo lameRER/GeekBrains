@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <textarea></textarea>
 
@@ -12,7 +14,10 @@
     появлялось сообщение: "вы навели на textarea" -->
 
     <script>
-        
+        "use strict"
+        const elements = document.querySelector('textarea');
+        elements.addEventListener('mouseover', () => console.log('вы навели на textarea'));
     </script>
 </body>
+
 </html>
