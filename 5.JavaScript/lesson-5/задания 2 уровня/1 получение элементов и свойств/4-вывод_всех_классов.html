@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <div class="one two three"></div>
 
-    <!-- 
+    <!--
     Задание.
     1. Сохраните в переменную тег div.
     2. Создайте переменную classes, и в нее сохраните значение свойства classList.
@@ -16,7 +18,11 @@
      -->
 
     <script>
-        
+        "use strict"
+        const elements = document.querySelector('div');
+        const classes = elements.classList;
+        classes.forEach(cs => console.log(cs));
     </script>
 </body>
+
 </html>

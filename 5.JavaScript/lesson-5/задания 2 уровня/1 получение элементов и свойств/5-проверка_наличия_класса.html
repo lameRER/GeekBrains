@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <div class="product hidden"></div>
 
@@ -14,4 +16,10 @@
     проверьте есть ли класс hidden у этого тега.
      -->
 </body>
+<script>
+    "use strict"
+    const elements = document.querySelector('div');
+    console.log(elements.classList.contains('hidden'));
+</script>
+
 </html>
