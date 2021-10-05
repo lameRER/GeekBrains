@@ -15,7 +15,7 @@
         <input type="text"><br>
     </form>
 
-    <!-- 
+    <!--
         Задание. Сделайте, чтобы у всех инпутов снизу был внешний отступ (margin-bottom).
         1. Получите все инпуты, например с помощью querySelectorAll
         2. Переберите полученную коллекцию например с помощью forEach
@@ -25,7 +25,9 @@
     -->
 
     <script>
-        
+        "use strict"
+        const elements = document.querySelectorAll('input');
+        elements.forEach(input => input.style.marginBottom = '5px');
     </script>
 </body>
 
