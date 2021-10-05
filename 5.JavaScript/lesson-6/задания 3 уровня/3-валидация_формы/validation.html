@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -10,6 +11,7 @@
         }
     </style>
 </head>
+
 <body>
     <form>
         <input id="first" type="text"><br>
@@ -19,7 +21,7 @@
         <button>Отправить</button>
     </form>
 
-    <!-- 
+    <!--
         Задание. Вам нужно проверять пусто ли в input'ах при отправке формы.
         Если в инпуте пусто делаете ему красную рамку. Если хотя бы в одном
         инпуте пусто форма не должна отправляться.
@@ -36,7 +38,22 @@
      -->
 
     <script>
-        
+        "use strict"
+        const formEl = document.querySelector('form');
+        const inputFirstEl = document.querySelector('input#first');
+        const inputSecondEl = document.querySelector('input#second');
+        formEl.addEventListener('submit', event => {
+            if (!inputFirstEl.value) {
+                inputFirstEl.style.borderColor = 'red';
+                event.preventDefault();
+            }
+            if (!inputSecondEl.value) {
+                inputSecondEl.style.borderColor = 'red';
+                event.preventDefault();
+            }
+        })
+
     </script>
 </body>
+
 </html>

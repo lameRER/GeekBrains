@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="products">
         <div class="product">
@@ -35,13 +37,20 @@
     из папки images.
     1. Получите все картинки например с помощью querySelectorAll
     2. Переберите эту коллекцию с помощью цикла for, в цикле каждой картинке
-    установите атрибут src (например с помощью setAttribute) равный 
+    установите атрибут src (например с помощью setAttribute) равный
     "images/здесь_нужно_поставить_правильное_имя_файла".
     3. Наконец весь код оберните в setTimeout, и выставите задержку 3 сек.
     -->
 
     <script>
-        
+        "use strict"
+        setTimeout(function () {
+            const imagesEl = document.querySelectorAll('img');
+            for (let i = 0; i < imagesEl.length; i++) {
+                imagesEl[i].setAttribute('src', `images/${i + 1}.jpg`);
+            }
+        }, 3000);
     </script>
 </body>
+
 </html>

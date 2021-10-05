@@ -33,7 +33,7 @@
 
     <!-- Задание. Надо сделать, чтобы по клику на крестик исчезало тот блок
     с сообщением, в котором этот крестик находится. Для этого:
-    1. Получите все кнопки, например с помощью querySelectorAll 
+    1. Получите все кнопки, например с помощью querySelectorAll
     2. Переберите полученную коллекцию, например с помощью forEach
     2.1 Методу forEach передавайте callback-функцию с параметром button
     3. Каждому button назначьте обработчик клика, с помощью addEventListener,
@@ -44,9 +44,12 @@
     -->
 
     <script>
+        "use strict"
+        const buttonEl = document.querySelectorAll('button');
+        buttonEl.forEach(btn => btn.addEventListener('click', closeClickHandler));
 
         function closeClickHandler(event) {
-           
+            event.currentTarget.parentNode.style.display = 'none';
         }
     </script>
 </body>
