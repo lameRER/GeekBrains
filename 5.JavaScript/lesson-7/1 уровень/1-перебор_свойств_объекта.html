@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <script>
         const products = {
@@ -18,7 +20,10 @@
         Используя цикл for in переберите объект products, ведите в консоль
         имя свойства, значение свойства.
         */
-
+        for (product in products) {
+            console.log(`Name: ${product}; Value: ${products[product]}`);
+        }
     </script>
 </body>
+
 </html>
