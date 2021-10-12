@@ -16,7 +16,7 @@
         explicabo? Ipsa quos qui similique sequi officia quod ab reiciendis alias!
     </div>
 
-    <!-- 
+    <!--
     Задание. Вам нужно чтобы при клике на кнопку появлялось сообщение .message
     снизу экрана, в общем как сообщения вконтакте.
     1. Аудио воспроизводите как здесь https://developer.mozilla.org/en-US/docs/Web/API/HTMLAudioElement
@@ -26,7 +26,13 @@
     -->
 
     <script>
-        
+        const messageEl = document.querySelector('.message');
+        const audioEl = new Audio('notification.mp3');
+        const buttonEl = document.querySelector('button');
+        buttonEl.addEventListener('click', event => {
+            audioEl.play();
+            messageEl.style.transform = `translateY(${-20 - messageEl.clientHeight}px)`;
+        })
     </script>
 </body>
 
