@@ -28,3 +28,11 @@ let filterSizeWrap = document.querySelector('.filterSizeWrap');
 filterSizeWrap.addEventListener('click', function() {
     filterSizes.classList.toggle('hidden');
 });
+
+
+const product = [
+    new Product(1, 'Куртка', 1300, '1.img'),
+    new Product(2, 'Куртка', 2300, '2.img'),
+    new Product(3, 'Куртка', 3300, '3.img'),
+    new Product(4, 'Куртка', 4300, '4.img')
+]
