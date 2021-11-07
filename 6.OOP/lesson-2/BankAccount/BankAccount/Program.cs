@@ -13,9 +13,9 @@ namespace BankAccount
 
             void GetAccount(Account account)
             {
-                Console.WriteLine($"Счет: {account.GetNumber()}");
-                Console.WriteLine($"Тип счета: {account.GetAccountType()}");
-                Console.WriteLine($"Баланс счета: {account.GetBalance()}");
+                Console.WriteLine($"Счет: {account.Number}");
+                Console.WriteLine($"Тип счета: {account.Type}");
+                Console.WriteLine($"Баланс счета: {account.Balance}");
                 Console.WriteLine();
             }
         }

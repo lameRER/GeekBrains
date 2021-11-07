@@ -33,8 +33,9 @@ namespace BankAccount
             return _lastNumber++;
         }
 
-        private uint Number
+        public uint Number
         {
+            get => _number;
             set
             {
                 if (value <= 0) throw new ArgumentOutOfRangeException(nameof(value));
@@ -42,8 +43,9 @@ namespace BankAccount
             }
         }
 
-        private decimal Balance
+        public decimal Balance
         {
+            get => _balance;
             set
             {
                 if (value <= 0) throw new ArgumentOutOfRangeException(nameof(value));
@@ -51,19 +53,14 @@ namespace BankAccount
             }
         }
 
-        private AccountType Type
+        public AccountType Type
         {
+            get => _type;
             set
             {
                 if (value <= 0) throw new ArgumentOutOfRangeException(nameof(value));
                 _type = value;
             }
         }
-
-        public uint GetNumber() => _number;
-
-        public decimal GetBalance() => _balance;
-
-        public AccountType GetAccountType() => _type;
     }
 }
