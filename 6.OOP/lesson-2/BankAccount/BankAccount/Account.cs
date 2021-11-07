@@ -62,5 +62,22 @@ namespace BankAccount
                 _type = value;
             }
         }
+
+        public string Deposit(decimal value)
+        {
+            Balance += value;
+            return $"Операция выполнена успешно. Баланс: {Balance}";
+        }
+
+        public string Withdraw(decimal value)
+        {
+            if (Balance - value > 0)
+            {
+                Balance -= value;
+                return $"Операция выполнена успешно. Баланс: {Balance}";
+            }
+
+            return $"Недостаточно средств. Операция не выполнена. Баланс:{Balance}";
+        }
     }
 }
