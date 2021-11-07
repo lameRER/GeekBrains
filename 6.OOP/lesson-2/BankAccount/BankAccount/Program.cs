@@ -6,14 +6,22 @@ namespace BankAccount
     {
         static void Main(string[] args)
         {
-            var account = new Account();
-            account.SetNumber(123);
-            account.SetBalance(500.00m);
-            account.SetAccountType(AccountType.CurrentAccounts);
+            for (var i = 0; i < new Random().Next(2,10); i++)
+            {
+                GetAccount(new Account(), new Random().Next(100000) / 100m, AccountType.CurrentAccounts);
+            }
 
-            Console.WriteLine($"Счет: {account.GetNumber()}");
-            Console.WriteLine($"Тип счета: {account.GetAccountType()}");
-            Console.WriteLine($"Баланс счета: {account.GetBalance()}");
+            void GetAccount(Account account, decimal balance, AccountType type)
+            {
+                account.SetNumber();
+                account.SetBalance(balance);
+                account.SetAccountType(type);
+
+                Console.WriteLine($"Счет: {account.GetNumber()}");
+                Console.WriteLine($"Тип счета: {account.GetAccountType()}");
+                Console.WriteLine($"Баланс счета: {account.GetBalance()}");
+                Console.WriteLine();
+            }
         }
     }
 }

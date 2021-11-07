@@ -7,7 +7,13 @@ namespace BankAccount
         private uint _number;
         private decimal _balance;
         private AccountType _type;
+        private static uint _lastNumber = 1;
 
+        private static uint GenerateNumber()
+        {
+            return _lastNumber++;
+        } 
+        
         private uint Number
         {
             set
@@ -35,6 +41,11 @@ namespace BankAccount
             } 
         }
 
+        public void SetNumber()
+        {
+            Number = GenerateNumber();
+        }
+        
         public void SetNumber(uint number)
         {
             Number = number;
