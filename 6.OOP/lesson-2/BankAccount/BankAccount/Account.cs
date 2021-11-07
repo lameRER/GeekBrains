@@ -5,15 +5,34 @@ namespace BankAccount
     public class Account
     {
         private uint _number;
-        private decimal _balance;
+        private decimal _balance = 0.00m;
         private AccountType _type;
         private static uint _lastNumber = 1;
+
+        public Account(decimal balance)
+        {
+            Number = GenerateNumber();
+            Balance = balance;
+        }
+
+        public Account(AccountType type)
+        {
+            Number = GenerateNumber();
+            Type = type;
+        }
+
+        public Account(decimal balance, AccountType type)
+        {
+            Number = GenerateNumber();
+            Balance = balance;
+            Type = type;
+        }
 
         private static uint GenerateNumber()
         {
             return _lastNumber++;
-        } 
-        
+        }
+
         private uint Number
         {
             set
@@ -38,31 +57,11 @@ namespace BankAccount
             {
                 if (value <= 0) throw new ArgumentOutOfRangeException(nameof(value));
                 _type = value;
-            } 
-        }
-
-        public void SetNumber()
-        {
-            Number = GenerateNumber();
-        }
-        
-        public void SetNumber(uint number)
-        {
-            Number = number;
-        }
-
-        public void SetBalance(decimal balance)
-        {
-            Balance = balance;
-        }
-
-        public void SetAccountType(AccountType type)
-        {
-            Type = type;
+            }
         }
 
         public uint GetNumber() => _number;
-        
+
         public decimal GetBalance() => _balance;
 
         public AccountType GetAccountType() => _type;
