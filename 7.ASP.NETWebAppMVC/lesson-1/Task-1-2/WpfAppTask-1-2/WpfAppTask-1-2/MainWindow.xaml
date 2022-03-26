@@ -1,0 +1,36 @@
+﻿<Window x:Class="WpfAppTask_1_2.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:WpfAppTask_1_2"
+        mc:Ignorable="d"
+        Title="WpfAppTask_1_2" Height="174" Width="300">
+    <Grid>
+        <StackPanel>
+            <GroupBox Name="wq">
+                <DockPanel>
+                    <Label Name="LabelText" 
+                           Content="Fibonachi:" 
+                           VerticalAlignment="Top" 
+                           HorizontalAlignment="Left" 
+                           Margin="10"/>
+                    <TextBlock Name="TextBlockFibonachi"
+                               HorizontalAlignment="Center" 
+                               Margin="15"
+                               VerticalAlignment="Top"/>
+                </DockPanel>
+            </GroupBox>
+            <GroupBox>
+                <Button Content="Start" 
+                        Name="ButtonStart" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Bottom"
+                        Margin="10"
+                        Height="54"
+                        Width="118"
+                        Click="Button_Click"/>
+            </GroupBox>
+        </StackPanel>
+    </Grid>
+</Window>
