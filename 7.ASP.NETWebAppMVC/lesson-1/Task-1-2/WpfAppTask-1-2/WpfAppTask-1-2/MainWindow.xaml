@@ -5,10 +5,32 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfAppTask_1_2"
         mc:Ignorable="d"
-        Title="WpfAppTask_1_2" Height="150" Width="300">
+        Title="WpfAppTask_1_2" Height="174" Width="300">
     <Grid>
-        <Label Name="LabelText" Content="Fibonachi:" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="10"/>
-        <TextBlock Name="TextBlockFibonachi" HorizontalAlignment="Center" Margin="15" TextWrapping="Wrap" VerticalAlignment="Top"/>
-        <Button Content="Start" Name="ButtonStart" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="10" Height="54" Width="118" Click="Button_Click"/>
+        <StackPanel>
+            <GroupBox Name="wq">
+                <DockPanel>
+                    <Label Name="LabelText" 
+                           Content="Fibonachi:" 
+                           VerticalAlignment="Top" 
+                           HorizontalAlignment="Left" 
+                           Margin="10"/>
+                    <TextBlock Name="TextBlockFibonachi"
+                               HorizontalAlignment="Center" 
+                               Margin="15"
+                               VerticalAlignment="Top"/>
+                </DockPanel>
+            </GroupBox>
+            <GroupBox>
+                <Button Content="Start" 
+                        Name="ButtonStart" 
+                        HorizontalAlignment="Center" 
+                        VerticalAlignment="Bottom"
+                        Margin="10"
+                        Height="54"
+                        Width="118"
+                        Click="Button_Click"/>
+            </GroupBox>
+        </StackPanel>
     </Grid>
 </Window>
