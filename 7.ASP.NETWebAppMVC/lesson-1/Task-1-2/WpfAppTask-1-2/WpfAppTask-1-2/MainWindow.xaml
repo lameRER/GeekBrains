@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfAppTask_1_2"
         mc:Ignorable="d"
-        Title="WpfAppTask_1_2" Height="174" Width="300">
+        Title="WpfAppTask_1_2" Height="194" Width="300">
     <Grid>
         <StackPanel>
             <GroupBox Name="wq">
@@ -22,14 +22,20 @@
                 </DockPanel>
             </GroupBox>
             <GroupBox>
-                <Button Content="Start" 
-                        Name="ButtonStart" 
-                        HorizontalAlignment="Center" 
-                        VerticalAlignment="Bottom"
-                        Margin="10"
-                        Height="54"
-                        Width="118"
-                        Click="Button_Click"/>
+                <StackPanel>
+                    <Slider ValueChanged="Slider_OnValueChanged" 
+                            Name="Slider"
+                            Minimum="25"
+                            Maximum="2000"/>
+                    <Button Content="Start" 
+                            Name="ButtonStart" 
+                            HorizontalAlignment="Center" 
+                            VerticalAlignment="Bottom"
+                            Margin="10"
+                            Height="54"
+                            Width="118"
+                            Click="Button_Click"/>
+                </StackPanel>
             </GroupBox>
         </StackPanel>
     </Grid>

@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Windows;
 
 namespace WpfAppTask_1_2
@@ -25,14 +26,17 @@ namespace WpfAppTask_1_2
             ButtonStart.IsEnabled = false;
             var thread = new Thread(() =>
             {
-                for (int i = 0; i < 20; i++)
+                for (int i = 0; i < 30; i++)
                 {
+                    int sleep =0;
                     var result = Fibonachi(i);
                     TextBlockFibonachi.Dispatcher.Invoke(() =>
                     {
+                        sleep = (int)Slider.Value;
                         TextBlockFibonachi.Text = result.ToString();
                     });
-                    Thread.Sleep(1000);
+                    if(sleep != 0)
+                        Thread.Sleep(sleep);
                 }
                 ButtonStart.Dispatcher.Invoke(() =>
                 {
@@ -41,6 +45,11 @@ namespace WpfAppTask_1_2
             });
             thread.IsBackground = true;
             thread.Start();
+        }
+
+        private void Slider_OnValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            Console.WriteLine(Slider.Value);
         }
     }
 }
