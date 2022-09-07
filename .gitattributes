@@ -1,7 +1,5 @@
 *.sql linguist-detectable=true
 *.sql linguist-language=sql
-*.json linguist-detectable=true
-*.md linguist-detectable=true
 ###############################################################################
 # Set default behavior to automatically normalize line endings.
 ###############################################################################
