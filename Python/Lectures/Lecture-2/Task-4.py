@@ -8,7 +8,7 @@ lists = [-4, -3, -2, -1, 0, 1, 2, 3, 4]
 def SetFile(lists, path):
     for l in lists:
         with open(path, 'a') as f:
-            f.write(str(f'{l}\n'))
+            f.write(str(f'{ls}\n'))
 
 def GetFileIndex(digit, path):
     
