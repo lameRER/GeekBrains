@@ -20,6 +20,5 @@ def GetFileIndex(digit, path):
 
 digits = input("Вветите список чисел").split(' ')
 
-digits = [1, 6]    
 SetFile(lists, pth)
 
