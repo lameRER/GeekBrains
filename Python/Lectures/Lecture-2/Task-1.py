@@ -1,5 +1,5 @@
 n = input("Введите вещественное число: ")
-sum = 0
+sm = 0
 for digit in n:
     if digit.isdigit():
         sum += int(digit)
