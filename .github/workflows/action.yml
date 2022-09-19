@@ -1,6 +1,11 @@
 name: Python package
 
-on: [pull_request]
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    # The branches below must be a subset of the branches above
+    branches: [ master ]
 
 jobs:
   build:
@@ -8,12 +13,15 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
+        language: [ 'python' ]
         python-version: ["3.7", "3.8", "3.9", "3.10"]
+        path: [ 'Python/Lectures/Lecrure-3' ]
 
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python ${{ matrix.python-version }}
         uses: actions/setup-python@v4
         with:
+          languages: ${{ matrix.language }}
           python-version: ${{ matrix.python-version }}
-      - run: python Python/Lectures/Lecrure-3/Task-5.py
+      - run: python ${{ matrix.path }}/Task-5.py
