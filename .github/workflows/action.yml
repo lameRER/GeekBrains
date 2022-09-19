@@ -15,7 +15,7 @@ jobs:
       matrix:
         language: [ 'python' ]
         python-version: ["3.7", "3.8", "3.9", "3.10"]
-        path: [ 'Python/Lectures/Lecrure-3' ]
+        path: [ 'Python/Lectures/Lecrure-4' ]
 
     steps:
       - uses: actions/checkout@v3
@@ -24,4 +24,4 @@ jobs:
         with:
           languages: ${{ matrix.language }}
           python-version: ${{ matrix.python-version }}
-      - run: python ${{ matrix.path }}/Task-5.py
+#      - run: python ${{ matrix.path }}/*.py
