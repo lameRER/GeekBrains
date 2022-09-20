@@ -1,7 +1,5 @@
-# *.sql linguist-detectable=true
-# *.sql linguist-language=sql
-# *.py linguist-detectable=true
-# *.py linguist-language=Python
+*.py linguist-detectable=true
+*.py linguist-language=python
 ###############################################################################
 # Set default behavior to automatically normalize line endings.
 ###############################################################################
