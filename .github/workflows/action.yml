@@ -10,7 +10,7 @@ jobs:
       matrix:
         language: [ 'python' ]
         python-version: [ "3.7", "3.8", "3.9", "3.10" ]
-        path: [ 'Python/Lessons/lesson-2' ]
+        path: [ 'Python/Homeworks/HW-4' ]
 
     steps:
       - uses: actions/checkout@v3
