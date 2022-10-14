@@ -10,7 +10,7 @@ jobs:
       matrix:
         language: [ 'python' ]
         python-version: [ "3.7", "3.8", "3.9", "3.10" ]
-        path: [ 'Python/Lessons/lesson-1' ]
+        path: [ 'Python/Lessons/lesson-2' ]
 
     steps:
       - uses: actions/checkout@v3
@@ -20,7 +20,7 @@ jobs:
           languages: ${{ matrix.language }}
           python-version: ${{ matrix.python-version }}
       - run: python ${{ matrix.path }}/Task-1.py
-      - run: python ${{ matrix.path }}/Task-2.py
-      - run: python ${{ matrix.path }}/Task-3.py
-      - run: python ${{ matrix.path }}/Task-4.py
-      - run: python ${{ matrix.path }}/Task-5.py
+     # - run: python ${{ matrix.path }}/Task-2.py
+     # - run: python ${{ matrix.path }}/Task-3.py
+     # - run: python ${{ matrix.path }}/Task-4.py
+     # - run: python ${{ matrix.path }}/Task-5.py
