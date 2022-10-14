@@ -10,7 +10,7 @@ jobs:
       matrix:
         language: [ 'python' ]
         python-version: [ "3.7", "3.8", "3.9", "3.10" ]
-        path: [ 'Python/Homeworks/HW-4' ]
+        path: [ 'Python/Homeworks/HW-6' ]
 
     steps:
       - uses: actions/checkout@v3
@@ -20,7 +20,3 @@ jobs:
           languages: ${{ matrix.language }}
           python-version: ${{ matrix.python-version }}
       - run: python ${{ matrix.path }}/Task-1.py
-     # - run: python ${{ matrix.path }}/Task-2.py
-     # - run: python ${{ matrix.path }}/Task-3.py
-     # - run: python ${{ matrix.path }}/Task-4.py
-     # - run: python ${{ matrix.path }}/Task-5.py
