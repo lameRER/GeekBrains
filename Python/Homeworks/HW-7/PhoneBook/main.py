@@ -1,11 +1,11 @@
-from controller.controller import get_controller
+from Controller.controller import get_controller
 
 
 def main():
     state = (None, None)
     while True:
-        contoller = get_controller(state[0])
-        state = contoller()
+        controller = get_controller(state[0])
+        state = controller()
 
 
 if __name__ == '__main__':
