@@ -1,22 +1,22 @@
-name: Python package
+# name: Python package
 
-on: [ pull_request ]
+# on: [ pull_request ]
 
-jobs:
-  build:
+# jobs:
+#   build:
 
-    runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        language: [ 'python' ]
-        python-version: [ "3.7", "3.8", "3.9", "3.10" ]
-        path: [ 'Python/Homeworks/HW-7/PhoneBook' ]
+#     runs-on: ubuntu-latest
+#     strategy:
+#       matrix:
+#         language: [ 'python' ]
+#         python-version: [ "3.7", "3.8", "3.9", "3.10" ]
+#         path: [ 'Python/Homeworks/HW-7/PhoneBook' ]
 
-    steps:
-      - uses: actions/checkout@v3
-      - name: Set up Python ${{ matrix.python-version }}
-        uses: actions/setup-python@v4
-        with:
-          languages: ${{ matrix.language }}
-          python-version: ${{ matrix.python-version }}
-      - run: python ${{ matrix.path }}/main.py
+#     steps:
+#       - uses: actions/checkout@v3
+#       - name: Set up Python ${{ matrix.python-version }}
+#         uses: actions/setup-python@v4
+#         with:
+#           languages: ${{ matrix.language }}
+#           python-version: ${{ matrix.python-version }}
+#       - run: python ${{ matrix.path }}/main.py
