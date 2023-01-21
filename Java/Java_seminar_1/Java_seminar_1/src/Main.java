@@ -58,11 +58,9 @@ public class Main {
             if(arr[i] ==1){
                 incounter++;
             }
-            if(arr[i] != 1 || i == arr.length-1){
-                if(incounter > rescounter){
-                    rescounter = incounter;
-                    incounter = 0;
-                }
+            if((arr[i] != 1 || i == arr.length-1) && incounter > rescounter) {
+                rescounter = incounter;
+                incounter = 0;
             }
             i++;
         }
