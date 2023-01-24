@@ -7,7 +7,6 @@ public class Main {
 
     public static String shuffle(final String s, final int[] index) {
         String outputResult = "";
-        String temp = "";
         for (int i = 0; i < index.length; i++) {
             outputResult = outputResult + s.charAt(index[i] - 1);
         }
