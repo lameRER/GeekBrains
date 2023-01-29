@@ -22,11 +22,11 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.logging.*;
 
-public class task1{
+public class task11 {
 
     public static void send_log(String text) throws IOException {
         
-        Logger logger = Logger.getLogger(task1.class.getName());
+        Logger logger = Logger.getLogger(homework2.task11.class.getName());
         FileHandler fh = new FileHandler("log_for_task1.txt", true);
         logger.addHandler(fh);
         
