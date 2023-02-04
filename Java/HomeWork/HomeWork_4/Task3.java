@@ -1,6 +1,5 @@
-package HomeWork.HomeWork_4;
+package homework.homework_4;
 import java.util.*;
-import java.util.Stack;
 
 
 public class Task3 {
@@ -27,13 +26,13 @@ public class Task3 {
         brackets.put(')', '(');
         brackets.put('}', '{');
         brackets.put(']', '[');
-        Stack<Character> stack = new Stack<>();
+        Deque<Character> arrDeque = new ArrayDeque<>();
         for (Character item : deque){
             if(brackets.containsValue(item)){
-                stack.push(item);
+                arrDeque.push(item);
             }
-            else if (brackets.containsKey(item) && (stack.isEmpty() || !stack.pop().equals(brackets.get(item)))) return false;
+            else if (brackets.containsKey(item) && (arrDeque.isEmpty() || !arrDeque.pop().equals(brackets.get(item)))) return false;
         }
-        return stack.isEmpty();
+        return arrDeque.isEmpty();
     }
 }
