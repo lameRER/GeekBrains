@@ -1,3 +1,4 @@
+package seminar.java_seminar_3;
 // Дан список с десятью случайными числами, нужно отсортировать
 import java.util.*;
 

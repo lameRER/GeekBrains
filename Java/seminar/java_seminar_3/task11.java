@@ -1,10 +1,10 @@
 /*
-Напишите программу, которая принимает с консоли число 
+Напишите программу, которая принимает с консоли число
 в формате byte и записывает его в файл ”result.txt”.
 
 Требуется перехватить все возможные ошибки и вывести их в логгер.
 
-После написания, попробуйте подать на вход числа 100 и 200 
+После написания, попробуйте подать на вход числа 100 и 200
 и проследите разницу в результате
 */
 
@@ -15,7 +15,7 @@
 При вводе 200 будет вызвана ошибка "Value out of range".
 */
 
-package homework2;
+package seminar.java_seminar_3;
 
 import java.util.Scanner;
 import java.io.FileWriter;
@@ -25,14 +25,14 @@ import java.util.logging.*;
 public class task11 {
 
     public static void send_log(String text) throws IOException {
-        
-        Logger logger = Logger.getLogger(homework2.task11.class.getName());
+
+        Logger logger = Logger.getLogger(task11.class.getName());
         FileHandler fh = new FileHandler("log_for_task1.txt", true);
         logger.addHandler(fh);
-        
+
         SimpleFormatter sFormat = new SimpleFormatter();
         fh.setFormatter(sFormat);
-        
+
         logger.log(Level.INFO, text);
         fh.close();
     }
@@ -41,7 +41,7 @@ public class task11 {
 
         System.out.printf(text);
         String data_str = "";
-        
+
         try {
             Scanner terminal_scanner = new Scanner(System.in);
             byte data = terminal_scanner.nextByte();
@@ -56,13 +56,13 @@ public class task11 {
     }
 
     public static void writing_data_in_txt_file(String data_str, String file_name) throws IOException {
-        
+
         file_name +=".txt";
-    
+
         if (data_str == ""){
             return;
         }
-    
+
         try (FileWriter file_for_write = new FileWriter(file_name, true)) {
 
             file_for_write.write(data_str + "\n");
@@ -81,7 +81,7 @@ public class task11 {
         String data_str = get_data_console_format_byte_return_string(text);
 
         String file_name = "result";
-        
+
         writing_data_in_txt_file(data_str,file_name);
     }
 }

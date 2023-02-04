@@ -1,3 +1,4 @@
+package seminar.java_seminar_3;
 // Даны следующие строки, cравнить их с помощью == и метода equals()
 public class Task0 {
     public static void main(String[] args) {

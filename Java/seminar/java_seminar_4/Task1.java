@@ -1,3 +1,4 @@
+package seminar.java_seminar_4;
 import java.util.ArrayDeque;
 import java.util.Arrays;
 import java.util.Deque;
