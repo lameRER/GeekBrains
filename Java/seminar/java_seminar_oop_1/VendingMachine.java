@@ -7,14 +7,14 @@ import java.util.List;
 
 public class VendingMachine {
 
-
+    private double cash;
+    
     protected List<Product> localList = new ArrayList<Product>();
 
     public List<Product> getLocalList() {
         return localList;
     }
 
-    private double cash;
 
     public VendingMachine addProduct(Product inputProduct) {
         localList.add(inputProduct);
