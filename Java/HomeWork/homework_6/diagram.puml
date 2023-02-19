@@ -1,0 +1,52 @@
+@startuml
+interface IComputer{
+    + void setPrice(int price)
+    + void setPrice()
+    + Integer getPrice()
+    + Computer getComputer()
+}
+
+interface IShop<E>{
+    + List<E> getComputersFromShop();
+    + setComputersFromShop(List<E> product);
+    + setComputersFromShop(E product);
+}
+
+class Shop<E> implements IShop{
+    - List<E> product
+}
+
+class Computer implements IComputer{
+    - CPU CPU
+    - RAM RAM
+    - Disk Disk
+    - GPU GPU
+    - OS OS
+    - Color color
+    - int price
+    + Notebook(CPU CPU, RAM RAM, Disk Disk, GPU GPU, OS OS, Color color, int price)
+}
+
+class SortingList{
+    + {static} TreeMap<Integer, Computer> sortByPrice(Set<Computer> inputSet)
+}
+
+Enum Color
+Enum CPU
+Enum Disk
+Enum GPU
+Enum OS
+
+class Filter{
+    +{static} getFilteredComputersBy(Map<String, String> params, List<Computer> putStore)
+}
+
+Color <-- Computer
+CPU <-- Computer
+Disk <-- Computer
+GPU <-- Computer
+OS <-- Computer
+
+
+
+@enduml
