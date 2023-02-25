@@ -13,6 +13,7 @@ public class Main {
         machine.addProduct(new Perishable("Молоко Бурёнка", 85, LocalDate.of(2023, 3, 25)));
         machine.addProduct(new Perishable("Молоко Коровка", 85, LocalDate.of(2023, 3, 25)));
         machine.addProduct(new Perishable("Молоко Василёк", 85, LocalDate.of(2023, 3, 25)));
+        machine.addProduct(new Perishable("Шоколадка Аленка", 120, LocalDate.of(2024, 05, 30)));
 
         System.out.println(machine);
         System.out.println("__________________________________");
