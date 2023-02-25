@@ -1,6 +1,6 @@
 package seminar.java_seminar_oop_1;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 public class Main {
     public static void main(String[] args) {
@@ -10,9 +10,9 @@ public class Main {
         machine.addProduct(new Product("Twix", 70.99));
         machine.addProduct(new Product("Алёнка", 90));
         machine.addProduct(new Product("Колокольчик", 85));
-        machine.addProduct(new Perishable("Молоко Бурёнка", 85, new Date(2023, 1, 25)));
-        machine.addProduct(new Perishable("Молоко Коровка", 85, new Date(2023, 1, 25)));
-        machine.addProduct(new Perishable("Молоко Василёк", 85, new Date(2023, 1, 25)));
+        machine.addProduct(new Perishable("Молоко Бурёнка", 85, LocalDate.of(2023, 3, 25)));
+        machine.addProduct(new Perishable("Молоко Коровка", 85, LocalDate.of(2023, 3, 25)));
+        machine.addProduct(new Perishable("Молоко Василёк", 85, LocalDate.of(2023, 3, 25)));
 
         System.out.println(machine);
         System.out.println("__________________________________");
