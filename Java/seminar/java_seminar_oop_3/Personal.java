@@ -1,7 +1,6 @@
 package seminar.java_seminar_oop_3;
 
-import java.awt.*;
-import java.util.*;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
