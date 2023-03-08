@@ -41,12 +41,23 @@ public class Team<T extends Warrior> {
         return sum;
     }
 
+    public int getTeamMinShield(){
+        int min = 100;
+        for (T item : team){
+            int shied = item.getShield();
+            if (shied < min){
+                min = shied;
+            }
+        }
+        return min;
+    }
+
     @Override
     public String toString() {
         StringBuilder teamBuilder = new StringBuilder();
         for (T item : team) {
-            teamBuilder.append(item.toString() + "\n");
+            teamBuilder.append(item.toString()).append("\n");
         }
-        return String.format("Team{ team= %s, maxDistance = %d, maxDamage = %d \n%s}", name, getMaxDistance(), getTeamDamage(), teamBuilder);
+        return String.format("Team{ team= %s, maxDistance = %d, maxDamage = %d, minShied = %d \n%s}", name, getMaxDistance(), getTeamDamage(), getTeamMinShield(), teamBuilder);
     }
 }
