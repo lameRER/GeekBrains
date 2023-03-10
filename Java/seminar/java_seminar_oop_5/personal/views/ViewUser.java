@@ -15,7 +15,7 @@ public class ViewUser {
     }
 
     public void run() throws Exception {
-        Commands com = null;
+        Commands com;
 
         while (true) {
             String command = prompt("Введите команду: ");
@@ -77,7 +77,7 @@ public class ViewUser {
         return new User(firstName, lastName, phone);
     }
 
-    private void createUser() throws Exception {
+    private void createUser() {
         userController.saveUser(inputUser());
     }
 
@@ -88,7 +88,7 @@ public class ViewUser {
         return in.nextLine();
     }
 
-    private void deleteUser() throws Exception {
+    private void deleteUser() {
         String userId = getUserId();
         userController.deleteUser(userId);
     }

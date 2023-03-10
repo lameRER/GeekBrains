@@ -16,15 +16,14 @@ public class UserController {
         this.repository = repository;
     }
 
-    public void saveUser(User user) throws Exception {
+    public void saveUser(User user) {
         validator.validateUser(user);
         repository.createUser(user);
     }
 
     public User readUser(String userId) throws Exception {
         List<User> users = repository.getAllUsers();
-        User user = userSearch(userId, users);
-        return user;
+        return userSearch(userId, users);
     }
 
     private static User userSearch(String userId, List<User> users) throws ClassNotFoundException{
