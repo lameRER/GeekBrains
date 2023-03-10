@@ -27,13 +27,13 @@ public class UserController {
         return user;
     }
 
-    private static User userSearch(String userId, List<User> users) throws Exception{
+    private static User userSearch(String userId, List<User> users) throws ClassNotFoundException{
         for (User user : users) {
             if (user.getId().equals(userId)) {
                 return user;
             }
         }
-        throw new Exception("User not found");
+        throw new ClassNotFoundException("User not found");
     }
 
     public List<User> readAllUsers(){
