@@ -36,6 +36,8 @@ public class ViewUser {
                     case UPDATE:
                         updateUser();
                         break;
+                    case DELETE:
+                        deleteUser();
                 }
             } catch (Exception e) {
                 System.out.println(e.getMessage());
@@ -56,11 +58,15 @@ public class ViewUser {
     }
 
     private void readUser() throws Exception {
-        String id = prompt("Идентификатор пользователя: ");
+        String id = getUserId();
 
         User user = userController.readUser(id);
         System.out.println(user);
 
+    }
+
+    private String getUserId() {
+        return prompt("Идентификатор пользователя: ");
     }
 
     private User inputUser() {
@@ -79,5 +85,10 @@ public class ViewUser {
         Scanner in = new Scanner(System.in);
         System.out.print(message);
         return in.nextLine();
+    }
+
+    private void deleteUser() throws Exception {
+        String userId = getUserId();
+        userController.deleteUser(userId);
     }
 }

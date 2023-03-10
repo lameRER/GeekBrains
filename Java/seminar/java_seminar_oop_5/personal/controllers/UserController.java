@@ -49,4 +49,10 @@ public class UserController {
         user.setPhone(newUser.getPhone());
         repository.saveUsers(users);
     }
+
+    public void deleteUser(String userId){
+        List<User> users = readAllUsers();
+        users.removeIf(item -> item.getId().equals(userId));
+        repository.saveUsers(users);
+    }
 }
