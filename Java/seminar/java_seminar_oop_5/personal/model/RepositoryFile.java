@@ -22,7 +22,7 @@ public class RepositoryFile implements Repository {
     }
 
     @Override
-    public String CreateUser(User user) {
+    public String createUser(User user) {
 
         List<User> users = getAllUsers();
         int max = 0;

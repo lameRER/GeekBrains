@@ -18,7 +18,7 @@ public class UserController {
 
     public void saveUser(User user) throws Exception {
         validator.validateUser(user);
-        repository.CreateUser(user);
+        repository.createUser(user);
     }
 
     public User readUser(String userId) throws Exception {
