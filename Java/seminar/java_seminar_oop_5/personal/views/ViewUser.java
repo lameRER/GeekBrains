@@ -14,15 +14,17 @@ public class ViewUser {
         this.userController = userController;
     }
 
-    public void run() {
+    public void run() throws Exception {
         Commands com;
 
         while (true) {
             String command = prompt("Введите команду: ");
             try {
                 com = Commands.valueOf(command.toUpperCase());
-
-                if (com == Commands.EXIT) return;
+            } catch (Exception e) {
+                com = Commands.valueOf("NULL".toUpperCase());
+            }
+            if (com == Commands.EXIT) return;
                 switch (com) {
                     case CREATE:
                         createUser();
@@ -36,11 +38,12 @@ public class ViewUser {
                     case UPDATE:
                         updateUser();
                         break;
+                    case DELETE:
+                        deleteUser();
+                    default:
+                        System.out.println("Введено недопустимое значение");
                 }
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
             }
-        }
     }
 
     private void updateUser() throws Exception {
@@ -56,11 +59,15 @@ public class ViewUser {
     }
 
     private void readUser() throws Exception {
-        String id = prompt("Идентификатор пользователя: ");
+        String id = getUserId();
 
         User user = userController.readUser(id);
         System.out.println(user);
 
+    }
+
+    private String getUserId() {
+        return prompt("Идентификатор пользователя: ");
     }
 
     private User inputUser() {
@@ -70,7 +77,7 @@ public class ViewUser {
         return new User(firstName, lastName, phone);
     }
 
-    private void createUser() throws Exception {
+    private void createUser() {
         userController.saveUser(inputUser());
     }
 
@@ -79,5 +86,10 @@ public class ViewUser {
         Scanner in = new Scanner(System.in);
         System.out.print(message);
         return in.nextLine();
+    }
+
+    private void deleteUser() {
+        String userId = getUserId();
+        userController.deleteUser(userId);
     }
 }
