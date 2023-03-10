@@ -9,7 +9,7 @@ import seminar.java_seminar_oop_5.personal.views.Validation;
 import seminar.java_seminar_oop_5.personal.views.ViewUser;
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args) throws Exception {
         FileOperation fileOperation = new FileOperationImpl("users.txt");
         Repository repository = new RepositoryFile(fileOperation);
         UserController controller = new UserController(repository,new Validation());

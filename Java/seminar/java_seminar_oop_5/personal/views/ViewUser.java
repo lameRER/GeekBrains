@@ -14,15 +14,17 @@ public class ViewUser {
         this.userController = userController;
     }
 
-    public void run() {
-        Commands com;
+    public void run() throws Exception {
+        Commands com = null;
 
         while (true) {
             String command = prompt("Введите команду: ");
             try {
                 com = Commands.valueOf(command.toUpperCase());
-
-                if (com == Commands.EXIT) return;
+            } catch (Exception e) {
+                com = Commands.valueOf("NULL".toUpperCase());
+            }
+            if (com == Commands.EXIT) return;
                 switch (com) {
                     case CREATE:
                         createUser();
@@ -38,11 +40,10 @@ public class ViewUser {
                         break;
                     case DELETE:
                         deleteUser();
+                    default:
+                        System.out.println("Введено недопустимое значение");
                 }
-            } catch (Exception e) {
-                System.out.println(e.getMessage());
             }
-        }
     }
 
     private void updateUser() throws Exception {
