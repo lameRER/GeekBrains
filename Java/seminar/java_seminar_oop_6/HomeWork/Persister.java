@@ -1,9 +1,9 @@
 package seminar.java_seminar_oop_6.HomeWork;
 
 public class Persister{
-	private User user;
+	private final IUser user;
 	
-	public Persister(User user){
+	public Persister(IUser user){
 		this.user = user;
 	}
 	
